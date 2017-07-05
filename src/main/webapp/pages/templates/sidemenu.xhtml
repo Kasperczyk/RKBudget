@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<body>
-    <p>Sidemenu</p>
-</body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+    <h:form>
+        <p:menu styleClass="full-width">
+            <p:menuitem value="Dashboard"
+                        action="dashboard"/>
+            <p:menuitem value="Balance"
+                        action="balance"/>
+            <p:menuitem value="Expenses"
+                        action="expenses"/>
+            <p:menuitem value="Income"
+                        action="income"/>
+            <p:menuitem value="Accounts"
+                        action="accounts"/>
+            <p:menuitem value="Categories"
+                        action="categories"/>
+            <p:menuitem value="Shared Costs"
+                        action="shared-costs"/>
+            <p:menuitem value="Calculators"
+                        action="calculators"/>
+            <p:menuitem value="Inbox"
+                        action="inbox"/>
+        </p:menu>
+    </h:form>
+    <h:outputStylesheet name="css/style.css"/>
+</h:body>
 </html>

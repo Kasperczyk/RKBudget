@@ -5,7 +5,7 @@
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="abc"/>
+        <property name="basename" value="message"/>
     </bean>
 
 </beans>

@@ -21,7 +21,7 @@ public class Application implements ServletContextAware {
     @Bean
     public ServletRegistrationBean servletRegistrationBean() {
         ServletRegistrationBean servletRegistration = new ServletRegistrationBean(new FacesServlet());
-        servletRegistration.addUrlMappings("*.jsf", "*.xhtml");
+        servletRegistration.addUrlMappings("*.xhtml");
         servletRegistration.setLoadOnStartup(1);
         return servletRegistration;
     }
@@ -30,5 +30,9 @@ public class Application implements ServletContextAware {
     public void setServletContext(ServletContext servletContext) {
         servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
         servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Development");
+        servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
+        servletContext.setInitParameter("javax.faces.FACELETS_BUFFER_SIZE", "65535"); // 64 kB
+        servletContext.setInitParameter("primefaces.THEME", "bootstrap");
+        servletContext.setInitParameter("primefaces.FONT_AWESOME", "true");
     }
 }

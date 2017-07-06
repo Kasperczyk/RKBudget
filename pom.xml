@@ -9,12 +9,14 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
+        <spring.boot.version>1.5.4.RELEASE</spring.boot.version>
         <mojarra.version>2.2.14</mojarra.version>
         <primefaces.version>6.1</primefaces.version>
         <tomcat.embed.jasper.version>8.5.15</tomcat.embed.jasper.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
         <primefaces.themes.version>1.0.10</primefaces.themes.version>
+        <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+        <h2.version>1.4.196</h2.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.9.5</mockito.version>
     </properties>
@@ -49,16 +51,30 @@
             <artifactId>primefaces</artifactId>
             <version>${primefaces.version}</version>
         </dependency>
-        <!-- todo: upgrade when repo is online again -->
         <dependency>
-            <groupId>org.primefaces.extensions</groupId>
-            <artifactId>all-themes</artifactId>
-            <version>1.0.8</version>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${primefaces.themes.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
             <version>${tomcat.embed.jasper.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

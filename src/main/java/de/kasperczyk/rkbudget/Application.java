@@ -32,7 +32,7 @@ public class Application implements ServletContextAware {
         servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Development");
         servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
         servletContext.setInitParameter("javax.faces.FACELETS_BUFFER_SIZE", "65535"); // 64 kB
-        servletContext.setInitParameter("primefaces.THEME", "bootstrap");
+        servletContext.setInitParameter("primefaces.THEME", "delta");
         servletContext.setInitParameter("primefaces.FONT_AWESOME", "true");
     }
 }

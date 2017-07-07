@@ -32,8 +32,9 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void accountsShouldHaveBeenInitialized() {
+    public void listsAndMapsShouldBeInitialized() {
         assertThat(accountController.getAccounts(), is(not(nullValue())));
+        assertThat(accountController.getAccountsChecked(), is(not(nullValue())));
     }
 
     @Test
@@ -41,6 +42,13 @@ public class AccountControllerTest {
         assertThat(accountController.getAccounts().size(), is(0));
         accountController.addAccount();
         assertThat(accountController.getAccounts().size(), is(1));
+    }
+
+    @Test
+    public void addAccountShouldAddTheAccountToTheCheckedMapWithTrueAsDefault() {
+        assertThat(accountController.getAccountsChecked().size(), is(0));
+        accountController.addAccount();
+        assertThat(accountController.getAccountsChecked().get(null), is(true));
     }
 
     @Test

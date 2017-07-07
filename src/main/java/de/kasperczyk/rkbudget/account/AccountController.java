@@ -2,15 +2,14 @@ package de.kasperczyk.rkbudget.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Controller
+@Scope("session")
 public class AccountController {
 
     private final MessageSource messageSource;
@@ -23,17 +22,20 @@ public class AccountController {
     private String iban;
     private Date expirationDate; // todo Java 8 LocalDate
     private BigDecimal balance;
+    private Map<Long, Boolean> accountsChecked;
 
     @Autowired
     public AccountController(MessageSource messageSource, AccountService accountService) {
         this.messageSource = messageSource;
         this.accountService = accountService;
         accounts = new ArrayList<>();
+        accountsChecked = new HashMap<>();
     }
 
     public void addAccount() {
         Account account = new Account(accountType, institute, owner, iban, expirationDate, balance);
         accountService.addAccount(account);
+        accountsChecked.put(account.getId(), true);
         accounts.add(account);
     }
 
@@ -95,5 +97,9 @@ public class AccountController {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public Map<Long, Boolean> getAccountsChecked() {
+        return accountsChecked;
     }
 }

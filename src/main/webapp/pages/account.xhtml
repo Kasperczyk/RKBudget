@@ -20,7 +20,7 @@
                                              styleClass="ui-panelgrid-blank">
 
                                     <!-- Create / modify account -->
-                                    <p:row styleClass="height-20">
+                                    <p:row>
                                         <h:messages/>
                                         <div class="ui-fluid">
                                             <p:panelGrid columns="2"
@@ -83,15 +83,37 @@
                                     <p:separator/>
 
                                     <!-- Account list -->
-                                    <p:row styleClass="height-80">
+                                    <p:row>
                                         <p:dataList value="#{accountController.accounts}"
-                                                    var="account">
-                                            #{account.accountType}
-                                            #{account.institute}
-                                            #{account.owner}
-                                            #{account.iban}
-                                            #{account.expirationDate}
-                                            #{account.balance}
+                                                    var="account"
+                                                    type="none"
+                                                    emptyMessage="#{msg.account_dataList_empty}">
+                                            <f:facet name="header">
+                                                #{msg.account_dataList_header}
+                                            </f:facet>
+                                            <p:fieldset
+                                                    legend="#{accountController.getAccountTypeName(account.accountType)}">
+                                                <h:outputText value="#{account.institute}"/>
+                                                <br/>
+                                                <h:outputText value="#{account.owner}"/>
+                                                <br/>
+                                                <h:outputText value="#{account.iban}"/>
+                                                <br/>
+                                                <h:outputText value="#{account.expirationDate}"/>
+                                                <br/>
+                                                <h:outputText value="#{account.balance}"/>
+                                                <br/>
+                                                <p:commandButton value="#{msg.account_button_editAccount}"
+                                                                 icon="fa fa-fw fa-edit"/>
+                                                <p:commandButton value="#{msg.account_button_deleteAccount}"
+                                                                 icon="fa fa-fw fa-remove"/>
+                                                <p:outputLabel for="showDetails"
+                                                               value="#{msg.account_label_showAccount}"/>
+                                                <p:selectBooleanCheckbox id="showDetails"
+                                                                         value="#{accountController.accountsChecked[account.id]}">
+                                                    <p:ajax update="accountsForm"/>
+                                                </p:selectBooleanCheckbox>
+                                            </p:fieldset>
                                         </p:dataList>
                                     </p:row>
                                 </p:panelGrid>

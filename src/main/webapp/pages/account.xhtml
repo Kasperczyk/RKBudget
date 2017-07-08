@@ -2,149 +2,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-<f:view locale="de"> <!-- todo -->
-    <h:body>
-        <ui:composition template="templates/template.xhtml">
-            <ui:define name="content">
-                <h:form id="accountsForm">
-                    <p:panel header="#{msg.account_panel_header}"
-                             styleClass="full-width">
-                        <div class="ui-g">
-                            <!-- Left side with account list and create / modify account area -->
-                            <div class="ui-g-3">
-                                <p:panelGrid columns="1"
-                                             layout="grid"
-                                             styleClass="ui-panelgrid-blank">
+<h:body>
+    <ui:composition template="templates/template.xhtml">
+        <ui:define name="content">
+            <h:form id="accountsForm">
+                <p:panel header="#{msg.account_panel_header}"
+                         styleClass="full-width">
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                            <p:panelGrid columns="1"
+                                         layout="grid"
+                                         styleClass="ui-panelgrid-blank">
 
-                                    <!-- Create / modify account -->
-                                    <p:row>
-                                        <h:messages/>
-                                        <div class="ui-fluid">
-                                            <p:panelGrid columns="2"
-                                                         layout="grid"
-                                                         styleClass="ui-panelgrid-blank">
-                                                <!-- Account type -->
-                                                <p:outputLabel for="accountType"
-                                                               value="#{msg.account_label_accountType}"/>
-                                                <p:selectOneMenu id="accountType"
-                                                                 value="#{accountController.accountType}"
-                                                                 converter="#{accountTypeConverter}"
-                                                                 required="true">
-                                                    <f:selectItem
-                                                            itemLabel="#{msg.account_selectItem_defaultAccountType}"
-                                                            noSelectionOption="true"
-                                                            itemDisabled="true"/>
-                                                    <f:selectItems value="#{accountController.accountTypes}"
-                                                                   var="accountType"
-                                                                   itemValue="#{accountType}"
-                                                                   itemLabel="#{accountController.getAccountTypeName(accountType)}"/>
-                                                </p:selectOneMenu>
-                                                <!-- Institute -->
-                                                <p:outputLabel for="institute"
-                                                               value="#{msg.account_label_institute}"/>
-                                                <p:inputText id="institute"
-                                                             value="#{accountController.institute}"
-                                                             required="true"/>
-                                                <!-- Owner -->
-                                                <p:outputLabel for="owner"
-                                                               value="#{msg.account_label_owner}"/>
-                                                <p:inputText id="owner"
-                                                             value="#{accountController.owner}"
-                                                             required="true"/>
-                                                <!-- IBAN -->
-                                                <p:outputLabel for="iban"
-                                                               value="#{msg.account_label_iban}"/>
-                                                <p:inputText id="iban"
-                                                             value="#{accountController.iban}"
-                                                             required="true"/>
-                                                <!-- Expiration date -->
-                                                <p:outputLabel for="expirationDate"
-                                                               value="#{msg.account_label_expirationDate}"/>
-                                                <p:calendar id="expirationDate"
-                                                            value="#{accountController.expirationDate}"
-                                                            required="true"/>
-                                                <!-- Balance -->
-                                                <p:outputLabel for="balance"
-                                                               value="#{msg.account_label_balance}"/>
-                                                <p:inputText id="balance"
-                                                             value="#{accountController.balance}"
-                                                             required="true"/>
-                                                <h:panelGrid/>
-                                                <p:commandButton value="#{msg.account_button_addAccount}"
-                                                                 actionListener="#{accountController.addAccount}"
-                                                                 update="accountsForm"/>
-                                            </p:panelGrid>
-                                        </div>
-                                    </p:row>
+                                <p:row>
+                                    <h:messages/>
+                                    <div class="ui-fluid">
+                                        <ui:include src="account/create-edit-account.xhtml"/>
+                                    </div>
+                                </p:row>
 
-                                    <p:separator/>
+                                <p:separator/>
 
-                                    <!-- Account list -->
-                                    <p:row>
-                                        <p:dataList value="#{accountController.accounts}"
-                                                    var="account"
-                                                    type="none"
-                                                    emptyMessage="#{msg.account_dataList_empty}">
-                                            <f:facet name="header">
-                                                #{msg.account_dataList_header}
-                                            </f:facet>
-                                            <p:fieldset
-                                                    legend="#{accountController.getAccountTypeName(account.accountType)}">
-                                                <h:outputText value="#{account.institute}"/>
-                                                <br/>
-                                                <h:outputText value="#{account.owner}"/>
-                                                <br/>
-                                                <h:outputText value="#{account.iban}"/>
-                                                <br/>
-                                                <h:outputText value="#{account.expirationDate}"/>
-                                                <br/>
-                                                <h:outputText value="#{account.balance}"/>
-                                                <br/>
-                                                <p:commandButton value="#{msg.account_button_editAccount}"
-                                                                 icon="fa fa-fw fa-edit"/>
-                                                <p:commandButton value="#{msg.account_button_deleteAccount}"
-                                                                 icon="fa fa-fw fa-remove"/>
-                                                <p:outputLabel for="showDetails"
-                                                               value="#{msg.account_label_showAccount}"/>
-                                                <p:selectBooleanCheckbox id="showDetails"
-                                                                         value="#{accountController.accountsChecked[account.id]}"
-                                                                         disabled="#{accountController.isCheckboxDisabled(account.id)}">
-                                                    <p:ajax update="accountsForm"/>
-                                                </p:selectBooleanCheckbox>
-                                            </p:fieldset>
-                                        </p:dataList>
-                                    </p:row>
-                                </p:panelGrid>
-                            </div>
-
-                            <!-- Right side with accounts and their transactions -->
-                            <div class="ui-g-9">
-                                <p:panelGrid columns="3"
-                                             layout="grid"
-                                             columnClasses="ui-grid-col-4, ui-grid-col-4, ui-grid-col-4"
-                                             styleClass="ui-panelgrid-blank">
-                                    <p:panel header="#{accountController.shownAccounts.get(0).id} - #{accountController.shownAccounts.get(0).iban}"
-                                             rendered="#{accountController.shownAccounts.size() >= 1}">
-                                        TODO continue working on this when you can add transactions to your accounts (these will be shown here)
-                                    </p:panel>
-                                    <p:panel header="#{accountController.shownAccounts.get(1).id} - #{accountController.shownAccounts.get(1).iban}"
-                                             rendered="#{accountController.shownAccounts.size() >= 2}">
-                                        TODO continue working on this when you can add transactions to your accounts (these will be shown here)
-                                    </p:panel>
-                                    <p:panel header="#{accountController.shownAccounts.get(2).id} - #{accountController.shownAccounts.get(2).iban}"
-                                             rendered="#{accountController.shownAccounts.size() == 3}">
-                                        TODO continue working on this when you can add transactions to your accounts (these will be shown here)
-                                    </p:panel>
-                                </p:panelGrid>
-                            </div>
+                                <p:row>
+                                    <ui:include src="account/account-list.xhtml"/>
+                                </p:row>
+                            </p:panelGrid>
                         </div>
-                    </p:panel>
-                </h:form>
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</f:view>
+
+                        <div class="ui-g-9">
+                            <ui:include src="account/account-details.xhtml"/>
+                        </div>
+                    </div>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
 </html>

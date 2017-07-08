@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<p:panelGrid columns="2"
+             layout="grid"
+             styleClass="ui-panelgrid-blank">
+    <!-- Account type -->
+    <p:outputLabel for="accountType"
+                   value="#{msg.account_label_accountType}"/>
+    <p:selectOneMenu id="accountType"
+                     value="#{accountController.accountType}"
+                     converter="#{accountTypeConverter}"
+                     required="true">
+        <f:selectItem
+                itemLabel="#{msg.account_selectItem_defaultAccountType}"
+                noSelectionOption="true"
+                itemDisabled="true"/>
+        <f:selectItems value="#{accountController.accountTypes}"
+                       var="accountType"
+                       itemValue="#{accountType}"
+                       itemLabel="#{accountController.getAccountTypeName(accountType)}"/>
+    </p:selectOneMenu>
+
+    <!-- Institute -->
+    <p:outputLabel for="institute"
+                   value="#{msg.account_label_institute}"/>
+    <p:inputText id="institute"
+                 value="#{accountController.institute}"
+                 required="true"/>
+
+    <!-- Owner -->
+    <p:outputLabel for="owner"
+                   value="#{msg.account_label_owner}"/>
+    <p:inputText id="owner"
+                 value="#{accountController.owner}"
+                 required="true"/>
+
+    <!-- IBAN -->
+    <p:outputLabel for="iban"
+                   value="#{msg.account_label_iban}"/>
+    <p:inputText id="iban"
+                 value="#{accountController.iban}"
+                 required="true"/>
+
+    <!-- Expiration date -->
+    <p:outputLabel for="expirationDate"
+                   value="#{msg.account_label_expirationDate}"/>
+    <p:calendar id="expirationDate"
+                value="#{accountController.expirationDate}"
+                required="true"/>
+
+    <!-- Balance -->
+    <p:outputLabel for="balance"
+                   value="#{msg.account_label_balance}"/>
+    <p:inputText id="balance"
+                 value="#{accountController.balance}"
+                 required="true"/>
+    <h:panelGrid/>
+
+    <!-- Add button -->
+    <p:commandButton value="#{msg.account_button_addAccount}"
+                     actionListener="#{accountController.addAccount}"
+                     update="accountsForm"/>
+</p:panelGrid>
+</html>

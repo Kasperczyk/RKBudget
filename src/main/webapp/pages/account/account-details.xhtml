@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui">
+<p:panelGrid columns="3"
+             layout="grid"
+             columnClasses="ui-grid-col-4, ui-grid-col-4, ui-grid-col-4"
+             styleClass="ui-panelgrid-blank">
+    <p:panel
+            header="#{accountController.shownAccounts.get(0).id} - #{accountController.shownAccounts.get(0).iban}"
+            rendered="#{accountController.shownAccounts.size() >= 1}">
+        TODO continue working on this when you can add transactions to your accounts (these will be shown here)
+    </p:panel>
+    <p:panel
+            header="#{accountController.shownAccounts.get(1).id} - #{accountController.shownAccounts.get(1).iban}"
+            rendered="#{accountController.shownAccounts.size() >= 2}">
+        TODO continue working on this when you can add transactions to your accounts (these will be shown here)
+    </p:panel>
+    <p:panel
+            header="#{accountController.shownAccounts.get(2).id} - #{accountController.shownAccounts.get(2).iban}"
+            rendered="#{accountController.shownAccounts.size() == 3}">
+        TODO continue working on this when you can add transactions to your accounts (these will be shown here)
+    </p:panel>
+</p:panelGrid>
+</html>

@@ -1,5 +1,6 @@
 package de.kasperczyk.rkbudget.account;
 
+import de.kasperczyk.rkbudget.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +40,8 @@ public class AccountServiceTest {
 
     @Test
     public void addAccountShouldCallSaveWithTheCorrectArgument() {
-        Account account = new Account(AccountType.GIRO_ACCOUNT, "Institute", "Owner", "IBAN", new Date(), BigDecimal.ONE);
+        Account account = new Account(AccountType.GIRO_ACCOUNT, "Institute", "Owner", "IBAN",
+                new Date(), BigDecimal.ONE, new User());
         accountService.addAccount(account);
         verify(accountRepositoryMock).save(account);
     }

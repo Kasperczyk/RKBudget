@@ -1,5 +1,7 @@
 package de.kasperczyk.rkbudget.account;
 
+import de.kasperczyk.rkbudget.user.User;
+import de.kasperczyk.rkbudget.user.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -17,6 +19,7 @@ public class AccountController {
 
     private final MessageSource messageSource;
     private final AccountService accountService;
+    private final UserController userController;
 
     private List<Account> accounts;
     private AccountType accountType;
@@ -28,15 +31,17 @@ public class AccountController {
     private Map<Long, Boolean> accountsChecked;
 
     @Autowired
-    public AccountController(MessageSource messageSource, AccountService accountService) {
+    public AccountController(MessageSource messageSource, AccountService accountService, UserController userController) {
         this.messageSource = messageSource;
         this.accountService = accountService;
+        this.userController = userController;
         accounts = new ArrayList<>();
         accountsChecked = new HashMap<>();
     }
 
     public void addAccount() {
-        Account account = new Account(accountType, institute, owner, iban, expirationDate, balance);
+        User currentUser = userController.getCurrentUser();
+        Account account = new Account(accountType, institute, owner, iban, expirationDate, balance, currentUser);
         accountService.addAccount(account);
         accountsChecked.put(account.getId(), !isLimitReached());
         accounts.add(account);

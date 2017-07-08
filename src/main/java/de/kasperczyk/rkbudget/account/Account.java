@@ -1,11 +1,12 @@
 package de.kasperczyk.rkbudget.account;
 
+import de.kasperczyk.rkbudget.user.User;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table
 public class Account {
 
     @Id
@@ -31,13 +32,23 @@ public class Account {
     @Column
     private BigDecimal balance;
 
-    public Account(AccountType accountType, String institute, String owner, String iban, Date expirationDate, BigDecimal balance) {
+    @ManyToOne
+    private User user;
+
+    public Account(AccountType accountType,
+                   String institute,
+                   String owner,
+                   String iban,
+                   Date expirationDate,
+                   BigDecimal balance,
+                   User user) {
         this.accountType = accountType;
         this.institute = institute;
         this.owner = owner;
         this.iban = iban;
         this.expirationDate = expirationDate;
         this.balance = balance;
+        this.user = user;
     }
 
     public Long getId() {
@@ -94,6 +105,14 @@ public class Account {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

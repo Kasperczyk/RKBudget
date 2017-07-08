@@ -23,6 +23,10 @@
     text-align: right;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 /** {*/
     /*border: solid red thin;*/
 /*}*/

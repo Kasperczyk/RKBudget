@@ -1,5 +1,7 @@
 package de.kasperczyk.rkbudget.account;
 
+import de.kasperczyk.rkbudget.user.User;
+import de.kasperczyk.rkbudget.user.UserController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,9 +32,12 @@ public class AccountControllerTest {
     @Mock
     private AccountService accountServiceMock;
 
+    @Mock
+    private UserController userControllerMock;
+
     @Before
     public void setup() {
-        accountController = new AccountController(messageSourceMock, accountServiceMock);
+        accountController = new AccountController(messageSourceMock, accountServiceMock, userControllerMock);
     }
 
     @Test
@@ -76,7 +81,7 @@ public class AccountControllerTest {
     public void addAccountShouldCallAddAccountWithTheCorrectArgument() {
         Date expirationDate = new Date();
         Account account = new Account(AccountType.GIRO_ACCOUNT, "Institute",
-                "Owner", "IBAN", expirationDate, BigDecimal.ONE);
+                "Owner", "IBAN", expirationDate, BigDecimal.ONE, new User());
         accountController.setAccountType(account.getAccountType());
         accountController.setInstitute(account.getInstitute());
         accountController.setOwner(account.getOwner());

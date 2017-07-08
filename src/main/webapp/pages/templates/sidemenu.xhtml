@@ -6,6 +6,14 @@
 >
 <h:body>
     <h:form>
+        <p:panel>
+            <p:outputLabel for="currentUser"
+                           value="#{msg.user_label_currentUser}"/>
+            <br/>
+            <h:outputText id="currentUser"
+                          value="#{userController.currentUser.userName}"
+                          styleClass="bold"/>
+        </p:panel>
         <p:menu styleClass="full-width">
             <p:menuitem value="Dashboard"
                         action="dashboard"/>

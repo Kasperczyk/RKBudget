@@ -7,10 +7,13 @@ import org.springframework.stereotype.Controller;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @Scope("session")
 public class AccountController {
+
+    private static final int SHOWN_ACCOUNTS_LIMIT = 3; // todo extend in the future, maybe allow the user to choose from several layouts
 
     private final MessageSource messageSource;
     private final AccountService accountService;
@@ -35,8 +38,25 @@ public class AccountController {
     public void addAccount() {
         Account account = new Account(accountType, institute, owner, iban, expirationDate, balance);
         accountService.addAccount(account);
-        accountsChecked.put(account.getId(), true);
+        accountsChecked.put(account.getId(), !isLimitReached());
         accounts.add(account);
+    }
+
+    public boolean isCheckboxDisabled(Long id) {
+        return !accountsChecked.get(id) && isLimitReached();
+    }
+
+    private Boolean isLimitReached() {
+        return accountsChecked.values()
+                .stream()
+                .filter(checked -> checked)
+                .count() == SHOWN_ACCOUNTS_LIMIT;
+    }
+
+    public List<Account> getShownAccounts() {
+        return accounts.stream()
+                .filter(account -> accountsChecked.get(account.getId()))
+                .collect(Collectors.toList());
     }
 
     public String getAccountTypeName(AccountType accountType) {

@@ -110,7 +110,8 @@
                                                 <p:outputLabel for="showDetails"
                                                                value="#{msg.account_label_showAccount}"/>
                                                 <p:selectBooleanCheckbox id="showDetails"
-                                                                         value="#{accountController.accountsChecked[account.id]}">
+                                                                         value="#{accountController.accountsChecked[account.id]}"
+                                                                         disabled="#{accountController.isCheckboxDisabled(account.id)}">
                                                     <p:ajax update="accountsForm"/>
                                                 </p:selectBooleanCheckbox>
                                             </p:fieldset>
@@ -121,7 +122,23 @@
 
                             <!-- Right side with accounts and their transactions -->
                             <div class="ui-g-9">
-
+                                <p:panelGrid columns="3"
+                                             layout="grid"
+                                             columnClasses="ui-grid-col-4, ui-grid-col-4, ui-grid-col-4"
+                                             styleClass="ui-panelgrid-blank">
+                                    <p:panel header="#{accountController.shownAccounts.get(0).id} - #{accountController.shownAccounts.get(0).iban}"
+                                             rendered="#{accountController.shownAccounts.size() >= 1}">
+                                        TODO continue working on this when you can add transactions to your accounts (these will be shown here)
+                                    </p:panel>
+                                    <p:panel header="#{accountController.shownAccounts.get(1).id} - #{accountController.shownAccounts.get(1).iban}"
+                                             rendered="#{accountController.shownAccounts.size() >= 2}">
+                                        TODO continue working on this when you can add transactions to your accounts (these will be shown here)
+                                    </p:panel>
+                                    <p:panel header="#{accountController.shownAccounts.get(2).id} - #{accountController.shownAccounts.get(2).iban}"
+                                             rendered="#{accountController.shownAccounts.size() == 3}">
+                                        TODO continue working on this when you can add transactions to your accounts (these will be shown here)
+                                    </p:panel>
+                                </p:panelGrid>
                             </div>
                         </div>
                     </p:panel>

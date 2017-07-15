@@ -19,6 +19,7 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountControllerTest {
@@ -84,14 +85,17 @@ public class AccountControllerTest {
     @Test
     public void addAccountShouldCallAddAccountWithTheCorrectArgument() {
         Date expirationDate = new Date();
+        User user = new User();
         Account account = new Account(AccountType.GIRO, "Name", "Institute",
-                "Owner", "IBAN", expirationDate, BigDecimal.ONE, new User());
+                "Owner", "IBAN", expirationDate, BigDecimal.ONE, user);
         accountController.setAccountType(account.getAccountType());
+        accountController.setName(account.getName());
         accountController.setInstitute(account.getInstitute());
         accountController.setOwner(account.getOwner());
         accountController.setIban(account.getIban());
         accountController.setExpirationDate(expirationDate);
         accountController.setBalance(account.getBalance());
+        when(userControllerMock.getCurrentUser()).thenReturn(user);
 
         addAccountAndFillId(1);
 
@@ -125,6 +129,12 @@ public class AccountControllerTest {
         for (Account shownAccount : shownAccounts) {
             assertThat(accountController.getAccountsChecked().get(shownAccount.getId()), is(true));
         }
+    }
+
+    @Test
+    public void suggestOwnerShouldCallGetAllUsers() {
+        accountController.suggestOwner("query");
+        verify(userServiceMock).getAllUsers();
     }
 
     private void addAccountAndFillId(int times) {

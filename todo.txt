@@ -1,0 +1,9 @@
+Accounts:
+- create-edit-account:
+    - improve example in accountService.accountExists
+- account-list:
+    - improve design
+    - implement edit and delete buttons
+    - fullscreen / scrolling when too many accounts
+- account-details
+    - later

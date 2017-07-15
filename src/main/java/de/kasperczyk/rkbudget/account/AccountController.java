@@ -8,6 +8,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -88,9 +90,15 @@ public class AccountController {
     public void addAccount() {
         User currentUser = userController.getCurrentUser();
         Account account = new Account(accountType, name, institute, owner, iban, expirationDate, balance, currentUser);
-        accountService.addAccount(account);
-        accountsChecked.put(account.getId(), !isLimitReached());
-        accounts.add(account);
+        if (!accountService.accountExists(account)) {
+            accountService.addAccount(account);
+            accountsChecked.put(account.getId(), !isLimitReached());
+            accounts.add(account);
+        } else {
+            // todo locale
+            String message = messageSource.getMessage("account_error_accountAlreadyAdded", null, new Locale("de"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+        }
         resetFields();
     }
 

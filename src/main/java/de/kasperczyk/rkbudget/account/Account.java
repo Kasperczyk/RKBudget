@@ -148,7 +148,6 @@ public class Account {
 
         Account account = (Account) o;
 
-        if (getId() != null ? !getId().equals(account.getId()) : account.getId() != null) return false;
         if (getAccountType() != account.getAccountType()) return false;
         if (!getName().equals(account.getName())) return false;
         if (!getInstitute().equals(account.getInstitute())) return false;

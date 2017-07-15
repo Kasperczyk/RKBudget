@@ -1,6 +1,7 @@
 package de.kasperczyk.rkbudget.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -34,5 +35,10 @@ public class AccountService {
 
     Account getAccountByIban(String iban) {
         return accountRepository.findByIban(iban);
+    }
+
+    boolean accountExists(Account account) {
+        // todo improve example object
+        return accountRepository.findAll(Example.of(account)).size() > 0;
     }
 }

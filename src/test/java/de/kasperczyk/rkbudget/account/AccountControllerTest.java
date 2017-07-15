@@ -13,7 +13,6 @@ import org.springframework.context.MessageSource;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -106,7 +105,7 @@ public class AccountControllerTest {
     public void getAccountTypeNameShouldCallGetMessageWithTheKeyAsAnArgument() {
         AccountType accountType = AccountType.GIRO;
         accountController.getAccountTypeName(accountType);
-        verify(messageSourceMock).getMessage(accountType.getKey(), null, new Locale("de"));
+        verify(messageSourceMock).getMessage(accountType.getKey(), null, null);
     }
 
     @Test

@@ -3,6 +3,7 @@ package de.kasperczyk.rkbudget.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -26,5 +27,17 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    List<Language> getAllSupportedLanguages() {
+        return Arrays.asList(Language.values());
+    }
+
+    Language getLanguageByName(String name) {
+        return Language.valueOf(name);
+    }
+
+    void updateUser(User user) {
+        userRepository.save(user);
     }
 }

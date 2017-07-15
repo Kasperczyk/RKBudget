@@ -11,8 +11,7 @@
     <f:facet name="header">
         #{msg.account_dataList_header}
     </f:facet>
-    <p:fieldset
-            legend="#{accountController.getAccountTypeName(account.accountType)}">
+    <p:fieldset legend="#{accountController.getAccountTypeName(account.accountType)}">
         <h:outputText value="#{account.institute}"/>
         <br/>
         <h:outputText value="#{account.owner}"/>
@@ -32,7 +31,7 @@
         <p:selectBooleanCheckbox id="showDetails"
                                  value="#{accountController.accountsChecked[account.id]}"
                                  disabled="#{accountController.isCheckboxDisabled(account.id)}">
-            <p:ajax update="accountsForm"/>
+            <p:ajax update="@form"/>
         </p:selectBooleanCheckbox>
     </p:fieldset>
 </p:dataList>

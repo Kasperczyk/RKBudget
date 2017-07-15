@@ -6,10 +6,12 @@
       xmlns:p="http://primefaces.org/ui">
 <h:body>
     <ui:composition template="template/template.xhtml">
+        <ui:define name="title">RKBudget - #{msg.title_contact}</ui:define>
         <ui:define name="content">
             <h:form id="contactForm">
                 <p:panel header="#{msg.contact_panel_header}"
                          styleClass="full-width">
+                    <!-- todo -->
                     CONTACT!
                 </p:panel>
             </h:form>

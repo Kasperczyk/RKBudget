@@ -3,9 +3,19 @@ package de.kasperczyk.rkbudget.user;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "PERSON")
 public class User {
 
     @Id
+//    @GenericGenerator(
+//            name = "userSequenceGenerator",
+//            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+//            parameters = {
+//                    @org.hibernate.annotations.Parameter(name = "sequence_name", value = "PERSON_SEQUENCE"),
+//                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+//                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
+//            }
+//    )
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -70,5 +80,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
     }
 }

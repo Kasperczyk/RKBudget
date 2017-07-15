@@ -3,6 +3,8 @@ package de.kasperczyk.rkbudget.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -20,5 +22,9 @@ public class UserService {
         } else {
             throw new RuntimeException("wrong password");
         }
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

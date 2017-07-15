@@ -6,63 +6,110 @@
       xmlns:p="http://primefaces.org/ui">
 <p:panelGrid columns="2"
              layout="grid"
+             columnClasses="ui-grid-col-4, ui-grid-col-8"
              styleClass="ui-panelgrid-blank">
-    <!-- Account type -->
+
     <p:outputLabel for="accountType"
                    value="#{msg.account_label_accountType}"/>
     <p:selectOneMenu id="accountType"
                      value="#{accountController.accountType}"
                      converter="#{accountTypeConverter}"
                      required="true">
-        <f:selectItem
-                itemLabel="#{msg.account_selectItem_defaultAccountType}"
-                noSelectionOption="true"
-                itemDisabled="true"/>
-        <f:selectItems value="#{accountController.accountTypes}"
+        <f:selectItem itemLabel="#{msg.account_selectItem_defaultAccountType}"
+                      noSelectionOption="true"
+                      itemDisabled="true"/>
+        <f:selectItems value="#{accountController.allAccountTypes}"
                        var="accountType"
                        itemValue="#{accountType}"
                        itemLabel="#{accountController.getAccountTypeName(accountType)}"/>
+        <p:ajax update="@form"/>
     </p:selectOneMenu>
 
-    <!-- Institute -->
+    <p:outputLabel for="name"
+                   value="#{msg.account_label_name}"
+                   rendered="#{not accountController.cash}"/>
+    <p:inputText id="name"
+                 value="#{accountController.name}"
+                 required="#{accountController.custom}"
+                 rendered="#{not accountController.cash}"/>
+
     <p:outputLabel for="institute"
-                   value="#{msg.account_label_institute}"/>
+                   value="#{msg.account_label_institute}"
+                   rendered="#{accountController.bankAccountOrNull or accountController.creditCard}"/>
     <p:inputText id="institute"
                  value="#{accountController.institute}"
-                 required="true"/>
+                 required="true"
+                 rendered="#{accountController.bankAccountOrNull or accountController.creditCard}"/>
 
-    <!-- Owner -->
     <p:outputLabel for="owner"
                    value="#{msg.account_label_owner}"/>
-    <p:inputText id="owner"
-                 value="#{accountController.owner}"
-                 required="true"/>
+    <p:autoComplete id="owner"
+                    value="#{accountController.owner}"
+                    completeMethod="#{accountController.suggestOwner}"
+                    required="true"/>
 
-    <!-- IBAN -->
     <p:outputLabel for="iban"
-                   value="#{msg.account_label_iban}"/>
+                   value="#{msg.account_label_iban}"
+                   rendered="#{accountController.bankAccountOrNull}"/>
     <p:inputText id="iban"
                  value="#{accountController.iban}"
-                 required="true"/>
+                 required="true"
+                 rendered="#{accountController.bankAccountOrNull}"/>
 
-    <!-- Expiration date -->
+    <p:outputLabel for="creditCardNumber"
+                   value="#{msg.account_label_creditCardNumber}"
+                   rendered="#{accountController.creditCard}"/>
+    <p:inputText id="creditCardNumber"
+                 value="#{accountController.creditCardNumber}"
+                 required="true"
+                 rendered="#{accountController.creditCard}"/>
+
     <p:outputLabel for="expirationDate"
-                   value="#{msg.account_label_expirationDate}"/>
+                   value="#{msg.account_label_expirationDate}"
+                   rendered="#{accountController.bankAccountOrNull or accountController.creditCard}"/>
     <p:calendar id="expirationDate"
                 value="#{accountController.expirationDate}"
-                required="true"/>
+                required="true"
+                rendered="#{accountController.bankAccountOrNull or accountController.creditCard}"/>
 
-    <!-- Balance -->
     <p:outputLabel for="balance"
-                   value="#{msg.account_label_balance}"/>
+                   value="#{msg.account_label_balance}"
+                   rendered="#{not accountController.creditCard}"/>
     <p:inputText id="balance"
                  value="#{accountController.balance}"
-                 required="true"/>
-    <h:panelGrid/>
+                 required="true"
+                 rendered="#{not accountController.creditCard}"/>
 
-    <!-- Add button -->
+    <p:outputLabel for="linkToAnotherAccount"
+                   value="#{msg.account_label_linkedToAnotherAccount}"
+                   rendered="#{accountController.creditCard}"/>
+    <p:panelGrid columns="2"
+                 layout="grid"
+                 columnClasses="ui-grid-col-2, ui-grid-col-10"
+                 styleClass="ui-panelgrid-blank"
+                 rendered="#{accountController.creditCard}">
+        <p:selectBooleanCheckbox id="linkToAnotherAccount"
+                                 value="#{accountController.linkedToAnotherAccount}">
+            <p:ajax update="@form"/>
+        </p:selectBooleanCheckbox>
+        <p:selectOneMenu id="linkedAccount"
+                         value="#{accountController.linkedAccount}"
+                         converter="#{accountConverter}"
+                         required="#{accountController.linkedToAnotherAccount}"
+                         rendered="#{accountController.linkedToAnotherAccount}">
+            <f:selectItem itemLabel="#{msg.account_selectItem_defaultLinkedAccount}"
+                          noSelectionOption="true"
+                          itemDisabled="true"/>
+            <f:selectItems value="#{accountController.linkableAccounts}"
+                           var="linkedAccount"
+                           itemValue="#{linkedAccount}"
+                           itemLabel="#{linkedAccount.iban}"/>
+        </p:selectOneMenu>
+    </p:panelGrid>
+
+    <h:panelGrid/>
     <p:commandButton value="#{msg.account_button_addAccount}"
                      actionListener="#{accountController.addAccount}"
-                     update="accountsForm"/>
+                     update="@form"/>
 </p:panelGrid>
 </html>

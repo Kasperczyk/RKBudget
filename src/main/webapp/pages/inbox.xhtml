@@ -6,10 +6,12 @@
       xmlns:p="http://primefaces.org/ui">
 <h:body>
     <ui:composition template="template/template.xhtml">
+        <ui:define name="title">RKBudget - #{msg.title_inbox}</ui:define>
         <ui:define name="content">
             <h:form id="inboxForm">
                 <p:panel header="#{msg.inbox_panel_header}"
                          styleClass="full-width">
+                    <!-- todo -->
                     INBOX!
                 </p:panel>
             </h:form>

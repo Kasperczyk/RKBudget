@@ -2,7 +2,11 @@ package de.kasperczyk.rkbudget.account;
 
 public enum AccountType {
 
-    GIRO_ACCOUNT("giro");
+    GIRO("giro"),
+    SAVINGS("savings"),
+    CREDIT("credit"),
+    CASH("cash"),
+    CUSTOM("custom");
 
     private static final String MESSAGE_PREFIX = "account_accountType_";
 

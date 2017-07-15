@@ -7,35 +7,44 @@
     <h:form>
         <p:panel styleClass="full-width">
             <p:outputLabel for="currentUser"
-                           value="#{msg.user_label_currentUser}"/>
+                           value="#{msg.person_label_currentPerson}"/>
             <br/>
             <h:outputText id="currentUser"
                           value="#{userController.currentUser.userName}"
                           styleClass="bold"/>
         </p:panel>
         <p:menu styleClass="full-width">
-            <p:menuitem value="Dashboard"
+            <p:menuitem value="#{msg.title_dashbord}"
+                        icon="fa fa-home"
                         action="dashboard"/>
-            <p:menuitem value="Balance"
+            <p:menuitem value="#{msg.title_balance}"
+                        icon="fa fa-bar-chart-o"
                         action="balance"/>
-            <p:menuitem value="Expenses"
+            <p:menuitem value="#{msg.title_expenses}"
+                        icon="fa fa-shopping-cart"
                         action="expense"/>
-            <p:menuitem value="Income"
+            <p:menuitem value="#{msg.title_income}"
+                        icon="fa fa-money"
                         action="income"/>
-            <p:menuitem value="Accounts"
+            <p:menuitem value="#{msg.title_accounts}"
+                        icon="fa fa-newspaper-o"
                         action="account"/>
-            <p:menuitem value="Categories"
+            <p:menuitem value="#{msg.title_categories}"
+                        icon="fa fa-list-alt"
                         action="category"/>
-            <p:menuitem value="Shared Costs"
+            <p:menuitem value="#{msg.title_sharedCosts}"
+                        icon="fa fa-slideshare"
                         action="shared-cost"/>
-            <p:menuitem value="Calculators"
+            <p:menuitem value="#{msg.title_calculators}"
+                        icon="fa fa-building"
                         action="calculator"/>
-            <p:menuitem value="Inbox"
+            <p:menuitem value="#{msg.title_inbox}"
+                        icon="fa fa-envelope"
                         action="inbox"/>
-            <p:menuitem value="Profile"
+            <p:menuitem value="#{msg.title_profile}"
+                        icon="fa fa-user"
                         action="profile"/>
         </p:menu>
     </h:form>
-    <h:outputStylesheet name="css/style.css"/>
 </h:body>
 </html>

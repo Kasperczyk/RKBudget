@@ -30,17 +30,17 @@ public class AccountServiceTest {
 
     @Test
     public void getAccountTypesShouldReturnAllAccountTypesAsAList() {
-        assertThat(accountService.getAccountTypes(), is(Arrays.asList(AccountType.values())));
+        assertThat(accountService.getAllAccountTypes(), is(Arrays.asList(AccountType.values())));
     }
 
     @Test
     public void getAccountTypeByNameShouldReturnTheCorrectAccountType() {
-        assertThat(accountService.getAccountTypeByName(AccountType.GIRO_ACCOUNT.name()), is(AccountType.GIRO_ACCOUNT));
+        assertThat(accountService.getAccountTypeByName(AccountType.GIRO.name()), is(AccountType.GIRO));
     }
 
     @Test
     public void addAccountShouldCallSaveWithTheCorrectArgument() {
-        Account account = new Account(AccountType.GIRO_ACCOUNT, "Institute", "Owner", "IBAN",
+        Account account = new Account(AccountType.GIRO, "Name", "Institute", "Owner", "IBAN",
                 new Date(), BigDecimal.ONE, new User());
         accountService.addAccount(account);
         verify(accountRepositoryMock).save(account);

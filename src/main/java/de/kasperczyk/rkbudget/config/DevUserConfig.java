@@ -22,7 +22,6 @@ public class DevUserConfig {
         devUser.setUserName("Rene Kasperczyk");
         devUser.setEmail("kasperczyk.rene@gmail.com");
         devUser.setPassword("geheim");
-
         userRepository.save(devUser);
     }
 }

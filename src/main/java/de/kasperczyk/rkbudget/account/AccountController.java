@@ -2,6 +2,7 @@ package de.kasperczyk.rkbudget.account;
 
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
+import de.kasperczyk.rkbudget.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -15,40 +16,92 @@ import java.util.stream.Collectors;
 @Scope("session")
 public class AccountController {
 
-    private static final int SHOWN_ACCOUNTS_LIMIT = 3; // todo extend in the future, maybe allow the user to choose from several layouts
+    // todo extend in the future, maybe allow the user to choose from several layouts
+    private static final int SHOWN_ACCOUNTS_LIMIT = 3;
 
     private final MessageSource messageSource;
     private final AccountService accountService;
     private final UserController userController;
+    private final UserService userService;
 
     private List<Account> accounts;
+    private Map<Long, Boolean> accountsChecked;
+
     private AccountType accountType;
+    private String name;
     private String institute;
     private String owner;
     private String iban;
+    private String creditCardNumber;
     private Date expirationDate; // todo Java 8 LocalDate
     private BigDecimal balance;
-    private Map<Long, Boolean> accountsChecked;
+    private Boolean linkedToAnotherAccount;
+    private Account linkedAccount;
 
     @Autowired
-    public AccountController(MessageSource messageSource, AccountService accountService, UserController userController) {
+    public AccountController(MessageSource messageSource,
+                             AccountService accountService,
+                             UserController userController,
+                             UserService userService) {
         this.messageSource = messageSource;
         this.accountService = accountService;
         this.userController = userController;
+        this.userService = userService;
         accounts = new ArrayList<>();
         accountsChecked = new HashMap<>();
     }
 
+    public List<AccountType> getAllAccountTypes() {
+        return accountService.getAllAccountTypes();
+    }
+
+    public String getAccountTypeName(AccountType accountType) {
+        // todo locale
+        return messageSource.getMessage(accountType.getKey(), null, new Locale("de"));
+    }
+
+    public boolean isBankAccountOrNull() {
+        return accountType == null || accountType == AccountType.GIRO || accountType == AccountType.SAVINGS;
+    }
+
+    public boolean isCreditCard() {
+        return accountType == AccountType.CREDIT;
+    }
+
+    public boolean isCash() {
+        return accountType == AccountType.CASH;
+    }
+
+    public boolean isCustom() {
+        return accountType == AccountType.CUSTOM;
+    }
+
+    public List<User> suggestOwner(String query) {
+        // todo limit by something (own user and "friends")
+        return userService.getAllUsers();
+    }
+
+    public List<Account> getLinkableAccounts() {
+        return accountService.getLinkableAccounts();
+    }
+
     public void addAccount() {
         User currentUser = userController.getCurrentUser();
-        Account account = new Account(accountType, institute, owner, iban, expirationDate, balance, currentUser);
+        Account account = new Account(accountType, name, institute, owner, iban, expirationDate, balance, currentUser);
         accountService.addAccount(account);
         accountsChecked.put(account.getId(), !isLimitReached());
         accounts.add(account);
+        resetFields();
     }
 
-    public boolean isCheckboxDisabled(Long id) {
-        return !accountsChecked.get(id) && isLimitReached();
+    private void resetFields() {
+        name = null;
+        institute = null;
+        owner = null;
+        iban = null;
+        creditCardNumber = null;
+        expirationDate = null;
+        balance = null;
     }
 
     private Boolean isLimitReached() {
@@ -58,22 +111,14 @@ public class AccountController {
                 .count() == SHOWN_ACCOUNTS_LIMIT;
     }
 
+    public boolean isCheckboxDisabled(Long id) {
+        return !accountsChecked.get(id) && isLimitReached();
+    }
+
     public List<Account> getShownAccounts() {
         return accounts.stream()
                 .filter(account -> accountsChecked.get(account.getId()))
                 .collect(Collectors.toList());
-    }
-
-    public String getAccountTypeName(AccountType accountType) {
-        return messageSource.getMessage(accountType.getKey(), null, new Locale("de"));
-    }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public List<AccountType> getAccountTypes() {
-        return accountService.getAccountTypes();
     }
 
     public AccountType getAccountType() {
@@ -82,6 +127,14 @@ public class AccountController {
 
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getInstitute() {
@@ -108,6 +161,14 @@ public class AccountController {
         this.iban = iban;
     }
 
+    public String getCreditCardNumber() {
+        return creditCardNumber;
+    }
+
+    public void setCreditCardNumber(String creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
+    }
+
     public Date getExpirationDate() {
         return expirationDate;
     }
@@ -122,6 +183,26 @@ public class AccountController {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public Boolean getLinkedToAnotherAccount() {
+        return linkedToAnotherAccount;
+    }
+
+    public void setLinkedToAnotherAccount(Boolean linkedToAnotherAccount) {
+        this.linkedToAnotherAccount = linkedToAnotherAccount;
+    }
+
+    public Account getLinkedAccount() {
+        return linkedAccount;
+    }
+
+    public void setLinkedAccount(Account linkedAccount) {
+        this.linkedAccount = linkedAccount;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
     public Map<Long, Boolean> getAccountsChecked() {

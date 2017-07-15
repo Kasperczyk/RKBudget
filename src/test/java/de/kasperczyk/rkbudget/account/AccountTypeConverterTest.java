@@ -32,13 +32,13 @@ public class AccountTypeConverterTest {
 
     @Test
     public void getAsStringShouldReturnTheAccountTypesName() {
-        String result = accountTypeConverter.getAsString(null, null, AccountType.GIRO_ACCOUNT);
-        assertThat(result, is(AccountType.GIRO_ACCOUNT.name()));
+        String result = accountTypeConverter.getAsString(null, null, AccountType.GIRO);
+        assertThat(result, is(AccountType.GIRO.name()));
     }
 
     @Test
     public void getAsObjectShouldCallGetAccountTypeByNameWithTheCorrectArgument() {
-        String name = AccountType.GIRO_ACCOUNT.name();
+        String name = AccountType.GIRO.name();
         accountTypeConverter.getAsObject(null, null, name);
         verify(accountServiceMock).getAccountTypeByName(name);
     }

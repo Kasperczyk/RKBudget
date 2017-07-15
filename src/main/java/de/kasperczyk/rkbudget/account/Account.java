@@ -10,12 +10,24 @@ import java.util.Date;
 public class Account {
 
     @Id
+//    @GenericGenerator(
+//            name = "accountSequenceGenerator",
+//            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+//            parameters = {
+//                    @Parameter(name = "sequence_name", value = "ACCOUNT_SEQUENCE"),
+//                    @Parameter(name = "initial_value", value = "1"),
+//                    @Parameter(name = "increment_size", value = "1")
+//            }
+//    )
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
     private Long id;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private AccountType accountType;
+
+    @Column
+    private String name;
 
     @Column
     private String institute;
@@ -35,14 +47,20 @@ public class Account {
     @ManyToOne
     private User user;
 
-    public Account(AccountType accountType,
-                   String institute,
-                   String owner,
-                   String iban,
-                   Date expirationDate,
-                   BigDecimal balance,
-                   User user) {
+    public Account() {
+        // for Hibernate
+    }
+
+    Account(AccountType accountType,
+            String name,
+            String institute,
+            String owner,
+            String iban,
+            Date expirationDate,
+            BigDecimal balance,
+            User user) {
         this.accountType = accountType;
+        this.name = name;
         this.institute = institute;
         this.owner = owner;
         this.iban = iban;
@@ -65,6 +83,14 @@ public class Account {
 
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getInstitute() {
@@ -122,22 +148,28 @@ public class Account {
 
         Account account = (Account) o;
 
+        if (getId() != null ? !getId().equals(account.getId()) : account.getId() != null) return false;
         if (getAccountType() != account.getAccountType()) return false;
+        if (!getName().equals(account.getName())) return false;
         if (!getInstitute().equals(account.getInstitute())) return false;
-        if (!getOwner().equals(account.getOwner())) return false;
+        if (getOwner() != null ? !getOwner().equals(account.getOwner()) : account.getOwner() != null) return false;
         if (!getIban().equals(account.getIban())) return false;
         if (!getExpirationDate().equals(account.getExpirationDate())) return false;
-        return getBalance().equals(account.getBalance());
+        if (!getBalance().equals(account.getBalance())) return false;
+        return getUser() != null ? getUser().equals(account.getUser()) : account.getUser() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getAccountType().hashCode();
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getAccountType() != null ? getAccountType().hashCode() : 0);
+        result = 31 * result + getName().hashCode();
         result = 31 * result + getInstitute().hashCode();
-        result = 31 * result + getOwner().hashCode();
+        result = 31 * result + (getOwner() != null ? getOwner().hashCode() : 0);
         result = 31 * result + getIban().hashCode();
         result = 31 * result + getExpirationDate().hashCode();
         result = 31 * result + getBalance().hashCode();
+        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
         return result;
     }
 }

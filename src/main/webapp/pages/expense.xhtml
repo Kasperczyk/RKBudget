@@ -6,10 +6,12 @@
       xmlns:p="http://primefaces.org/ui">
 <h:body>
     <ui:composition template="template/template.xhtml">
+        <ui:define name="title">RKBudget - #{msg.title_expenses}</ui:define>
         <ui:define name="content">
             <h:form id="expenseForm">
                 <p:panel header="#{msg.expense_panel_header}"
                          styleClass="full-width">
+                    <!-- todo -->
                     BALANCE!
                 </p:panel>
             </h:form>

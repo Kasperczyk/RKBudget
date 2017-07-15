@@ -2,6 +2,7 @@ package de.kasperczyk.rkbudget.account;
 
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
+import de.kasperczyk.rkbudget.user.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,9 +36,12 @@ public class AccountControllerTest {
     @Mock
     private UserController userControllerMock;
 
+    @Mock
+    private UserService userServiceMock;
+
     @Before
     public void setup() {
-        accountController = new AccountController(messageSourceMock, accountServiceMock, userControllerMock);
+        accountController = new AccountController(messageSourceMock, accountServiceMock, userControllerMock, userServiceMock);
     }
 
     @Test
@@ -80,7 +84,7 @@ public class AccountControllerTest {
     @Test
     public void addAccountShouldCallAddAccountWithTheCorrectArgument() {
         Date expirationDate = new Date();
-        Account account = new Account(AccountType.GIRO_ACCOUNT, "Institute",
+        Account account = new Account(AccountType.GIRO, "Name", "Institute",
                 "Owner", "IBAN", expirationDate, BigDecimal.ONE, new User());
         accountController.setAccountType(account.getAccountType());
         accountController.setInstitute(account.getInstitute());
@@ -96,15 +100,15 @@ public class AccountControllerTest {
 
     @Test
     public void getAccountTypeNameShouldCallGetMessageWithTheKeyAsAnArgument() {
-        AccountType accountType = AccountType.GIRO_ACCOUNT;
+        AccountType accountType = AccountType.GIRO;
         accountController.getAccountTypeName(accountType);
         verify(messageSourceMock).getMessage(accountType.getKey(), null, new Locale("de"));
     }
 
     @Test
     public void getAccountTypesShouldCallGetAccountTypes() {
-        accountController.getAccountTypes();
-        verify(accountServiceMock).getAccountTypes();
+        accountController.getAllAccountTypes();
+        verify(accountServiceMock).getAllAccountTypes();
     }
 
     @Test

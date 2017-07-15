@@ -6,10 +6,12 @@
       xmlns:p="http://primefaces.org/ui">
 <h:body>
     <ui:composition template="template/template.xhtml">
+        <ui:define name="title">RKBudget - #{msg.title_sharedCosts}</ui:define>
         <ui:define name="content">
             <h:form id="sharedCostForm">
                 <p:panel header="#{msg.sharedCost_panel_header}"
                          styleClass="full-width">
+                    <!-- todo -->
                     SHARED COSTS!
                 </p:panel>
             </h:form>

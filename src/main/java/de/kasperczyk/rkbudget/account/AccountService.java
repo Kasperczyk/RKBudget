@@ -16,7 +16,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    List<AccountType> getAccountTypes() {
+    List<AccountType> getAllAccountTypes() {
         return Arrays.asList(AccountType.values());
     }
 
@@ -26,5 +26,13 @@ public class AccountService {
 
     void addAccount(Account account) {
         accountRepository.save(account);
+    }
+
+    List<Account> getLinkableAccounts() {
+        return accountRepository.findAllByAccountType(AccountType.GIRO);
+    }
+
+    Account getAccountByIban(String iban) {
+        return accountRepository.findByIban(iban);
     }
 }

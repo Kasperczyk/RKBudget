@@ -6,10 +6,12 @@
       xmlns:p="http://primefaces.org/ui">
 <h:body>
     <ui:composition template="template/template.xhtml">
+        <ui:define name="title">RKBudget - #{msg.title_categories}</ui:define>
         <ui:define name="content">
             <h:form id="categoryForm">
                 <p:panel header="#{msg.category_panel_header}"
                          styleClass="full-width">
+                    <!-- todo -->
                     CATEGORY!
                 </p:panel>
             </h:form>

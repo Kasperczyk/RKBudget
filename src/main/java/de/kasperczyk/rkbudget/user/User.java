@@ -1,6 +1,7 @@
 package de.kasperczyk.rkbudget.user;
 
 import javax.persistence.*;
+import java.util.Locale;
 
 @Entity
 @Table(name = "PERSON")
@@ -33,6 +34,9 @@ public class User {
 
     @Column
     private String password;
+
+    @Column
+    private Locale locale;
 
     public Long getId() {
         return id;
@@ -80,6 +84,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
     }
 
     @Override

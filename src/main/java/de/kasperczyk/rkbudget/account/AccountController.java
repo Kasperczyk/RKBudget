@@ -58,8 +58,7 @@ public class AccountController {
     }
 
     public String getAccountTypeName(AccountType accountType) {
-        // todo locale
-        return messageSource.getMessage(accountType.getKey(), null, new Locale("de"));
+        return messageSource.getMessage(accountType.getKey(), null, userController.getLocale());
     }
 
     public boolean isBankAccountOrNull() {
@@ -95,8 +94,7 @@ public class AccountController {
             accountsChecked.put(account.getId(), !isLimitReached());
             accounts.add(account);
         } else {
-            // todo locale
-            String message = messageSource.getMessage("account_error_accountAlreadyAdded", null, new Locale("de"));
+            String message = messageSource.getMessage("account_error_accountAlreadyAdded", null, userController.getLocale());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
         }
         resetFields();

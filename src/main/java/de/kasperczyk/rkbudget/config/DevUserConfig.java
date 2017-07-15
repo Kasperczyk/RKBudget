@@ -5,6 +5,8 @@ import de.kasperczyk.rkbudget.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
+
 @Component
 public class DevUserConfig {
 
@@ -22,6 +24,7 @@ public class DevUserConfig {
         devUser.setUserName("Rene Kasperczyk");
         devUser.setEmail("kasperczyk.rene@gmail.com");
         devUser.setPassword("geheim");
+        devUser.setLocale(new Locale("de"));
         userRepository.save(devUser);
     }
 }

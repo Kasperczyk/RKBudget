@@ -7,7 +7,7 @@
     <h:form>
         <p:panel styleClass="full-width">
             <p:outputLabel for="currentUser"
-                           value="#{msg.person_label_currentPerson}"/>
+                           value="#{msg.user_label_currentPerson}"/>
             <br/>
             <h:outputText id="currentUser"
                           value="#{userController.currentUser.userName}"
@@ -22,22 +22,22 @@
                         action="balance"/>
             <p:menuitem value="#{msg.title_expenses}"
                         icon="fa fa-shopping-cart"
-                        action="expense"/>
+                        action="expenses"/>
             <p:menuitem value="#{msg.title_income}"
                         icon="fa fa-money"
                         action="income"/>
             <p:menuitem value="#{msg.title_accounts}"
                         icon="fa fa-newspaper-o"
-                        action="account"/>
+                        action="accounts"/>
             <p:menuitem value="#{msg.title_categories}"
                         icon="fa fa-list-alt"
-                        action="category"/>
-            <p:menuitem value="#{msg.title_sharedCosts}"
+                        action="categories"/>
+            <p:menuitem value="#{msg.title_sharedExpenses}"
                         icon="fa fa-slideshare"
-                        action="shared-cost"/>
+                        action="shared-expenses"/>
             <p:menuitem value="#{msg.title_calculators}"
                         icon="fa fa-building"
-                        action="calculator"/>
+                        action="calculators"/>
             <p:menuitem value="#{msg.title_inbox}"
                         icon="fa fa-envelope"
                         action="inbox"/>

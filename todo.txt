@@ -7,3 +7,6 @@ Accounts:
     - fullscreen / scrolling when too many accounts
 - account-details
     - later
+
+Profile:
+- change locale

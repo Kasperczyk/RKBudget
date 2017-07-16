@@ -8,5 +8,12 @@ Accounts:
 - account-details
     - later
 
-Profile:
-- change locale
+Categories:
+- implement categories
+    - create and edit
+    - similar to accounts (but smaller in scope)
+
+Income and Expenses after that
+Then back to Accounts
+
+Dashboard, Balance, Shared Expenses, Calculators and Inbox when the core functionalities are implemented

@@ -79,7 +79,10 @@ public class AccountController {
 
     public List<User> suggestOwner(String query) {
         // todo limit by something (own user and "friends")
-        return userService.getAllUsers();
+        List<User> allUsers = userService.getAllUsers();
+        return allUsers.stream()
+                .filter(user -> user.getFullName().toLowerCase().startsWith(query.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     public List<Account> getLinkableAccounts() {

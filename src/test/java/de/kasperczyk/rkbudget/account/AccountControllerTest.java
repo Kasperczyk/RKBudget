@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -73,11 +74,11 @@ public class AccountControllerTest {
         assertThat(accountController.getAccountsChecked().size(), is(0));
         addAccountAndFillId(LIMIT + 2);
         for (long i = 0; i < accountController.getAccountsChecked().size(); i++) {
-           if (i < 3) {
-               assertThat(accountController.getAccountsChecked().get(i), is(true));
-           } else {
-               assertThat(accountController.getAccountsChecked().get(i), is(false));
-           }
+            if (i < 3) {
+                assertThat(accountController.getAccountsChecked().get(i), is(true));
+            } else {
+                assertThat(accountController.getAccountsChecked().get(i), is(false));
+            }
         }
     }
 
@@ -134,6 +135,28 @@ public class AccountControllerTest {
     public void suggestOwnerShouldCallGetAllUsers() {
         accountController.suggestOwner("query");
         verify(userServiceMock).getAllUsers();
+    }
+
+    @Test
+    public void suggestOwnerShouldFilterByThePassedQuery() {
+        setupSuggestionUserList();
+        assertThat(accountController.suggestOwner("Abc").size(), is(0));
+        assertThat(accountController.suggestOwner("Re").size(), is(1));
+    }
+
+    @Test
+    public void suggestOwnerShouldIgnoreLowerAndUpperCase() {
+        setupSuggestionUserList();
+        assertThat(accountController.suggestOwner("rEnE kAs").size(), is(1));
+    }
+
+    private void setupSuggestionUserList() {
+        List<User> users = new ArrayList<>();
+        users.add(new User() {{
+            setFirstName("Rene");
+            setLastName("Kasperczyk");
+        }});
+        when(userServiceMock.getAllUsers()).thenReturn(users);
     }
 
     private void addAccountAndFillId(int times) {

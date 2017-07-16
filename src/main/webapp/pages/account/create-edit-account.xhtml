@@ -31,7 +31,9 @@
     <p:inputText id="name"
                  value="#{accountController.name}"
                  required="#{accountController.custom}"
-                 rendered="#{not accountController.cash}"/>
+                 rendered="#{not accountController.cash}">
+        <f:validateLength maximum="30"/>
+    </p:inputText>
 
     <p:outputLabel for="institute"
                    value="#{msg.account_label_institute}"
@@ -39,14 +41,20 @@
     <p:inputText id="institute"
                  value="#{accountController.institute}"
                  required="true"
-                 rendered="#{accountController.bankAccountOrNull or accountController.creditCard}"/>
+                 rendered="#{accountController.bankAccountOrNull or accountController.creditCard}">
+        <f:validateLength maximum="30"/>
+        <f:validateRegex pattern="^[a-zA-Z ]*$"/>
+    </p:inputText>
 
     <p:outputLabel for="owner"
                    value="#{msg.account_label_owner}"/>
     <p:autoComplete id="owner"
                     value="#{accountController.owner}"
                     completeMethod="#{accountController.suggestOwner}"
-                    required="true"/>
+                    required="true">
+        <f:validateLength maximum="30"/>
+        <f:validateRegex pattern="^[a-zA-Z ]*$"/>
+    </p:autoComplete>
 
     <p:outputLabel for="iban"
                    value="#{msg.account_label_iban}"
@@ -54,7 +62,9 @@
     <p:inputText id="iban"
                  value="#{accountController.iban}"
                  required="true"
-                 rendered="#{accountController.bankAccountOrNull}"/>
+                 rendered="#{accountController.bankAccountOrNull}">
+        <f:validator binding="#{ibanValidator}"/>
+    </p:inputText>
 
     <p:outputLabel for="creditCardNumber"
                    value="#{msg.account_label_creditCardNumber}"
@@ -62,7 +72,9 @@
     <p:inputText id="creditCardNumber"
                  value="#{accountController.creditCardNumber}"
                  required="true"
-                 rendered="#{accountController.creditCard}"/>
+                 rendered="#{accountController.creditCard}">
+        <f:validator binding="#{creditCardNumberValidator}"/>
+    </p:inputText>
 
     <p:outputLabel for="expirationDate"
                    value="#{msg.account_label_expirationDate}"
@@ -85,7 +97,7 @@
                    rendered="#{accountController.creditCard}"/>
     <p:panelGrid columns="2"
                  layout="grid"
-                 columnClasses="ui-grid-col-2, ui-grid-col-10"
+                 columnClasses="ui-grid-col-2 no-padding, ui-grid-col-10 no-padding"
                  styleClass="ui-panelgrid-blank"
                  rendered="#{accountController.creditCard}">
         <p:selectBooleanCheckbox id="linkToAnotherAccount"

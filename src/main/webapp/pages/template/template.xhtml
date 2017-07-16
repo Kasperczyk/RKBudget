@@ -12,15 +12,17 @@
 <h:body>
     <!-- todo locale -->
     <f:view locale="#{userController.locale}">
-        <div class="ui-g">
-            <div class="ui-g-1">
-                <ui:include src="sidemenu.xhtml"/>
+        <div class="ui-fluid">
+            <div class="ui-g">
+                <div class="ui-g-1">
+                    <ui:include src="sidemenu.xhtml"/>
+                </div>
+                <div class="ui-g-11">
+                    <ui:insert name="content"/>
+                </div>
             </div>
-            <div class="ui-g-11">
-                <ui:insert name="content"/>
-            </div>
+            <!-- todo footer -->
         </div>
-        <!-- todo footer -->
     </f:view>
     <h:outputStylesheet name="css/style.css"/>
 </h:body>

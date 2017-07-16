@@ -14,33 +14,31 @@
                          styleClass="full-width">
                     <div class="ui-g">
                         <div class="ui-g-2">
-                            <div class="ui-fluid">
-                                <p:panelGrid columns="2"
-                                             layout="grid"
-                                             columnClasses="ui-grid-col-4, ui-grid-col-8"
-                                             styleClass="ui-panelgrid-blank">
+                            <p:panelGrid columns="2"
+                                         layout="grid"
+                                         columnClasses="ui-grid-col-4, ui-grid-col-8"
+                                         styleClass="ui-panelgrid-blank">
 
-                                    <p:outputLabel for="language"
-                                                   value="#{msg.user_label_language}"/>
-                                    <p:selectOneMenu id="language"
-                                                     value="#{userController.language}"
-                                                     converter="#{languageConverter}">
-                                        <f:selectItem itemLabel="#{msg.user_selectItem_defaultLanguage}"
-                                                      noSelectionOption="true"
-                                                      itemDisabled="true"/>
-                                        <f:selectItems value="#{userController.allSupportedLanguages}"
-                                                       var="language"
-                                                       itemValue="#{language}"
-                                                       itemLabel="#{userController.getLanguageName(language)}"/>
-                                        <p:ajax update="@form"/>
-                                    </p:selectOneMenu>
+                                <p:outputLabel for="language"
+                                               value="#{msg.user_label_language}"/>
+                                <p:selectOneMenu id="language"
+                                                 value="#{userController.language}"
+                                                 converter="#{languageConverter}">
+                                    <f:selectItem itemLabel="#{msg.user_selectItem_defaultLanguage}"
+                                                  noSelectionOption="true"
+                                                  itemDisabled="true"/>
+                                    <f:selectItems value="#{userController.allSupportedLanguages}"
+                                                   var="language"
+                                                   itemValue="#{language}"
+                                                   itemLabel="#{userController.getLanguageName(language)}"/>
+                                    <p:ajax update="@form"/>
+                                </p:selectOneMenu>
 
-                                    <h:panelGrid/>
-                                    <p:commandButton value="#{msg.user_button_save}"
-                                                     actionListener="#{userController.save}"
-                                                     update="@all"/>
-                                </p:panelGrid>
-                            </div>
+                                <h:panelGrid/>
+                                <p:commandButton value="#{msg.user_button_save}"
+                                                 actionListener="#{userController.save}"
+                                                 update="@all"/>
+                            </p:panelGrid>
                         </div>
                     </div>
                 </p:panel>

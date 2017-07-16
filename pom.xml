@@ -17,6 +17,8 @@
         <primefaces.themes.version>1.0.10</primefaces.themes.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
         <h2.version>1.4.196</h2.version>
+        <apache.commons.version>3.6</apache.commons.version>
+        <commons.validator.version>1.4.0</commons.validator.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.9.5</mockito.version>
     </properties>
@@ -75,6 +77,16 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${commons.validator.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

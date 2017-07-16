@@ -95,14 +95,15 @@
     <p:outputLabel for="linkToAnotherAccount"
                    value="#{msg.account_label_linkedToAnotherAccount}"
                    rendered="#{accountController.creditCard}"/>
-    <p:panelGrid columns="2"
+    <p:panelGrid id="linkedAccountPanel"
+                 columns="2"
                  layout="grid"
                  columnClasses="ui-grid-col-2 no-padding, ui-grid-col-10 no-padding"
                  styleClass="ui-panelgrid-blank"
                  rendered="#{accountController.creditCard}">
         <p:selectBooleanCheckbox id="linkToAnotherAccount"
                                  value="#{accountController.linkedToAnotherAccount}">
-            <p:ajax update="@form"/>
+            <p:ajax update="linkedAccountPanel"/>
         </p:selectBooleanCheckbox>
         <p:selectOneMenu id="linkedAccount"
                          value="#{accountController.linkedAccount}"
@@ -115,7 +116,7 @@
             <f:selectItems value="#{accountController.linkableAccounts}"
                            var="linkedAccount"
                            itemValue="#{linkedAccount}"
-                           itemLabel="#{linkedAccount.iban}"/>
+                           itemLabel="#{not empty linkedAccount.name ? linkedAccount.name : linkedAccount.iban}"/>
         </p:selectOneMenu>
     </p:panelGrid>
 

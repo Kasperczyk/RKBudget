@@ -3,6 +3,7 @@ package de.kasperczyk.rkbudget.account;
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
 import de.kasperczyk.rkbudget.user.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -91,7 +92,8 @@ public class AccountController {
 
     public void addAccount() {
         User currentUser = userController.getCurrentUser();
-        Account account = new Account(accountType, name, institute, owner, iban, expirationDate, balance, currentUser);
+        Account account = new Account(accountType, name, institute, owner,
+                iban, creditCardNumber, linkedAccount, expirationDate, balance, currentUser);
         if (!accountService.accountExists(account)) {
             accountService.addAccount(account);
             accountsChecked.put(account.getId(), !isLimitReached());
@@ -128,6 +130,31 @@ public class AccountController {
         return accounts.stream()
                 .filter(account -> accountsChecked.get(account.getId()))
                 .collect(Collectors.toList());
+    }
+
+    public String getAccountTitle(Account account) {
+        Locale locale = userController.getLocale();
+        String bankAccountType = "";
+        switch (account.getAccountType()) {
+            case CASH:
+                return messageSource.getMessage("account_accountType_cash", null, locale);
+            case GIRO:
+                bankAccountType = "giro";
+            case SAVINGS:
+                if (bankAccountType.equals("")) {
+                    bankAccountType = "savings";
+                }
+                return StringUtils.isEmpty(account.getName()) ?
+                        messageSource.getMessage("account_accountType_" + bankAccountType, null, locale)
+                                + ": " + account.getIban() : account.getName();
+            case CREDIT:
+                return StringUtils.isEmpty(account.getName()) ?
+                        messageSource.getMessage("account_accountType_credit", null, locale)
+                                + ": " + account.getCreditCardNumber() : account.getName();
+            default:
+                return StringUtils.isEmpty(account.getName()) ?
+                        "" : account.getName();
+        }
     }
 
     public AccountType getAccountType() {
@@ -167,7 +194,7 @@ public class AccountController {
     }
 
     public void setIban(String iban) {
-        this.iban = iban;
+        this.iban = StringUtils.deleteWhitespace(iban);
     }
 
     public String getCreditCardNumber() {
@@ -175,7 +202,7 @@ public class AccountController {
     }
 
     public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
+        this.creditCardNumber = StringUtils.deleteWhitespace(creditCardNumber);
     }
 
     public Date getExpirationDate() {

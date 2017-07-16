@@ -2,6 +2,7 @@ Accounts:
 - create-edit-account:
     - improve example in accountService.accountExists
     - improve error messages (validation ...)
+    - credit card +balance if not linked to giro (hard...)
 - account-list:
     - improve design
     - implement edit and delete buttons

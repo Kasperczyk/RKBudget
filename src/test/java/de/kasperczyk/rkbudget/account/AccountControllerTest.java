@@ -86,8 +86,8 @@ public class AccountControllerTest {
     public void addAccountShouldCallAddAccountWithTheCorrectArgument() {
         Date expirationDate = new Date();
         User user = new User();
-        Account account = new Account(AccountType.GIRO, "Name", "Institute",
-                "Owner", "IBAN", expirationDate, BigDecimal.ONE, user);
+        Account account = new Account(AccountType.GIRO, "Name", "Institute", "Owner", "IBAN",
+                "CCN", null, expirationDate, BigDecimal.ONE, user);
         accountController.setAccountType(account.getAccountType());
         accountController.setName(account.getName());
         accountController.setInstitute(account.getInstitute());

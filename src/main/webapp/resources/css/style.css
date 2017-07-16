@@ -27,6 +27,25 @@
     font-weight: bold;
 }
 
+.no-padding {
+    padding: 0 !important;
+}
+
+.ui-accordion .ui-accordion-content{
+    border-top: 0 none;
+    margin-bottom: 2px;
+    margin-top: -2px;
+    overflow: auto;
+    padding: 0;
+    position: relative;
+    top: 1px;
+}
+
+.tab-title {
+    background-color: aliceblue !important;
+    border-bottom: solid lightgray !important;
+}
+
 /** {*/
     /*border: solid red thin;*/
 /*}*/

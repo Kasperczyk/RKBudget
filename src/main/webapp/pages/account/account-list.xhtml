@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 <p:dataList value="#{accountController.accounts}"
             var="account"
@@ -11,28 +10,71 @@
     <f:facet name="header">
         #{msg.account_dataList_header}
     </f:facet>
-    <p:fieldset legend="#{accountController.getAccountTypeName(account.accountType)}">
-        <h:outputText value="#{account.institute}"/>
-        <br/>
-        <h:outputText value="#{account.owner}"/>
-        <br/>
-        <h:outputText value="#{account.iban}"/>
-        <br/>
-        <h:outputText value="#{account.expirationDate}"/>
-        <br/>
-        <h:outputText value="#{account.balance}"/>
-        <br/>
-        <p:commandButton value="#{msg.account_button_editAccount}"
-                         icon="fa fa-fw fa-edit"/>
-        <p:commandButton value="#{msg.account_button_deleteAccount}"
-                         icon="fa fa-fw fa-remove"/>
-        <p:outputLabel for="showDetails"
-                       value="#{msg.account_label_showAccount}"/>
-        <p:selectBooleanCheckbox id="showDetails"
-                                 value="#{accountController.accountsChecked[account.id]}"
-                                 disabled="#{accountController.isCheckboxDisabled(account.id)}">
-            <p:ajax update="@form"/>
-        </p:selectBooleanCheckbox>
-    </p:fieldset>
+    <p:accordionPanel>
+        <p:tab title="#{accountController.getAccountTitle(account)}"
+               titleStyleClass="tab-title">
+            <p:panelGrid columns="2"
+                         layout="grid"
+                         columnClasses="ui-grid-col-4, ui-grid-col-8"
+                         styleClass="ui-panelgrid-blank">
+                <p:outputLabel value="#{msg.account_label_institute}"
+                               rendered="#{account.accountType != 'CASH' and account.accountType != 'CUSTOM'}"/>
+                <p:outputLabel value="#{account.institute}"
+                               rendered="#{account.accountType != 'CASH' and account.accountType != 'CUSTOM'}"
+                               styleClass="bold"/>
+
+                <p:outputLabel value="#{msg.account_label_owner}"/>
+                <p:outputLabel value="#{account.owner}"
+                               styleClass="bold"/>
+
+                <p:outputLabel value="#{msg.account_label_iban}"
+                               rendered="#{account.accountType == 'GIRO' or account.accountType == 'SAVINGS'}"/>
+                <p:outputLabel value="#{account.iban}"
+                               rendered="#{account.accountType == 'GIRO' or account.accountType == 'SAVINGS'}"
+                               styleClass="bold"/>
+
+                <p:outputLabel value="#{msg.account_label_creditCardNumber}"
+                               rendered="#{account.accountType == 'CREDIT'}"/>
+                <p:outputLabel value="#{account.creditCardNumber}"
+                               rendered="#{account.accountType == 'CREDIT'}"
+                               styleClass="bold"/>
+
+                <p:outputLabel value="#{msg.account_label_linkedAccount}"
+                               rendered="#{account.accountType == 'CREDIT' and not empty account.linkedAccount}"/>
+                <p:outputLabel value="#{not empty account.linkedAccount.name ?
+                                            account.linkedAccount.name : account.linkedAccount.iban}"
+                               rendered="#{account.accountType == 'CREDIT' and not empty account.linkedAccount}"
+                               styleClass="bold"/>
+
+                <p:outputLabel value="#{msg.account_label_expirationDate}"
+                               rendered="#{account.accountType != 'CASH' and account.accountType != 'CUSTOM'}"/>
+                <p:outputLabel value="#{account.expirationDate}"
+                               rendered="#{account.accountType != 'CASH' and account.accountType != 'CUSTOM'}"
+                               styleClass="bold"/>
+
+                <p:outputLabel value="#{msg.account_label_balance}"
+                               rendered="#{account.accountType != 'CREDIT' and empty account.linkedAccount}"/>
+                <p:outputLabel value="#{account.balance}"
+                               rendered="#{account.accountType != 'CREDIT' and empty account.linkedAccount}"
+                               styleClass="bold"/>
+            </p:panelGrid>
+            <p:panelGrid columns="4"
+                         layout="grid"
+                         columnClasses="ui-grid-col-4, ui-grid-col-4, ui-grid-col-4"
+                         styleClass="ui-panelgrid-blank">
+                <p:commandButton value="#{msg.account_button_editAccount}"
+                                 icon="fa fa-fw fa-edit"/>
+                <p:commandButton value="#{msg.account_button_deleteAccount}"
+                                 icon="fa fa-fw fa-remove"/>
+                <p:outputLabel for="showDetails"
+                               value="#{msg.account_label_showAccount}"/>
+                <p:selectBooleanCheckbox id="showDetails"
+                                         value="#{accountController.accountsChecked[account.id]}"
+                                         disabled="#{accountController.isCheckboxDisabled(account.id)}">
+                    <p:ajax update="@form"/>
+                </p:selectBooleanCheckbox>
+            </p:panelGrid>
+        </p:tab>
+    </p:accordionPanel>
 </p:dataList>
 </html>

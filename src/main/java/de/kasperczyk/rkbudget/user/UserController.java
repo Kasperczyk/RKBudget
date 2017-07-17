@@ -1,5 +1,6 @@
 package de.kasperczyk.rkbudget.user;
 
+import de.kasperczyk.rkbudget.common.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -21,6 +22,7 @@ public class UserController {
 
     private User currentUser;
     private Language language;
+    private Currency currency;
 
     @Autowired
     public UserController(Environment environment, MessageSource messageSource, UserService userService) {
@@ -28,10 +30,13 @@ public class UserController {
         this.environment = environment;
         this.userService = userService;
 
+        // dev config
         if (Arrays.stream(environment.getActiveProfiles())
                 .anyMatch(env -> env.equals("dev-h2") || env.equals("dev-postgres"))) {
             currentUser = userService.login("kasperczyk.rene@gmail.com", "geheim");
             FacesContext.getCurrentInstance().getViewRoot().setLocale(getLocale());
+            language = Language.valueOf("GERMAN");
+            currency = currentUser.getCurrency();
         }
     }
 
@@ -43,12 +48,21 @@ public class UserController {
         return userService.getAllSupportedLanguages();
     }
 
+    public List<Currency> getAllSupportedCurrencies() {
+        return userService.getAllSupportedCurrencies();
+    }
+
     public String getLanguageName(Language language) {
         return messageSource.getMessage(language.getKey(), null, getLocale());
     }
 
+    public String getCurrencyName(Currency currency) {
+        return messageSource.getMessage(currency.getKey(), null, getLocale());
+    }
+
     public void save() {
         currentUser.setLocale(new Locale(language.getCountryCode()));
+        currentUser.setCurrency(currency);
         userService.updateUser(currentUser);
     }
 
@@ -66,5 +80,13 @@ public class UserController {
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

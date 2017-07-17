@@ -56,7 +56,9 @@
                                rendered="#{account.accountType != 'CREDIT' and empty account.linkedAccount}"/>
                 <p:outputLabel value="#{account.balance}"
                                rendered="#{account.accountType != 'CREDIT' and empty account.linkedAccount}"
-                               styleClass="bold"/>
+                               styleClass="bold">
+                    <f:convertNumber pattern="###,##0.00 #{userController.currency.sign}"/>
+                </p:outputLabel>
             </p:panelGrid>
             <p:panelGrid columns="4"
                          layout="grid"

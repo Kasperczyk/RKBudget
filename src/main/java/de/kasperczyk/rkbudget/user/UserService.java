@@ -1,5 +1,6 @@
 package de.kasperczyk.rkbudget.user;
 
+import de.kasperczyk.rkbudget.common.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +34,16 @@ public class UserService {
         return Arrays.asList(Language.values());
     }
 
+    List<Currency> getAllSupportedCurrencies() {
+        return Arrays.asList(Currency.values());
+    }
+
     Language getLanguageByName(String name) {
         return Language.valueOf(name);
+    }
+
+    Currency getCurrencyByName(String name) {
+        return Currency.valueOf(name);
     }
 
     void updateUser(User user) {

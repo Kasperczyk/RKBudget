@@ -3,6 +3,7 @@ Accounts:
     - improve example in accountService.accountExists
     - improve error messages (validation ...)
     - credit card +balance if not linked to giro (hard?...)
+    - currency (hard?...)
 - account-list:
     - implement delete button
 - account-details
@@ -17,7 +18,3 @@ Income and Expenses after that
 Then back to Accounts
 
 Dashboard, Balance, Shared Expenses, Calculators and Inbox when the core functionalities are implemented
-
-
-stuff:
-settings +Currency

@@ -1,5 +1,6 @@
 package de.kasperczyk.rkbudget.user;
 
+import de.kasperczyk.rkbudget.common.Currency;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,9 +39,11 @@ public class UserControllerTest {
     @Test
     public void saveShouldSetTheLocaleCorrectlyAndCallUpdateUser() {
         userController.setLanguage(Language.GERMAN);
+        userController.setCurrency(Currency.EURO);
         userController.setCurrentUser(new User());
         userController.save();
         verify(userServiceMock).updateUser(userController.getCurrentUser());
         assertThat(userController.getCurrentUser().getLocale(), is(new Locale("de")));
+        assertThat(userController.getCurrentUser().getCurrency(), is(Currency.EURO));
     }
 }

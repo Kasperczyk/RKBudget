@@ -34,6 +34,21 @@
                                     <p:ajax update="@form"/>
                                 </p:selectOneMenu>
 
+                                <p:outputLabel for="currency"
+                                               value="#{msg.user_label_currency}"/>
+                                <p:selectOneMenu id="currency"
+                                                 value="#{userController.currency}"
+                                                 converter="#{currencyConverter}">
+                                    <f:selectItem itemLabel="#{msg.user_selectItem_defaultCurrency}"
+                                                  noSelectionOption="true"
+                                                  itemDisabled="true"/>
+                                    <f:selectItems value="#{userController.allSupportedCurrencies}"
+                                                   var="currency"
+                                                   itemValue="#{currency}"
+                                                   itemLabel="#{userController.getCurrencyName(currency)}"/>
+                                    <p:ajax update="@form"/>
+                                </p:selectOneMenu>
+
                                 <h:panelGrid/>
                                 <p:commandButton value="#{msg.user_button_save}"
                                                  actionListener="#{userController.save}"

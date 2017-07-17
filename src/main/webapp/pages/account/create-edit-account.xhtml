@@ -92,7 +92,9 @@
     <p:inputText id="balance"
                  value="#{accountController.balance}"
                  required="true"
-                 rendered="#{not accountController.creditCard}"/>
+                 rendered="#{not accountController.creditCard}">
+        <f:convertNumber pattern="###,##0.00"/>
+    </p:inputText>
 
     <p:outputLabel for="linkToAnotherAccount"
                    value="#{msg.account_label_linkedToAnotherAccount}"

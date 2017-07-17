@@ -1,5 +1,7 @@
 package de.kasperczyk.rkbudget.user;
 
+import de.kasperczyk.rkbudget.common.Currency;
+
 import javax.persistence.*;
 import java.util.Locale;
 
@@ -37,6 +39,10 @@ public class User {
 
     @Column
     private Locale locale;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     public Long getId() {
         return id;
@@ -92,6 +98,14 @@ public class User {
 
     public void setLocale(Locale locale) {
         this.locale = locale;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Override

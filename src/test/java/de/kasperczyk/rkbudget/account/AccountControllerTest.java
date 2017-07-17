@@ -3,13 +3,17 @@ package de.kasperczyk.rkbudget.account;
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
 import de.kasperczyk.rkbudget.user.UserService;
+import de.kasperczyk.rkbudget.util.FacesContextMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +22,7 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -93,6 +98,7 @@ public class AccountControllerTest {
         accountController.setInstitute(account.getInstitute());
         accountController.setOwner(account.getOwner());
         accountController.setIban(account.getIban());
+        accountController.setCreditCardNumber(account.getCreditCardNumber());
         accountController.setExpirationDate(expirationDate);
         accountController.setBalance(account.getBalance());
         when(userControllerMock.getCurrentUser()).thenReturn(user);
@@ -100,6 +106,14 @@ public class AccountControllerTest {
         addAccountAndFillId(1);
 
         verify(accountServiceMock).addAccount(account);
+    }
+
+    @Test
+    public void addAccountShouldNotAddAnAccountThatAlreadyExistsAndAddAnErrorMessage() {
+        when(accountServiceMock.accountExists(Matchers.any(Account.class))).thenReturn(true);
+        FacesContext facesContextMock = FacesContextMock.getMock();
+        accountController.addAccount();
+        verify(facesContextMock).addMessage(anyObject(), Matchers.any(FacesMessage.class));
     }
 
     @Test

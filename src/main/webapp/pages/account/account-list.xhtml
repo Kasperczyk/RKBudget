@@ -63,9 +63,13 @@
                          columnClasses="ui-grid-col-4, ui-grid-col-4, ui-grid-col-4"
                          styleClass="ui-panelgrid-blank">
                 <p:commandButton value="#{msg.account_button_editAccount}"
-                                 icon="fa fa-fw fa-edit"/>
+                                 icon="fa fa-fw fa-edit"
+                                 process="@this"
+                                 update="#{p:component('createEditPanel')}"
+                                 action="#{accountController.selectAccount(account)}"/>
                 <p:commandButton value="#{msg.account_button_deleteAccount}"
-                                 icon="fa fa-fw fa-remove"/>
+                                 icon="fa fa-fw fa-remove"
+                                 action="#{accountController.deleteAccount(account)}"/>
                 <p:outputLabel for="showDetails"
                                value="#{msg.account_label_showAccount}"/>
                 <p:selectBooleanCheckbox id="showDetails"

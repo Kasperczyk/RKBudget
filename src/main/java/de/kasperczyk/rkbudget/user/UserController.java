@@ -56,6 +56,10 @@ public class UserController {
         return currentUser;
     }
 
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Language getLanguage() {
         return language;
     }

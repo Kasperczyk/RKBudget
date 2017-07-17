@@ -105,7 +105,7 @@ public class AccountController {
         resetFields();
     }
 
-    private void resetFields() {
+    public void resetFields() {
         name = null;
         institute = null;
         owner = null;
@@ -155,6 +155,24 @@ public class AccountController {
                 return StringUtils.isEmpty(account.getName()) ?
                         "" : account.getName();
         }
+    }
+
+    public void selectAccount(Account account) {
+        accountType = account.getAccountType();
+        name = account.getName();
+        institute = account.getInstitute();
+        owner = account.getOwner();
+        iban = account.getIban();
+        creditCardNumber = account.getCreditCardNumber();
+        expirationDate = account.getExpirationDate();
+        balance = account.getBalance();
+        linkedToAnotherAccount = account.getLinkedAccount() != null;
+        linkedAccount = account.getLinkedAccount();
+    }
+
+    public void deleteAccount(Account account) {
+        System.out.println("TEST");
+        // todo
     }
 
     public AccountType getAccountType() {

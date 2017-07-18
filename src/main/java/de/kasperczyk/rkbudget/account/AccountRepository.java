@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Long> {
+interface AccountRepository extends JpaRepository<Account, Long> {
 
     List<Account> findAllByAccountType(AccountType accountType);
 

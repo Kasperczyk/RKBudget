@@ -2,7 +2,6 @@ package de.kasperczyk.rkbudget.account;
 
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
-import de.kasperczyk.rkbudget.user.UserService;
 import de.kasperczyk.rkbudget.util.FacesContextMock;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,12 +40,9 @@ public class AccountControllerTest {
     @Mock
     private UserController userControllerMock;
 
-    @Mock
-    private UserService userServiceMock;
-
     @Before
     public void setup() {
-        accountController = new AccountController(messageSourceMock, accountServiceMock, userControllerMock, userServiceMock);
+        accountController = new AccountController(messageSourceMock, accountServiceMock, userControllerMock);
     }
 
     @Test
@@ -147,7 +143,7 @@ public class AccountControllerTest {
     @Test
     public void suggestOwnerShouldCallGetAllUsers() {
         accountController.suggestOwner("query");
-        verify(userServiceMock).getAllUsers();
+        verify(accountServiceMock).getAllUsers();
     }
 
     @Test
@@ -169,7 +165,7 @@ public class AccountControllerTest {
             setFirstName("Rene");
             setLastName("Kasperczyk");
         }});
-        when(userServiceMock.getAllUsers()).thenReturn(users);
+        when(accountServiceMock.getAllUsers()).thenReturn(users);
     }
 
     @Test
@@ -344,7 +340,7 @@ public class AccountControllerTest {
     public void selectAccountShouldSetTheInputFieldsCorrectlyAndEditModeToTrue() {
         Account account = getDummyAccount();
         account.setId(1L);
-        accountController.selectAccount(account);
+        accountController.selectAccount(account, 0);
         assertThat(accountController.getId(), is(account.getId()));
         assertThat(accountController.getAccountType(), is(account.getAccountType()));
         assertThat(accountController.getName(), is(account.getName()));

@@ -58,6 +58,19 @@
     padding: 4px 0;
 }
 
+.edit {
+    border: solid medium green;
+    font-style: italic;
+}
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
 
 /* debugging */
 /** {*/

@@ -1,5 +1,7 @@
 package de.kasperczyk.rkbudget.account;
 
+import de.kasperczyk.rkbudget.user.User;
+import de.kasperczyk.rkbudget.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -8,13 +10,15 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class AccountService {
+class AccountService {
 
     private final AccountRepository accountRepository;
+    private final UserService userService;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
+    AccountService(AccountRepository accountRepository, UserService userService) {
         this.accountRepository = accountRepository;
+        this.userService = userService;
     }
 
     List<AccountType> getAllAccountTypes() {
@@ -58,5 +62,9 @@ public class AccountService {
     void deleteAccount(Long id) {
         Account account = accountRepository.findOne(id);
         accountRepository.delete(account);
+    }
+
+    List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 }

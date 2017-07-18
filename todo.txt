@@ -3,9 +3,8 @@ Accounts:
     - improve example in accountService.accountExists
     - improve error messages (validation ...)
     - currency (hard?...)
-
 - account-list:
-    - mark account that is being edited
+    - red green font for + - balance
 - account-details
     - later
 

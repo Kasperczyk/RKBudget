@@ -1,6 +1,7 @@
 package de.kasperczyk.rkbudget.account;
 
 import de.kasperczyk.rkbudget.user.User;
+import de.kasperczyk.rkbudget.user.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,9 +29,12 @@ public class AccountServiceTest {
     @Mock
     private AccountRepository accountRepositoryMock;
 
+    @Mock
+    private UserService userServiceMock;
+
     @Before
     public void setup() {
-        accountService = new AccountService(accountRepositoryMock);
+        accountService = new AccountService(accountRepositoryMock, userServiceMock);
     }
 
     @Test

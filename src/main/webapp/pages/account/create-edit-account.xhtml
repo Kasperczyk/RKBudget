@@ -105,7 +105,8 @@
                  styleClass="ui-panelgrid-blank panelgrid-no-pad"
                  rendered="#{accountController.creditCard}">
         <p:selectBooleanCheckbox id="linkToAnotherAccount"
-                                 value="#{accountController.linkedToAnotherAccount}">
+                                 value="#{accountController.linkedToAnotherAccount}"
+                                 valueChangeListener="#{accountController.removeBalance}">
             <p:ajax update="createEditPanel"/>
         </p:selectBooleanCheckbox>
         <p:selectOneMenu id="linkedAccount"

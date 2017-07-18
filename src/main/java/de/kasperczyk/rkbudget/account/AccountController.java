@@ -2,7 +2,6 @@ package de.kasperczyk.rkbudget.account;
 
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
-import de.kasperczyk.rkbudget.user.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -25,7 +24,6 @@ public class AccountController {
     private final MessageSource messageSource;
     private final AccountService accountService;
     private final UserController userController;
-    private final UserService userService;
 
     private Long id;
     private AccountType accountType;
@@ -40,6 +38,7 @@ public class AccountController {
     private Account linkedAccount;
 
     private Boolean editMode;
+    private int editIndex = -1;
 
     private List<Account> accounts;
     private Map<Long, Boolean> accountsChecked;
@@ -47,12 +46,10 @@ public class AccountController {
     @Autowired
     public AccountController(MessageSource messageSource,
                              AccountService accountService,
-                             UserController userController,
-                             UserService userService) {
+                             UserController userController) {
         this.messageSource = messageSource;
         this.accountService = accountService;
         this.userController = userController;
-        this.userService = userService;
         accounts = new ArrayList<>();
         accountsChecked = new HashMap<>();
         editMode = false;
@@ -86,7 +83,7 @@ public class AccountController {
 
     public List<User> suggestOwner(String query) {
         // todo limit by something (own user and "friends")
-        List<User> allUsers = userService.getAllUsers();
+        List<User> allUsers = accountService.getAllUsers();
         return allUsers.stream()
                 .filter(user -> user.getFullName().toLowerCase().startsWith(query.toLowerCase()))
                 .collect(Collectors.toList());
@@ -107,6 +104,7 @@ public class AccountController {
         linkedToAnotherAccount = null;
         balance = null;
         editMode = false;
+        editIndex = -1;
     }
 
     public void saveAccount() {
@@ -142,6 +140,10 @@ public class AccountController {
         }
     }
 
+    public void removeBalance() {
+        balance = null;
+    }
+
 
     // account-list.xhtml
     public String getAccountTitle(Account account) {
@@ -169,7 +171,7 @@ public class AccountController {
         }
     }
 
-    public void selectAccount(Account account) {
+    public void selectAccount(Account account, int rowIndex) {
         id = account.getId();
         accountType = account.getAccountType();
         name = account.getName();
@@ -182,6 +184,7 @@ public class AccountController {
         linkedToAnotherAccount = account.getLinkedAccount() != null;
         linkedAccount = account.getLinkedAccount();
         editMode = true;
+        editIndex = rowIndex;
     }
 
     public void deleteAccount(Account account) {
@@ -199,6 +202,10 @@ public class AccountController {
                 .stream()
                 .filter(checked -> checked)
                 .count() == SHOWN_ACCOUNTS_LIMIT;
+    }
+
+    public boolean isBeingEdited(int rowIndex) {
+        return rowIndex == editIndex;
     }
 
 

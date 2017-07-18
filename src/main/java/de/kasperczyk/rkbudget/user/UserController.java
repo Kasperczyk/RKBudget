@@ -1,6 +1,5 @@
 package de.kasperczyk.rkbudget.user;
 
-import de.kasperczyk.rkbudget.common.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -29,8 +28,10 @@ public class UserController {
         this.messageSource = messageSource;
         this.environment = environment;
         this.userService = userService;
+        setupAndLoginDevUser(environment, userService);
+    }
 
-        // dev config
+    private void setupAndLoginDevUser(Environment environment, UserService userService) {
         if (Arrays.stream(environment.getActiveProfiles())
                 .anyMatch(env -> env.equals("dev-h2") || env.equals("dev-postgres"))) {
             currentUser = userService.login("kasperczyk.rene@gmail.com", "geheim");

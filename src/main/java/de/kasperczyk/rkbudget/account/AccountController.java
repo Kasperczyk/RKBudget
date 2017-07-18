@@ -27,9 +27,7 @@ public class AccountController {
     private final UserController userController;
     private final UserService userService;
 
-    private List<Account> accounts;
-    private Map<Long, Boolean> accountsChecked;
-
+    private Long id;
     private AccountType accountType;
     private String name;
     private String institute;
@@ -40,6 +38,11 @@ public class AccountController {
     private BigDecimal balance;
     private Boolean linkedToAnotherAccount;
     private Account linkedAccount;
+
+    private Boolean editMode;
+
+    private List<Account> accounts;
+    private Map<Long, Boolean> accountsChecked;
 
     @Autowired
     public AccountController(MessageSource messageSource,
@@ -52,8 +55,11 @@ public class AccountController {
         this.userService = userService;
         accounts = new ArrayList<>();
         accountsChecked = new HashMap<>();
+        editMode = false;
     }
 
+
+    // create-edit-account.xhtml
     public List<AccountType> getAllAccountTypes() {
         return accountService.getAllAccountTypes();
     }
@@ -90,48 +96,54 @@ public class AccountController {
         return accountService.getLinkableAccounts();
     }
 
-    public void addAccount() {
-        User currentUser = userController.getCurrentUser();
-        Account account = new Account(accountType, name, institute, owner,
-                iban, creditCardNumber, linkedAccount, expirationDate, balance, currentUser);
-        if (!accountService.accountExists(account)) {
-            accountService.addAccount(account);
-            accountsChecked.put(account.getId(), !isLimitReached());
-            accounts.add(account);
-        } else {
-            String message = messageSource.getMessage("account_error_accountAlreadyAdded", null, userController.getLocale());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-        }
-        resetFields();
-    }
-
     public void resetFields() {
+        accountType = null;
         name = null;
         institute = null;
         owner = null;
         iban = null;
         creditCardNumber = null;
         expirationDate = null;
+        linkedToAnotherAccount = null;
         balance = null;
+        editMode = false;
     }
 
-    private Boolean isLimitReached() {
-        return accountsChecked.values()
-                .stream()
-                .filter(checked -> checked)
-                .count() == SHOWN_ACCOUNTS_LIMIT;
+    public void saveAccount() {
+        Account account = new Account(accountType, name, institute, owner, iban, creditCardNumber,
+                linkedAccount, expirationDate, balance, userController.getCurrentUser());
+        if (editMode) {
+            accountService.updateAccount(account, id);
+            account.setId(id);
+            accounts.set(getAccountIndexById(id), account);
+        } else {
+            createAccount(account);
+        }
+        resetFields();
     }
 
-    public boolean isCheckboxDisabled(Long id) {
-        return !accountsChecked.get(id) && isLimitReached();
+    private int getAccountIndexById(long id) {
+        Account account = accounts.stream()
+                .filter(a -> a.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Could not find account with id " + id));
+        return accounts.indexOf(account);
     }
 
-    public List<Account> getShownAccounts() {
-        return accounts.stream()
-                .filter(account -> accountsChecked.get(account.getId()))
-                .collect(Collectors.toList());
+    void createAccount(Account account) {
+        if (!accountService.accountExists(account)) {
+            accountService.saveAccount(account);
+            accountsChecked.put(account.getId(), !isLimitReached());
+            accounts.add(account);
+        } else {
+            String message = messageSource.getMessage("account_error_accountAlreadyAdded", null,
+                    userController.getLocale());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+        }
     }
 
+
+    // account-list.xhtml
     public String getAccountTitle(Account account) {
         Locale locale = userController.getLocale();
         String bankAccountType = "";
@@ -158,6 +170,7 @@ public class AccountController {
     }
 
     public void selectAccount(Account account) {
+        id = account.getId();
         accountType = account.getAccountType();
         name = account.getName();
         institute = account.getInstitute();
@@ -168,11 +181,42 @@ public class AccountController {
         balance = account.getBalance();
         linkedToAnotherAccount = account.getLinkedAccount() != null;
         linkedAccount = account.getLinkedAccount();
+        editMode = true;
     }
 
     public void deleteAccount(Account account) {
-        System.out.println("TEST");
-        // todo
+        accounts.remove(account);
+        accountService.deleteAccount(account.getId());
+        resetFields();
+    }
+
+    public boolean isCheckboxDisabled(Long id) {
+        return !accountsChecked.get(id) && isLimitReached();
+    }
+
+    private Boolean isLimitReached() {
+        return accountsChecked.values()
+                .stream()
+                .filter(checked -> checked)
+                .count() == SHOWN_ACCOUNTS_LIMIT;
+    }
+
+
+    // account-details.xhtml
+    public List<Account> getShownAccounts() {
+        return accounts.stream()
+                .filter(account -> accountsChecked.get(account.getId()))
+                .collect(Collectors.toList());
+    }
+
+
+    // Getters and Setter
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public AccountType getAccountType() {
@@ -253,6 +297,14 @@ public class AccountController {
 
     public void setLinkedAccount(Account linkedAccount) {
         this.linkedAccount = linkedAccount;
+    }
+
+    public Boolean getEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(Boolean editMode) {
+        this.editMode = editMode;
     }
 
     public List<Account> getAccounts() {

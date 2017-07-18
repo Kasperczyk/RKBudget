@@ -5,7 +5,7 @@
 <p:panelGrid columns="3"
              layout="grid"
              columnClasses="ui-grid-col-4, ui-grid-col-4, ui-grid-col-4"
-             styleClass="ui-panelgrid-blank">
+             styleClass="ui-panelgrid-blank panelgrid-no-hor-pad">
     <p:panel
             header="#{accountController.shownAccounts.get(0).id} - #{accountController.shownAccounts.get(0).iban}"
             rendered="#{accountController.shownAccounts.size() >= 1}">

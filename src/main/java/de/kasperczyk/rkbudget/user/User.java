@@ -1,7 +1,5 @@
 package de.kasperczyk.rkbudget.user;
 
-import de.kasperczyk.rkbudget.common.Currency;
-
 import javax.persistence.*;
 import java.util.Locale;
 
@@ -21,6 +19,10 @@ public class User {
 //    )
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column
+    @Version
+    private Long version;
 
     @Column
     private String firstName;
@@ -50,6 +52,10 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getVersion() {
+        return version;
     }
 
     public String getFirstName() {

@@ -1,6 +1,5 @@
 package de.kasperczyk.rkbudget.user;
 
-import de.kasperczyk.rkbudget.common.Currency;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

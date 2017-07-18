@@ -47,7 +47,7 @@ public class AccountServiceTest {
     public void addAccountShouldCallSaveWithTheCorrectArgument() {
         Account account = new Account(AccountType.GIRO, "Name", "Institute", "Owner", "IBAN",
                 "CCN", null, new Date(), BigDecimal.ONE, new User());
-        accountService.addAccount(account);
+        accountService.saveAccount(account);
         verify(accountRepositoryMock).save(account);
     }
 
@@ -65,4 +65,6 @@ public class AccountServiceTest {
         when(accountRepositoryMock.findAll()).thenReturn(new ArrayList<>());
         assertThat(accountService.accountExists(new Account()), is(false));
     }
+
+    // todo more tests
 }

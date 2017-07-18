@@ -1,4 +1,4 @@
-package de.kasperczyk.rkbudget.common;
+package de.kasperczyk.rkbudget.user;
 
 public enum Currency {
 

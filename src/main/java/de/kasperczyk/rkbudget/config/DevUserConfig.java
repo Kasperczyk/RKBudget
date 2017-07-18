@@ -1,6 +1,6 @@
 package de.kasperczyk.rkbudget.config;
 
-import de.kasperczyk.rkbudget.common.Currency;
+import de.kasperczyk.rkbudget.user.Currency;
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -25,6 +25,7 @@ public class JsfConfig implements ServletContextAware {
         servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Development");
         servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
         servletContext.setInitParameter("javax.faces.FACELETS_BUFFER_SIZE", "65535"); // 64 kB
+        servletContext.setInitParameter("javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE", "true");
         servletContext.setInitParameter("primefaces.THEME", "delta");
         servletContext.setInitParameter("primefaces.FONT_AWESOME", "true");
     }

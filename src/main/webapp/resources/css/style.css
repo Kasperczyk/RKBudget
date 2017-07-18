@@ -46,6 +46,20 @@
     border-bottom: solid lightgray !important;
 }
 
+.ui-panel .ui-panel-content {
+    padding: 0;
+}
+
+.ui-panelgrid.panelgrid-no-pad .ui-panelgrid-cell {
+    padding: 0;
+}
+
+.ui-panelgrid.panelgrid-no-hor-pad .ui-panelgrid-cell {
+    padding: 4px 0;
+}
+
+
+/* debugging */
 /** {*/
     /*border: solid red thin;*/
 /*}*/

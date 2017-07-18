@@ -25,10 +25,6 @@ public class AccountService {
         return AccountType.valueOf(name);
     }
 
-    void addAccount(Account account) {
-        accountRepository.save(account);
-    }
-
     List<Account> getLinkableAccounts() {
         return accountRepository.findAllByAccountType(AccountType.GIRO);
     }
@@ -37,8 +33,30 @@ public class AccountService {
         return accountRepository.findByIban(iban);
     }
 
+    void updateAccount(Account updatedAccount, Long id) {
+        Account account = accountRepository.findOne(id);
+        account.setName(updatedAccount.getName());
+        account.setInstitute(updatedAccount.getInstitute());
+        account.setOwner(updatedAccount.getOwner());
+        account.setIban(updatedAccount.getIban());
+        account.setCreditCardNumber(updatedAccount.getCreditCardNumber());
+        account.setLinkedAccount(updatedAccount.getLinkedAccount());
+        account.setExpirationDate(updatedAccount.getExpirationDate());
+        account.setBalance(updatedAccount.getBalance());
+        accountRepository.save(account);
+    }
+
     boolean accountExists(Account account) {
         // todo improve example object
         return accountRepository.findAll(Example.of(account)).size() > 0;
+    }
+
+    void saveAccount(Account account) {
+        accountRepository.save(account);
+    }
+
+    void deleteAccount(Long id) {
+        Account account = accountRepository.findOne(id);
+        accountRepository.delete(account);
     }
 }

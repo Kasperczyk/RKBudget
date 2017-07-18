@@ -27,6 +27,10 @@ public class Account {
     private AccountType accountType;
 
     @Column
+    @Version
+    private Long version;
+
+    @Column
     private String name;
 
     @Column
@@ -85,6 +89,10 @@ public class Account {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getVersion() {
+        return version;
     }
 
     public AccountType getAccountType() {
@@ -176,33 +184,21 @@ public class Account {
 
         if (getAccountType() != account.getAccountType()) return false;
         if (getName() != null ? !getName().equals(account.getName()) : account.getName() != null) return false;
-        if (getInstitute() != null ? !getInstitute().equals(account.getInstitute()) : account.getInstitute() != null)
-            return false;
-        if (!getOwner().equals(account.getOwner())) return false;
+        if (getOwner() != null ? !getOwner().equals(account.getOwner()) : account.getOwner() != null) return false;
         if (getIban() != null ? !getIban().equals(account.getIban()) : account.getIban() != null) return false;
         if (getCreditCardNumber() != null ? !getCreditCardNumber().equals(account.getCreditCardNumber()) : account.getCreditCardNumber() != null)
             return false;
-        if (getLinkedAccount() != null ? !getLinkedAccount().equals(account.getLinkedAccount()) : account.getLinkedAccount() != null)
-            return false;
-        if (getExpirationDate() != null ? !getExpirationDate().equals(account.getExpirationDate()) : account.getExpirationDate() != null)
-            return false;
-        if (getBalance() != null ? !getBalance().equals(account.getBalance()) : account.getBalance() != null)
-            return false;
-        return getUser().equals(account.getUser());
+        return getBalance() != null ? getBalance().equals(account.getBalance()) : account.getBalance() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getAccountType().hashCode();
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getInstitute() != null ? getInstitute().hashCode() : 0);
-        result = 31 * result + getOwner().hashCode();
+        result = 31 * result + (getOwner() != null ? getOwner().hashCode() : 0);
         result = 31 * result + (getIban() != null ? getIban().hashCode() : 0);
         result = 31 * result + (getCreditCardNumber() != null ? getCreditCardNumber().hashCode() : 0);
-        result = 31 * result + (getLinkedAccount() != null ? getLinkedAccount().hashCode() : 0);
-        result = 31 * result + (getExpirationDate() != null ? getExpirationDate().hashCode() : 0);
         result = 31 * result + (getBalance() != null ? getBalance().hashCode() : 0);
-        result = 31 * result + getUser().hashCode();
         return result;
     }
 }

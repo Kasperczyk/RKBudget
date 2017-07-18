@@ -50,7 +50,9 @@
                                rendered="#{account.accountType != 'CASH' and account.accountType != 'CUSTOM'}"/>
                 <p:outputLabel value="#{account.expirationDate}"
                                rendered="#{account.accountType != 'CASH' and account.accountType != 'CUSTOM'}"
-                               styleClass="bold"/>
+                               styleClass="bold">
+                    <f:convertDateTime dateStyle="medium" locale="#{userController.locale}"/>
+                </p:outputLabel>
 
                 <p:outputLabel value="#{msg.account_label_balance}"
                                rendered="#{account.accountType != 'CREDIT' and empty account.linkedAccount}"/>
@@ -71,6 +73,8 @@
                                  action="#{accountController.selectAccount(account)}"/>
                 <p:commandButton value="#{msg.account_button_deleteAccount}"
                                  icon="fa fa-fw fa-remove"
+                                 process="@this"
+                                 update="@form"
                                  action="#{accountController.deleteAccount(account)}"/>
                 <p:outputLabel for="showDetails"
                                value="#{msg.account_label_showAccount}"/>

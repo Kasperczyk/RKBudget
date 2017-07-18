@@ -15,7 +15,7 @@
     <p:selectOneMenu id="accountType"
                      value="#{accountController.accountType}"
                      converter="#{accountTypeConverter}"
-                     valueChangeListener="#{accountController.resetFields()}"
+                     disabled="#{accountController.editMode}"
                      required="true">
         <f:selectItem itemLabel="#{msg.account_selectItem_defaultAccountType}"
                       noSelectionOption="true"
@@ -88,26 +88,25 @@
 
     <p:outputLabel for="balance"
                    value="#{msg.account_label_balance}"
-                   rendered="#{not accountController.creditCard}"/>
+                   rendered="#{not (accountController.creditCard and accountController.linkedToAnotherAccount)}"/>
     <p:inputText id="balance"
                  value="#{accountController.balance}"
                  required="true"
-                 rendered="#{not accountController.creditCard}">
+                 rendered="#{not (accountController.creditCard and accountController.linkedToAnotherAccount)}">
         <f:convertNumber pattern="###,##0.00"/>
     </p:inputText>
 
     <p:outputLabel for="linkToAnotherAccount"
                    value="#{msg.account_label_linkedToAnotherAccount}"
                    rendered="#{accountController.creditCard}"/>
-    <p:panelGrid id="linkedAccountPanel"
-                 columns="2"
+    <p:panelGrid columns="2"
                  layout="grid"
-                 columnClasses="ui-grid-col-2 no-padding, ui-grid-col-10 no-padding"
-                 styleClass="ui-panelgrid-blank"
+                 columnClasses="ui-grid-col-2, ui-grid-col-10"
+                 styleClass="ui-panelgrid-blank panelgrid-no-pad"
                  rendered="#{accountController.creditCard}">
         <p:selectBooleanCheckbox id="linkToAnotherAccount"
                                  value="#{accountController.linkedToAnotherAccount}">
-            <p:ajax update="linkedAccountPanel"/>
+            <p:ajax update="createEditPanel"/>
         </p:selectBooleanCheckbox>
         <p:selectOneMenu id="linkedAccount"
                          value="#{accountController.linkedAccount}"
@@ -124,9 +123,17 @@
         </p:selectOneMenu>
     </p:panelGrid>
 
-    <h:panelGrid/>
-    <p:commandButton value="#{msg.account_button_addAccount}"
-                     actionListener="#{accountController.addAccount}"
+    <h:panelGrid rendered="#{!accountController.editMode}"/>
+    <p:commandButton value="#{msg.account_button_cancel}"
+                     icon="fa fa-fw fa-remove"
+                     action="#{accountController.resetFields}"
+                     rendered="#{accountController.editMode}"
+                     update="@form"/>
+    <p:commandButton value="#{accountController.editMode ?
+                        msg.account_button_updateAccount : msg.account_button_addAccount}"
+                     icon="#{accountController.editMode ?
+                        'fa fa-fw fa-save' : 'fa fa-fw fa-plus'}"
+                     action="#{accountController.saveAccount}"
                      update="@form"/>
 </p:panelGrid>
 </html>

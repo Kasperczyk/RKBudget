@@ -4,16 +4,26 @@ Accounts:
     - improve error messages (validation ...)
     - currency (hard?...)
 - account-list:
-    - red green font for + - balance
+    - done?!
 - account-details
     - later
 
 Categories:
 - implement categories
-    - create and edit
-    - similar to accounts (but smaller in scope)
+    - edit / delete
+    - make it categories
+    - custom colors?
+    - prettier predefined colors?
+
+Tags:
+- later?
 
 Income and Expenses after that
 Then back to Accounts
 
 Dashboard, Balance, Shared Expenses, Calculators and Inbox when the core functionalities are implemented
+
+
+LOGGING!
+TESTING (category, stuff i havent yet in accounts, maybe integration tests, jpa, ...)
+LIQUIBASE?

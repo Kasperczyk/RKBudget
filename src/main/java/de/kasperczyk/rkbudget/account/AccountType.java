@@ -16,7 +16,7 @@ public enum AccountType {
         this.key = key;
     }
 
-    public String getKey() {
+    public String getMessageKey() {
         return MESSAGE_PREFIX + key;
     }
 }

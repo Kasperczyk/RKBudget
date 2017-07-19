@@ -19,7 +19,7 @@ public enum Language {
         return countryCode;
     }
 
-    public String getKey() {
+    public String getMessageKey() {
         return MESSAGE_PREFIX + countryCode;
     }
 }

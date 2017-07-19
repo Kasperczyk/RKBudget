@@ -54,11 +54,11 @@ public class UserController {
     }
 
     public String getLanguageName(Language language) {
-        return messageSource.getMessage(language.getKey(), null, getLocale());
+        return messageSource.getMessage(language.getMessageKey(), null, getLocale());
     }
 
     public String getCurrencyName(Currency currency) {
-        return messageSource.getMessage(currency.getKey(), null, getLocale());
+        return messageSource.getMessage(currency.getMessageKey(), null, getLocale());
     }
 
     public void save() {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<p:dataList value="#{categoryController.categories}"
+            var="category"
+            type="none"
+            emptyMessage="#{msg.category_dataList_empty}">
+    <p:panelGrid columns="4"
+                 layout="grid"
+                 columnClasses="ui-grid-col-4, ui-grid-col-3, ui-grid-col-3, ui-grid-col-2"
+                 styleClass="ui-panelgrid-blank panelgrid-small-pad">
+
+        <p:outputLabel value="#{category.name}"/>
+        <p:outputLabel value="#{categoryController.getColorName(category.color)}"/>
+        <p:outputLabel styleClass="fill-out lightgray-border #{categoryController.getColorKey(category.color)}"/>
+        <p:commandButton value="#{msg.category_button_edit}"
+                         icon="fa fa-fw fa-edit"
+                         update="@form"/>
+    </p:panelGrid>
+</p:dataList>
+<p:panelGrid columns="4"
+             layout="grid"
+             columnClasses="ui-grid-col-4, ui-grid-col-3, ui-grid-col-3, ui-grid-col-2"
+             styleClass="ui-panelgrid-blank panelgrid-small-pad">
+    <p:inputText value="#{categoryController.name}"
+                 placeholder="#{msg.category_placeholder_title}"
+                 styleClass="full-height"
+                 required="true"/>
+    <p:selectOneMenu value="#{categoryController.predefinedColor}"
+                     converter="#{predefinedColorConverter}"
+                     styleClass="full-height"
+                     required="true">
+        <f:selectItem itemLabel="#{msg.category_selectItem_defaultColor}"
+                      noSelectionOption="true"
+                      itemDisabled="true"/>
+        <f:selectItems value="#{categoryController.allPredefinedColors}"
+                       var="color"
+                       itemValue="#{color}"
+                       itemLabel="#{categoryController.getPredefinedColorName(color)}"/>
+        <p:ajax event="change"
+                update="color-bar"/>
+    </p:selectOneMenu>
+    <p:outputLabel id="color-bar"
+                   styleClass="fill-out lightgray-border #{categoryController.predefinedColor.key}"/>
+    <p:commandButton value="#{msg.category_button_add}"
+                     icon="fa fa-fw fa-plus"
+                     action="#{categoryController.saveCategory}"
+                     styleClass="full-height"
+                     update="@form"/>
+    <!-- todo: custom colors -->
+</p:panelGrid>
+</html>

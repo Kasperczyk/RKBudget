@@ -131,7 +131,7 @@
                      rendered="#{accountController.editMode}"
                      update="@form"/>
     <p:commandButton value="#{accountController.editMode ?
-                        msg.account_button_updateAccount : msg.account_button_addAccount}"
+                        msg.account_button_updateAccount : msg.account_button_add}"
                      icon="#{accountController.editMode ?
                         'fa fa-fw fa-save' : 'fa fa-fw fa-plus'}"
                      action="#{accountController.saveAccount}"

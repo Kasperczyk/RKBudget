@@ -19,7 +19,7 @@ public enum Currency {
         return sign;
     }
 
-    public String getKey() {
+    public String getMessageKey() {
         return MESSAGE_PREFIX + code;
     }
 }

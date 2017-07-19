@@ -62,7 +62,7 @@ public class AccountControllerTest {
     public void getAccountTypeNameShouldCallGetMessageWithTheKeyAsAnArgument() {
         AccountType accountType = AccountType.GIRO;
         accountController.getAccountTypeName(accountType);
-        verify(messageSourceMock).getMessage(accountType.getKey(), null, null);
+        verify(messageSourceMock).getMessage(accountType.getMessageKey(), null, null);
     }
 
     @Test

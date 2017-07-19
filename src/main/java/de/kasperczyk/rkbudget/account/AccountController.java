@@ -62,7 +62,7 @@ public class AccountController {
     }
 
     public String getAccountTypeName(AccountType accountType) {
-        return messageSource.getMessage(accountType.getKey(), null, userController.getLocale());
+        return messageSource.getMessage(accountType.getMessageKey(), null, userController.getLocale());
     }
 
     public boolean isBankAccountOrNull() {

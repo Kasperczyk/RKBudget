@@ -11,6 +11,16 @@
     width: 100%;
 }
 
+.full-height {
+    height: 100%;
+}
+
+.fill-out {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
 .left {
     text-align: left;
 }
@@ -25,10 +35,6 @@
 
 .bold {
     font-weight: bold;
-}
-
-.no-padding {
-    padding: 0 !important;
 }
 
 .ui-accordion .ui-accordion-content{
@@ -54,6 +60,10 @@
     padding: 0;
 }
 
+.ui-panelgrid.panelgrid-small-pad .ui-panelgrid-cell {
+    padding: 2px;
+}
+
 .ui-panelgrid.panelgrid-no-hor-pad .ui-panelgrid-cell {
     padding: 4px 0;
 }
@@ -63,12 +73,40 @@
     font-style: italic;
 }
 
-.positive {
-    color: green;
+.lightgray-border {
+    border: solid thin lightgray;
 }
 
-.negative {
-    color: red;
+.black {
+    background-color: black;
+}
+
+.gray {
+    background-color: gray;
+}
+
+.red {
+    background-color: red;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.white {
+    background-color: white;
 }
 
 

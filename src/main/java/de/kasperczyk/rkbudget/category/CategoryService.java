@@ -12,4 +12,12 @@ class CategoryService {
     CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
+
+    void saveCategory(Category category) {
+        categoryRepository.save(category);
+    }
+
+    PredefinedColor getPredefinedColorByName(String name) {
+        return PredefinedColor.valueOf(name);
+    }
 }

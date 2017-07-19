@@ -6,12 +6,19 @@
       xmlns:p="http://primefaces.org/ui">
 <h:body>
     <ui:composition template="template/template.xhtml">
-        <ui:define name="title">RKBudget - #{msg.title_categories}</ui:define>
+        <ui:define name="title">RKBudget - #{msg.title_categorization}</ui:define>
         <ui:define name="content">
             <h:form id="categoryForm">
                 <p:panel header="#{msg.categories_panel_header}"
                          styleClass="full-width">
-                    Work in progress
+                    <div class="ui-g">
+                        <div class="ui-xl-3 ui-g-6 ui-g-nopad">
+                            <ui:include src="categorization/categories.xhtml"/>
+                        </div>
+                        <div class="ui-xl-3 ui-g-6 ui-g-nopad">
+                            <ui:include src="categorization/tags.xhtml"/>
+                        </div>
+                    </div>
                 </p:panel>
             </h:form>
         </ui:define>

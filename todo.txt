@@ -7,6 +7,8 @@ Accounts:
     - done?!
 - account-details
     - later
+- registration
+    - choose preferred language (right from the start)
 
 Categories:
 - implement categories

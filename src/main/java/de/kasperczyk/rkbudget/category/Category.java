@@ -1,6 +1,7 @@
 package de.kasperczyk.rkbudget.category;
 
 import de.kasperczyk.rkbudget.user.User;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.awt.*;
@@ -9,7 +10,16 @@ import java.awt.*;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categorySequenceGenerator")
+    @GenericGenerator(
+            name = "categorySequenceGenerator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = "sequence_name", value = "CATEGORY_SEQUENCE"),
+                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
+            }
+    )
     private Long id;
 
     @Column

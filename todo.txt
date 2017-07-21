@@ -27,3 +27,13 @@ Dashboard, Balance, Shared Expenses, Calculators and Inbox when the core functio
 LOGGING!
 TESTING (category, stuff i havent yet in accounts, maybe integration tests, jpa, ...)
 LIQUIBASE?
+
+
+get rid of !important; styling rules!
+
+profile:
+- change name, username, password, email
+- add picture, motto
+
+
+HELP/TUTORIAL MODE

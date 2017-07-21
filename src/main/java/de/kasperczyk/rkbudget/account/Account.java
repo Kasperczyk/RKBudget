@@ -1,6 +1,8 @@
 package de.kasperczyk.rkbudget.account;
 
 import de.kasperczyk.rkbudget.user.User;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,16 +12,16 @@ import java.util.Date;
 public class Account {
 
     @Id
-//    @GenericGenerator(
-//            name = "accountSequenceGenerator",
-//            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-//            parameters = {
-//                    @Parameter(name = "sequence_name", value = "ACCOUNT_SEQUENCE"),
-//                    @Parameter(name = "initial_value", value = "1"),
-//                    @Parameter(name = "increment_size", value = "1")
-//            }
-//    )
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(
+            name = "accountSequenceGenerator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @Parameter(name = "sequence_name", value = "ACCOUNT_SEQUENCE"),
+                    @Parameter(name = "initial_value", value = "1"),
+                    @Parameter(name = "increment_size", value = "1")
+            }
+    )
     private Long id;
 
     @Column

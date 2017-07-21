@@ -63,3 +63,28 @@ professionally used package by layer and I want to see how package by feature wo
 - one line per attribute in Facelets
 - pattern for i18n keys: feature_type_name (type and name with camelCase)
 - write unit tests for new logic
+
+## MVP (Minimum Viable Product)
+
+- App starts at Login / Registration page
+- User can register for the website and receives an email with a verification link
+- Registered user can log into the app and is redirected to a welcome or tutorial page on their first visit
+- Users can change their settings in the profile menu
+- Users can add their accounts
+- Users can set the colors of categories
+- Users can create custom tags
+- Users can add fixed income and expenses (+ bill reminder)
+- Fixed income and expenses are automatically processed via batch jobs
+- Users can add variable income and expenses
+- Users can share costs with other users (or non users)
+- Shared costs are calculated and presented in an end of month report or when requested
+- Users can set monthly limits to categories (sub categories) and define a warning threshold -> when reached they get a message
+- User can see the balance of each month and year
+
+- Users can send Bugreports/Feature requests
+- Impressum / Contact
+- Deployed on Heroku(?)
+
+=> search users to test the app!
+
+- dashboard and calculators not included in MVP (probably)

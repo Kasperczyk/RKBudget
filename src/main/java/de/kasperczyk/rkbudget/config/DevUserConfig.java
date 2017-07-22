@@ -27,6 +27,7 @@ public class DevUserConfig {
         devUser.setPassword("geheim");
         devUser.setLocale(new Locale("de"));
         devUser.setCurrency(Currency.EURO);
+        devUser.setActivated(true);
         userRepository.save(devUser);
     }
 }

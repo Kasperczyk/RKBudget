@@ -20,6 +20,8 @@ public class EntryController {
     private String password;
     private boolean registered;
     private boolean submitted;
+    private String token;
+    private boolean verified;
 
     public EntryController(EntryService entryService) {
         this.entryService = entryService;
@@ -40,6 +42,10 @@ public class EntryController {
         userName = null;
         email = null;
         password = null;
+    }
+
+    public void verifyUser() {
+        verified = entryService.verifyUser(token);
     }
 
     // Getters and Setters
@@ -89,5 +95,21 @@ public class EntryController {
 
     public boolean isSubmitted() {
         return submitted;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }

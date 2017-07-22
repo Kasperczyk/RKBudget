@@ -48,6 +48,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
+    @Column
+    private boolean activated;
+
     public User() { }
 
     public User(String firstName,
@@ -128,6 +131,14 @@ public class User {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 
     @Override

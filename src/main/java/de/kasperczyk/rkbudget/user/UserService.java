@@ -59,4 +59,10 @@ public class UserService {
         user.setCurrency(updatedUser.getCurrency());
         userRepository.save(user);
     }
+
+    public void activateUser(Long id) {
+        User user = userRepository.findOne(id);
+        user.setActivated(true);
+        userRepository.save(user);
+    }
 }

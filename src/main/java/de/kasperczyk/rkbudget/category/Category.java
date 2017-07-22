@@ -36,6 +36,8 @@ public class Category {
     @ManyToOne
     private User user;
 
+    Category() { }
+
     Category(String name, Color color, User user) {
         this.name = name;
         this.color = color;

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
     <title>RKBudget - #{msg.title_registration}</title>
 </h:head>
@@ -14,12 +14,11 @@
                     <!-- empty -->
                 </div>
                 <div class="ui-xl-2 ui-g-4">
-                    <p:panel header="#{msg.registration_panel_header}">
-                        <br/>
-                        <h:messages/>
+                    <p:panel header="#{msg.entry_panel_header}">
+                        <p:messages showDetail="true"/>
                         <p:panelGrid columns="2"
                                      layout="grid"
-                                     columnClasses="ui-grid-col-6, ui-grid-col-6"
+                                     columnClasses="ui-grid-col-5, ui-grid-col-7"
                                      styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="firstName"
                                            value="#{msg.entry_label_firstName}"/>
@@ -42,7 +41,9 @@
                                            value="#{msg.entry_label_email}"/>
                             <p:inputText id="email"
                                          value="#{entryController.email}"
-                                         required="true"/>
+                                         required="true">
+                                <f:validator binding="#{emailValidator}"/>
+                            </p:inputText>
 
                             <p:outputLabel for="password"
                                            value="#{msg.entry_label_password}"/>
@@ -63,6 +64,16 @@
                                              action="#{entryController.registerUser}"
                                              update="@form"/>
                         </p:panelGrid>
+                    </p:panel>
+                    <p:panel header="#{msg.entry_panel_successfulPanel}"
+                             rendered="#{entryController.registered and entryController.submitted}">
+                        <p:outputLabel value="#{msg.entry_label_successfulRegistration}"/>
+                        <p:link value="#{msg.entry_link_login}"
+                                outcome="login"/>
+                    </p:panel>
+                    <p:panel header="#{msg.entry_panel_unsuccessfulPanel}"
+                             rendered="#{!entryController.registered and entryController.submitted}">
+                        <p:outputLabel value="#{msg.entry_error_emailAlreadyExists}"/>
                     </p:panel>
                 </div>
                 <div class="ui-xl-5 ui-g-4">

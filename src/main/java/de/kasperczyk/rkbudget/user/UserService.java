@@ -16,6 +16,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public boolean exists(User user) {
+        return userRepository.findByEmail(user.getEmail()) != null;
+    }
+
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
+
     User login(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user.getPassword().equals(password)) {

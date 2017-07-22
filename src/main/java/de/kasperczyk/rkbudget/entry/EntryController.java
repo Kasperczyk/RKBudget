@@ -1,23 +1,48 @@
 package de.kasperczyk.rkbudget.entry;
 
+import de.kasperczyk.rkbudget.user.Currency;
+import de.kasperczyk.rkbudget.user.User;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.Locale;
 
 @Component
 @Scope("request")
 public class EntryController {
+
+    private final EntryService entryService;
 
     private String firstName;
     private String lastName;
     private String userName;
     private String email;
     private String password;
+    private boolean registered;
+    private boolean submitted;
 
-    public void registerUser() {
-
+    public EntryController(EntryService entryService) {
+        this.entryService = entryService;
     }
 
-    // Setters and Setters
+    public void registerUser() {
+        User user = new User(firstName, lastName, userName, email, password);
+        user.setCurrency(Currency.EURO); // todo
+        user.setLocale(Locale.ENGLISH); // todo
+        registered = entryService.registerUser(user);
+        submitted = true;
+        resetFields();
+    }
+
+    private void resetFields() {
+        firstName = null;
+        lastName = null;
+        userName = null;
+        email = null;
+        password = null;
+    }
+
+    // Getters and Setters
     public String getFirstName() {
         return firstName;
     }
@@ -56,5 +81,13 @@ public class EntryController {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public boolean isSubmitted() {
+        return submitted;
     }
 }

@@ -48,6 +48,20 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
+    public User() { }
+
+    public User(String firstName,
+                String lastName,
+                String userName,
+                String email,
+                String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }

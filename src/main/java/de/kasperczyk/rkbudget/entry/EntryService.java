@@ -68,19 +68,6 @@ class EntryService {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     private final UserService userService;
     private final VerificationTokenRepository verificationTokenRepository;
     private final EmailService emailService;

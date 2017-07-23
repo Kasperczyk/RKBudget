@@ -20,32 +20,32 @@
                                          styleClass="ui-panelgrid-blank">
 
                                 <p:outputLabel for="language"
-                                               value="#{msg.user_label_language}"/>
+                                               value="#{msg.language_label}"/>
                                 <p:selectOneMenu id="language"
                                                  value="#{userController.language}"
                                                  converter="#{languageConverter}">
-                                    <f:selectItem itemLabel="#{msg.user_selectItem_defaultLanguage}"
+                                    <f:selectItem itemLabel="#{msg.language_selectItem_defaultLanguage}"
                                                   noSelectionOption="true"
                                                   itemDisabled="true"/>
-                                    <f:selectItems value="#{userController.allSupportedLanguages}"
+                                    <f:selectItems value="#{languageController.allSupportedLanguages}"
                                                    var="language"
                                                    itemValue="#{language}"
-                                                   itemLabel="#{userController.getLanguageName(language)}"/>
+                                                   itemLabel="#{languageController.getLanguageName(language)}"/>
                                     <p:ajax update="@form"/>
                                 </p:selectOneMenu>
 
                                 <p:outputLabel for="currency"
-                                               value="#{msg.user_label_currency}"/>
+                                               value="#{msg.currency_label_currency}"/>
                                 <p:selectOneMenu id="currency"
                                                  value="#{userController.currency}"
                                                  converter="#{currencyConverter}">
-                                    <f:selectItem itemLabel="#{msg.user_selectItem_defaultCurrency}"
+                                    <f:selectItem itemLabel="#{msg.currency_selectItem_defaultCurrency}"
                                                   noSelectionOption="true"
                                                   itemDisabled="true"/>
-                                    <f:selectItems value="#{userController.allSupportedCurrencies}"
+                                    <f:selectItems value="#{currencyController.allSupportedCurrencies}"
                                                    var="currency"
                                                    itemValue="#{currency}"
-                                                   itemLabel="#{userController.getCurrencyName(currency)}"/>
+                                                   itemLabel="#{currencyController.getCurrencyName(currency)}"/>
                                     <p:ajax update="@form"/>
                                 </p:selectOneMenu>
 

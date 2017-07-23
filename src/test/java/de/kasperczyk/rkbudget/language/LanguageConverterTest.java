@@ -1,4 +1,4 @@
-package de.kasperczyk.rkbudget.user;
+package de.kasperczyk.rkbudget.language;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,11 +17,11 @@ public class LanguageConverterTest {
     private LanguageConverter languageConverter;
 
     @Mock
-    private UserService userServiceMock;
+    private LanguageService languageServiceMock;
 
     @Before
     public void setup() {
-        languageConverter = new LanguageConverter(userServiceMock);
+        languageConverter = new LanguageConverter(languageServiceMock);
     }
 
     @Test
@@ -40,6 +40,6 @@ public class LanguageConverterTest {
     public void getAsObjectShouldCallGetLanguageByNameWithTheCorrectArgument() {
         String name = Language.ENGLISH.name();
         languageConverter.getAsObject(null, null, name);
-        verify(userServiceMock).getLanguageByName(name);
+        verify(languageServiceMock).getLanguageByName(name);
     }
 }

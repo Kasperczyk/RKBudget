@@ -1,13 +1,13 @@
-package de.kasperczyk.rkbudget.user;
+package de.kasperczyk.rkbudget.language;
 
 public enum Language {
 
     ENGLISH("en"),
-    GERMAN("de"),
-    SPANISH("es"),
-    DUTCH("nl");
+    GERMAN("de");
+//    SPANISH("es"),
+//    DUTCH("nl");
 
-    private static final String MESSAGE_PREFIX = "user_supportedLanguage_";
+    private static final String MESSAGE_PREFIX = "language_supportedLanguage_";
 
     private String countryCode;
 

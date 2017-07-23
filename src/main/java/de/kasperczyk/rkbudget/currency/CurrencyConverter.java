@@ -1,4 +1,4 @@
-package de.kasperczyk.rkbudget.user;
+package de.kasperczyk.rkbudget.currency;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,16 +10,16 @@ import javax.faces.convert.Converter;
 @Component
 public class CurrencyConverter implements Converter {
 
-    private final UserService userService;
+    private final CurrencyService currencyService;
 
     @Autowired
-    public CurrencyConverter(UserService userService) {
-        this.userService = userService;
+    public CurrencyConverter(CurrencyService currencyService) {
+        this.currencyService = currencyService;
     }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String name) {
-        return userService.getCurrencyByName(name);
+        return currencyService.getCurrencyByName(name);
     }
 
     @Override

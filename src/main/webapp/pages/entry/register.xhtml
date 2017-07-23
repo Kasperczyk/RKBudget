@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>RKBudget - #{msg.title_registration}</title>
+</h:head>
+<h:body>
+    <f:view locale="#{entryController.locale}">
+        <h:form id="registrationForm">
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-xl-5 ui-g-4">
+                        <!-- empty -->
+                    </div>
+                    <div class="ui-xl-2 ui-g-4">
+                        <p:panel header="#{msg.entry_panel_registrationheader}">
+                            <br/>
+                            <p:messages showDetail="true"/>
+                            <p:panelGrid columns="2"
+                                         layout="grid"
+                                         columnClasses="ui-grid-col-5, ui-grid-col-7"
+                                         styleClass="ui-panelgrid-blank">
+                                <p:outputLabel for="language"
+                                               value="#{msg.language_label}"/>
+                                <p:selectOneMenu id="language"
+                                                 value="#{entryController.language}"
+                                                 converter="#{languageConverter}"
+                                                 required="true">
+                                    <f:selectItem itemLabel="#{msg.language_selectItem_defaultLanguage}"
+                                                  noSelectionOption="true"
+                                                  itemDisabled="true"/>
+                                    <f:selectItems value="#{languageController.allSupportedLanguages}"
+                                                   var="language"
+                                                   itemValue="#{language}"
+                                                   itemLabel="#{languageController.getLanguageName(language)}"/>
+                                    <p:ajax update="@form"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="firstName"
+                                               value="#{msg.entry_label_firstName}"/>
+                                <p:inputText id="firstName"
+                                             value="#{entryController.firstName}"
+                                             required="true"/>
+
+                                <p:outputLabel for="lastName"
+                                               value="#{msg.entry_label_lastName}"/>
+                                <p:inputText id="lastName"
+                                             value="#{entryController.lastName}"
+                                             required="true"/>
+
+                                <p:outputLabel for="userName"
+                                               value="#{msg.entry_label_userName}"/>
+                                <p:inputText id="userName"
+                                             value="#{entryController.userName}"/>
+
+                                <p:outputLabel for="email"
+                                               value="#{msg.entry_label_email}"/>
+                                <p:inputText id="email"
+                                             value="#{entryController.email}"
+                                             required="true">
+                                    <f:validator binding="#{emailValidator}"/>
+                                </p:inputText>
+
+                                <p:outputLabel for="password"
+                                               value="#{msg.entry_label_password}"/>
+                                <p:password id="password"
+                                            value="#{entryController.password}"
+                                            match="passwordConfirmation"
+                                            required="true"/>
+
+                                <p:outputLabel for="passwordConfirmation"
+                                               value="#{msg.entry_label_passwordConfirmation}"/>
+                                <p:password id="passwordConfirmation"
+                                            type="hidden"
+                                            required="true"/>
+
+                                <p:outputLabel for="currency"
+                                               value="#{msg.currency_label_currency}"/>
+                                <p:selectOneMenu id="currency"
+                                                 value="#{entryController.currency}"
+                                                 converter="#{currencyConverter}">
+                                    <f:selectItem itemLabel="#{msg.currency_selectItem_defaultCurrency}"
+                                                  noSelectionOption="true"
+                                                  itemDisabled="true"/>
+                                    <f:selectItems value="#{currencyController.allSupportedCurrencies}"
+                                                   var="currency"
+                                                   itemValue="#{currency}"
+                                                   itemLabel="#{currencyController.getCurrencyName(currency)}"/>
+                                    <p:ajax update="@form"/>
+                                </p:selectOneMenu>
+
+                                <h:panelGrid/>
+                                <p:commandButton value="#{msg.entry_button_register}"
+                                                 icon="fa fa-fw fa-sign-in"
+                                                 action="#{entryController.register}"
+                                                 update="@form"/>
+                                <h:panelGrid/>
+                                <h:panelGroup>
+                                    <p:outputLabel value="#{msg.entry_label_alreadyRegistered}"/>
+                                    <p:spacer width="5"/>
+                                    <p:link value="#{msg.entry_link_login}"
+                                            styleClass="link"
+                                            outcome="login"/>
+                                </h:panelGroup>
+                            </p:panelGrid>
+                            <br/>
+                        </p:panel>
+                        <p:panel header="#{msg.entry_panel_successfulPanel}"
+                                 rendered="#{entryController.registered and entryController.submitted}">
+                            <p:outputLabel value="#{msg.entry_label_successfulRegistration}"/>
+                            <p:link value="#{msg.entry_link_login}"
+                                    outcome="login"/>
+                        </p:panel>
+                        <p:panel header="#{msg.entry_panel_unsuccessfulPanel}"
+                                 rendered="#{!entryController.registered and entryController.submitted}">
+                            <p:outputLabel value="#{msg.entry_error_emailAlreadyExists}"/>
+                        </p:panel>
+                    </div>
+                    <div class="ui-xl-5 ui-g-4">
+                        <!-- empty -->
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </f:view>
+    <h:outputStylesheet name="css/style.css"/>
+</h:body>
+</html>

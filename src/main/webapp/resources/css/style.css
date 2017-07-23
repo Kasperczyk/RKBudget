@@ -113,6 +113,10 @@
     background-color: blue;
 }
 
+.ui-widget-content a.link {
+    color: blue;
+}
+
 .white {
     background-color: white;
 }

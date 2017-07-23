@@ -1,11 +1,12 @@
 package de.kasperczyk.rkbudget.user;
 
+import de.kasperczyk.rkbudget.currency.Currency;
+import de.kasperczyk.rkbudget.language.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -32,22 +33,6 @@ public class UserController {
 
     public Locale getLocale() {
         return currentUser.getLocale();
-    }
-
-    public List<Language> getAllSupportedLanguages() {
-        return userService.getAllSupportedLanguages();
-    }
-
-    public List<Currency> getAllSupportedCurrencies() {
-        return userService.getAllSupportedCurrencies();
-    }
-
-    public String getLanguageName(Language language) {
-        return messageSource.getMessage(language.getMessageKey(), null, getLocale());
-    }
-
-    public String getCurrencyName(Currency currency) {
-        return messageSource.getMessage(currency.getMessageKey(), null, getLocale());
     }
 
     public void save() {

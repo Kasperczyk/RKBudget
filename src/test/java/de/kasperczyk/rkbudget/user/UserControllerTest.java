@@ -1,5 +1,7 @@
 package de.kasperczyk.rkbudget.user;
 
+import de.kasperczyk.rkbudget.currency.Currency;
+import de.kasperczyk.rkbudget.language.Language;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

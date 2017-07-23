@@ -1,4 +1,4 @@
-package de.kasperczyk.rkbudget.user;
+package de.kasperczyk.rkbudget.language;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,16 +10,16 @@ import javax.faces.convert.Converter;
 @Component
 public class LanguageConverter implements Converter {
 
-    private final UserService userService;
+    private final LanguageService languageService;
 
     @Autowired
-    public LanguageConverter(UserService userService) {
-        this.userService = userService;
+    public LanguageConverter(LanguageService languageService) {
+        this.languageService = languageService;
     }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String name) {
-        return userService.getLanguageByName(name);
+        return languageService.getLanguageByName(name);
     }
 
     @Override

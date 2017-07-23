@@ -1,6 +1,7 @@
 package de.kasperczyk.rkbudget.entry;
 
-import de.kasperczyk.rkbudget.user.Currency;
+import de.kasperczyk.rkbudget.currency.Currency;
+import de.kasperczyk.rkbudget.language.Language;
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
 import org.springframework.context.annotation.Scope;
@@ -14,11 +15,46 @@ import java.util.Locale;
 @Scope("request")
 public class EntryController {
 
+    private Language language;
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private String email;
+    private String password;
+    private Currency currency;
+
+    public Locale getLocale() {
+        if (language != null) {
+            return new Locale(language.getCountryCode());
+        } else {
+            return FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+        }
+    }
+
+    public void register() {
+        User user = new User(firstName, lastName, userName, email, password);
+        user.setCurrency(currency);
+        user.setLocale(getLocale());
+        registered = entryService.registerUser(user);
+        submitted = true;
+        resetFields();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final EntryService entryService;
     private final UserController userController;
-
-    private String emailOrUserName;
-    private String password;
 
     public EntryController(EntryService entryService, UserController userController) {
         this.entryService = entryService;
@@ -50,29 +86,15 @@ public class EntryController {
 
 
 
+    private String emailOrUserName;
 
 
 
 
-
-
-    private String firstName;
-    private String lastName;
-    private String userName;
-    private String email;
     private boolean registered;
     private boolean submitted;
     private String token;
     private boolean verified;
-
-    public void register() {
-        User user = new User(firstName, lastName, userName, email, password);
-        user.setCurrency(Currency.EURO); // todo
-        user.setLocale(Locale.ENGLISH); // todo
-        registered = entryService.registerUser(user);
-        submitted = true;
-        resetFields();
-    }
 
     private void resetFields() {
         firstName = null;
@@ -157,5 +179,21 @@ public class EntryController {
 
     public void setEmailOrUserName(String emailOrUserName) {
         this.emailOrUserName = emailOrUserName;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

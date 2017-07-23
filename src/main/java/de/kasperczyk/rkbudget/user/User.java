@@ -1,5 +1,6 @@
 package de.kasperczyk.rkbudget.user;
 
+import de.kasperczyk.rkbudget.currency.Currency;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

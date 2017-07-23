@@ -50,11 +50,22 @@ public class AccountController {
         this.messageSource = messageSource;
         this.accountService = accountService;
         this.userController = userController;
-        accounts = new ArrayList<>();
-        accountsChecked = new HashMap<>();
+        accounts = initializeAccounts();
+        accountsChecked = initializeAccountsChecked();
         editMode = false;
     }
 
+    private List<Account> initializeAccounts() {
+        return accountService.getAllAccountsFor(userController.getCurrentUser());
+    }
+
+    private Map<Long, Boolean> initializeAccountsChecked() {
+        accountsChecked = new HashMap<>();
+        for (Account account : accounts) {
+            accountsChecked.put(account.getId(), account.isShown());
+        }
+        return accountsChecked;
+    }
 
     // create-edit-account.xhtml
     public List<AccountType> getAllAccountTypes() {
@@ -109,7 +120,7 @@ public class AccountController {
 
     public void saveAccount() {
         Account account = new Account(accountType, name, institute, owner, iban, creditCardNumber,
-                linkedAccount, expirationDate, balance, userController.getCurrentUser());
+                linkedAccount, expirationDate, balance, !isLimitReached(), userController.getCurrentUser());
         if (editMode) {
             accountService.updateAccount(account, id);
             account.setId(id);

@@ -12,6 +12,9 @@
             <h:outputText id="currentUser"
                           value="#{userController.currentUser.userName}"
                           styleClass="bold"/>
+            <br/>
+            <p:commandLink value="#{msg.entry_label_logout}"
+                           action="#{entryController.logout}"/>
         </p:panel>
         <p:menu styleClass="full-width">
             <p:menuitem value="#{msg.title_dashbord}"

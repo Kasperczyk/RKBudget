@@ -245,7 +245,7 @@ public class AccountControllerTest {
         Date expirationDate = new Date();
         User user = new User();
         return new Account(AccountType.GIRO, "Name", "Institute", "Owner", "IBAN",
-                    "CCN", null, expirationDate, BigDecimal.ONE, user);
+                    "CCN", null, expirationDate, BigDecimal.ONE, true, user);
     }
 
     @Test

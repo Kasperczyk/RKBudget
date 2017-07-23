@@ -26,29 +26,29 @@ public class User {
     @Version
     private Long version;
 
-    @Column
+    @Column(nullable = false)
     private String firstName;
 
-    @Column
+    @Column(nullable = false)
     private String lastName;
 
     @Column
     private String userName;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
-    @Column
+    @Column(nullable = false)
     private Locale locale;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
-    @Column
+    @Column(nullable = false)
     private boolean activated;
 
     public User() { }

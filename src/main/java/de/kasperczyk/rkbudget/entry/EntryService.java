@@ -9,13 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 import java.util.UUID;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Service
 class EntryService {
 
-    private final UserService userService;
-    private final VerificationTokenRepository verificationTokenRepository;
     private final MessageSource messageSource;
-    private final EmailService emailService;
 
     EntryService(UserService userService,
                  VerificationTokenRepository verificationTokenRepository,
@@ -26,6 +25,65 @@ class EntryService {
         this.messageSource = messageSource;
         this.emailService = emailService;
     }
+
+    User loginUser(String emailOrUserName, String password) throws Exception {
+        User user = userService.getUserByEmailAddressOrUserName(emailOrUserName);
+        String errorMessage = validateUser(user, emailOrUserName, password);
+        if (isBlank(errorMessage)) {
+            return user;
+        } else {
+            throw new Exception(errorMessage);
+        }
+    }
+
+    private String validateUser(User user, String emailOrUserName, String password) {
+        String errorMessage = "";
+        Locale locale = new Locale("en"); // todo
+        String[] args = {emailOrUserName};
+        if (user == null) {
+            errorMessage = messageSource.getMessage("entry_error_userNotFound", args, locale);
+        } else if (!user.getPassword().equals(password)) {
+            errorMessage = messageSource.getMessage("entry_error_wrongPassword", args, locale);
+        } else if (!user.isActivated()) {
+            errorMessage = messageSource.getMessage("entry_error_notActivated", args, locale);
+        }
+        return errorMessage;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final UserService userService;
+    private final VerificationTokenRepository verificationTokenRepository;
+    private final EmailService emailService;
 
     boolean registerUser(User user) {
         if (userService.exists(user)) {

@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 
-import javax.faces.context.FacesContext;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,17 +26,11 @@ public class UserController {
         this.messageSource = messageSource;
         this.environment = environment;
         this.userService = userService;
-        setupAndLoginDevUser(environment, userService);
     }
 
-    private void setupAndLoginDevUser(Environment environment, UserService userService) {
-        if (Arrays.stream(environment.getActiveProfiles())
-                .anyMatch(env -> env.equals("dev-h2") || env.equals("dev-postgres"))) {
-            currentUser = userService.login("kasperczyk.rene@gmail.com", "geheim");
-            FacesContext.getCurrentInstance().getViewRoot().setLocale(getLocale());
-            language = Language.valueOf("GERMAN");
-            currency = currentUser.getCurrency();
-        }
+    public void initializeFields() {
+        language = Language.valueOf(currentUser.getLocale().getDisplayName().toUpperCase());
+        currency = currentUser.getCurrency();
     }
 
     public Locale getLocale() {

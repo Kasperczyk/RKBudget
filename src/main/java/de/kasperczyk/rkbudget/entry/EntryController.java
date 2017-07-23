@@ -2,9 +2,12 @@ package de.kasperczyk.rkbudget.entry;
 
 import de.kasperczyk.rkbudget.user.Currency;
 import de.kasperczyk.rkbudget.user.User;
+import de.kasperczyk.rkbudget.user.UserController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import java.util.Locale;
 
 @Component
@@ -12,22 +15,57 @@ import java.util.Locale;
 public class EntryController {
 
     private final EntryService entryService;
+    private final UserController userController;
+
+    private String emailOrUserName;
+    private String password;
+
+    public EntryController(EntryService entryService, UserController userController) {
+        this.entryService = entryService;
+        this.userController = userController;
+    }
+
+    public String login() {
+        try {
+            User user = entryService.loginUser(emailOrUserName, password);
+            userController.setCurrentUser(user);
+            userController.initializeFields();
+            return "/pages/accounts?faces-redirect=true";
+        } catch (Exception e) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            FacesMessage facesMessage = new FacesMessage(e.getMessage());
+            facesContext.addMessage(null, facesMessage);
+        }
+        return "";
+    }
+
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/pages/entry/login?faces-redirect=true";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private String firstName;
     private String lastName;
     private String userName;
     private String email;
-    private String password;
     private boolean registered;
     private boolean submitted;
     private String token;
     private boolean verified;
 
-    public EntryController(EntryService entryService) {
-        this.entryService = entryService;
-    }
-
-    public void registerUser() {
+    public void register() {
         User user = new User(firstName, lastName, userName, email, password);
         user.setCurrency(Currency.EURO); // todo
         user.setLocale(Locale.ENGLISH); // todo
@@ -111,5 +149,13 @@ public class EntryController {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public String getEmailOrUserName() {
+        return emailOrUserName;
+    }
+
+    public void setEmailOrUserName(String emailOrUserName) {
+        this.emailOrUserName = emailOrUserName;
     }
 }

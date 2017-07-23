@@ -14,7 +14,7 @@
                     <!-- empty -->
                 </div>
                 <div class="ui-xl-2 ui-g-4">
-                    <p:panel header="#{msg.entry_panel_header}">
+                    <p:panel header="#{msg.entry_panel_registrationheader}">
                         <p:messages showDetail="true"/>
                         <p:panelGrid columns="2"
                                      layout="grid"
@@ -61,7 +61,7 @@
                             <h:panelGrid/>
                             <p:commandButton value="#{msg.entry_button_register}"
                                              icon="fa fa-fw fa-sign-in"
-                                             action="#{entryController.registerUser}"
+                                             action="#{entryController.register}"
                                              update="@form"/>
                         </p:panelGrid>
                     </p:panel>

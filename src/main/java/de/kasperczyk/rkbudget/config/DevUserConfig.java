@@ -18,16 +18,21 @@ public class DevUserConfig {
         this.userRepository = userRepository;
     }
 
-    public void configureDevUser() {
-        User devUser = new User();
-        devUser.setFirstName("Rene");
-        devUser.setLastName("Kasperczyk");
-        devUser.setUserName("Rene Kasperczyk");
-        devUser.setEmail("kasperczyk.rene@gmail.com");
-        devUser.setPassword("geheim");
-        devUser.setLocale(new Locale("de"));
-        devUser.setCurrency(Currency.EURO);
-        devUser.setActivated(true);
-        userRepository.save(devUser);
+    public void configureDevUsers() {
+        User devUserRene = createDevUser("Rene", "Kasperczyk", "Vyrwel",
+                "kasperczyk.rene@gmail.com", "secret", new Locale("en"), Currency.EURO);
+        User devUserChristina = createDevUser("Christina", "Meißner", "Ryana",
+                "vyrwel@gmail.com", "geheim", new Locale("de"), Currency.EURO);
+        userRepository.save(devUserRene);
+        userRepository.save(devUserChristina);
+    }
+
+    private User createDevUser(String firstName, String lastName, String userName, String email,
+                               String password, Locale locale, Currency currency) {
+        User user = new User(firstName, lastName, userName, email, password);
+        user.setLocale(locale);
+        user.setCurrency(currency);
+        user.setActivated(true);
+        return user;
     }
 }

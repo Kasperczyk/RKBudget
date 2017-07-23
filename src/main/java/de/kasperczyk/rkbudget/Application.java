@@ -14,13 +14,13 @@ public class Application {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-        context.getBean(Application.class).run(args, context);
+        context.getBean(Application.class).configure(context);
     }
 
-    private void run(String[] args, ConfigurableApplicationContext context) {
+    private void configure(ConfigurableApplicationContext context) {
         if (Arrays.stream(context.getEnvironment().getActiveProfiles())
                 .anyMatch(env -> env.equals("dev-h2") || env.equals("dev-postgres"))) {
-            context.getBean(DevUserConfig.class).configureDevUser();
+            context.getBean(DevUserConfig.class).configureDevUsers();
         }
     }
 }

@@ -59,7 +59,7 @@
                                rendered="#{not (account.accountType == 'CREDIT' and not empty account.linkedAccount)}"/>
                 <p:outputLabel value="#{account.balance}"
                                rendered="#{not (account.accountType == 'CREDIT' and not empty account.linkedAccount)}"
-                               styleClass="bold #{account.balance >= 0 ? 'green' : 'red'}">
+                               styleClass="bold #{account.balance >= 0 ? 'positive' : 'negative'}">
                     <f:convertNumber pattern="###,##0.00 #{userController.currency.sign}"/>
                 </p:outputLabel>
             </p:panelGrid>

@@ -56,6 +56,9 @@ public class Account {
     @Column
     private BigDecimal balance;
 
+    @Column
+    private boolean shown;
+
     @ManyToOne
     private User user;
 
@@ -72,6 +75,7 @@ public class Account {
             Account linkedAccount,
             Date expirationDate,
             BigDecimal balance,
+            boolean shown,
             User user) {
         this.accountType = accountType;
         this.name = name;
@@ -82,6 +86,7 @@ public class Account {
         this.linkedAccount = linkedAccount;
         this.expirationDate = expirationDate;
         this.balance = balance;
+        this.shown = shown;
         this.user = user;
     }
 
@@ -167,6 +172,14 @@ public class Account {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public boolean isShown() {
+        return shown;
+    }
+
+    public void setShown(boolean shown) {
+        this.shown = shown;
     }
 
     public User getUser() {

@@ -67,4 +67,8 @@ class AccountService {
     List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
+    List<Account> getAllAccountsFor(User user) {
+        return accountRepository.findAllByUser(user);
+    }
 }

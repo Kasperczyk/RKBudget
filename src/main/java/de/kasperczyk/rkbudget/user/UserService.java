@@ -1,5 +1,6 @@
 package de.kasperczyk.rkbudget.user;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,27 @@ import java.util.List;
 
 @Service
 public class UserService {
+
+    public User getUserByEmailAddressOrUserName(String emailOrUserName) {
+        User user;
+        boolean isEmailAddress = EmailValidator.getInstance().isValid(emailOrUserName);
+        if (isEmailAddress) {
+            user = userRepository.findByEmail(emailOrUserName);
+        } else {
+            user = userRepository.findByUserName(emailOrUserName);
+        }
+        return user;
+    }
+
+
+
+
+
+
+
+
+
+
 
     private final UserRepository userRepository;
 
@@ -22,15 +44,6 @@ public class UserService {
 
     public void addUser(User user) {
         userRepository.save(user);
-    }
-
-    User login(String email, String password) {
-        User user = userRepository.findByEmail(email);
-        if (user.getPassword().equals(password)) {
-            return user;
-        } else {
-            throw new RuntimeException("wrong password");
-        }
     }
 
     public List<User> getAllUsers() {

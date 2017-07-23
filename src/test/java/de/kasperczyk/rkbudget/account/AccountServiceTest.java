@@ -50,7 +50,7 @@ public class AccountServiceTest {
     @Test
     public void addAccountShouldCallSaveWithTheCorrectArgument() {
         Account account = new Account(AccountType.GIRO, "Name", "Institute", "Owner", "IBAN",
-                "CCN", null, new Date(), BigDecimal.ONE, new User());
+                "CCN", null, new Date(), BigDecimal.ONE, true, new User());
         accountService.saveAccount(account);
         verify(accountRepositoryMock).save(account);
     }

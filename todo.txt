@@ -3,6 +3,7 @@ Accounts:
     - improve example in accountService.accountExists
     - improve error messages (validation ...)
     - currency (hard?...)
+    - ß -> regex error
 - account-list:
     - done?!
 - account-details

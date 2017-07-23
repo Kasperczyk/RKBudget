@@ -3,7 +3,6 @@ package de.kasperczyk.rkbudget.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.Locale;
 @Scope("session")
 public class UserController {
 
-    private final Environment environment;
     private final MessageSource messageSource;
     private final UserService userService;
 
@@ -22,9 +20,8 @@ public class UserController {
     private Currency currency;
 
     @Autowired
-    public UserController(Environment environment, MessageSource messageSource, UserService userService) {
+    public UserController(MessageSource messageSource, UserService userService) {
         this.messageSource = messageSource;
-        this.environment = environment;
         this.userService = userService;
     }
 

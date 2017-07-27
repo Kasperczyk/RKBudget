@@ -1,58 +1,71 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+
 <h:head>
-    <title>RKBudget - #{msg.entry_title_login}</title>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible"
+              content="IE=edge"/>
+        <meta http-equiv="Content-Type"
+              content="text/html; charset=UTF-8"/>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable"
+              content="yes"/>
+    </f:facet>
+    <title>#{msg.login_title}</title>
+    <h:outputScript name="js/ripple.js"
+                    library="ultima-layout"/>
+    <h:outputScript name="js/layout.js"
+                    library="ultima-layout"/>
 </h:head>
-<h:body>
+
+<h:body styleClass="login-body">
     <h:form id="loginForm">
-        <div class="ui-fluid">
+        <div class="card login-panel ui-fluid">
             <div class="ui-g">
-                <div class="ui-xl-5 ui-g-4">
-                    <!-- empty -->
+                <div class="ui-g-12">
+                    <p:graphicImage name="images/logo-ultima.svg"
+                                    library="ultima-layout"/>
                 </div>
-                <div class="ui-xl-2 ui-g-4">
-                    <p:panel header="#{msg.entry_panelHeader_login}">
-                        <br/>
-                        <p:messages/>
-                        <p:panelGrid columns="2"
-                                     layout="grid"
-                                     columnClasses="ui-grid-col-5, ui-grid-col-7"
-                                     styleClass="ui-panelgrid-blank">
-                            <p:outputLabel for="emailOrUserName"
-                                           value="#{msg.entry_label_emailOrUserName}"/>
-                            <p:inputText id="emailOrUserName"
-                                         value="#{entryController.emailOrUserName}"
-                                         required="true"/>
-                            <p:outputLabel for="password"
-                                           value="#{msg.entry_label_password}"/>
-                            <p:password id="password"
-                                        value="#{entryController.password}"
-                                        required="true"/>
-                            <h:panelGrid/>
-                            <p:commandButton value="#{msg.entry_button_login}"
-                                             icon="fa fa-fw fa-sign-in"
-                                             action="#{entryController.login}"
-                                             update="@form"/>
-                            <h:panelGrid/>
-                            <h:panelGroup>
-                                <p:outputLabel value="#{msg.entry_label_notYetRegistered}"/>
-                                <p:spacer width="5"/>
-                                <p:link value="#{msg.entry_link_register}"
-                                        styleClass="link"
-                                        outcome="register"/>
-                            </h:panelGroup>
-                        </p:panelGrid>
-                        <br/>
-                    </p:panel>
+                <div class="ui-g-12">
+                    <h:panelGroup styleClass="md-inputfield">
+                        <p:inputText value="#{loginController.emailOrUserName}"
+                                     required="true"/>
+                        <label>#{msg.login_input_emailOrUserName}</label>
+                    </h:panelGroup>
                 </div>
-                <div class="ui-xl-5 ui-g-4">
-                    <!-- empty -->
+                <div class="ui-g-12">
+                    <h:panelGroup styleClass="md-inputfield">
+                        <p:password value="#{loginController.password}"
+                                    required="true"/>
+                        <label>#{msg.login_input_password}</label>
+                    </h:panelGroup>
+                </div>
+                <div class="ui-g-12">
+                    <p:commandButton value="#{msg.login_button_login}"
+                                     icon="ui-icon-person"
+                                     action="#{loginController.login}"
+                                     update="@form"/>
+                    <p:commandButton value="#{msg.login_button_forgotPassword}"
+                                     icon="ui-icon-help"
+                                     action="login"
+                                     styleClass="secondary"/>
+                    <p:link value="#{msg.login_link_notYetRegistered}"
+                            outcome="register"/>
                 </div>
             </div>
         </div>
+
+        <div class="login-footer">PrimeFaces Ultima</div>
+
+        <h:outputStylesheet name="css/ripple.css"
+                            library="ultima-layout"/>
+        <h:outputStylesheet name="css/layout-#{userController.theme}.css"
+                            library="ultima-layout"/>
     </h:form>
 </h:body>
+
 </html>

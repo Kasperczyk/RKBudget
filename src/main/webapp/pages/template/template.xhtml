@@ -18,7 +18,9 @@
         <meta name="theme-color"
               content="#{userController.themeColors[userController.theme]}"/>
     </f:facet>
-    <ui:insert name="title"/>
+    <title>
+        <ui:insert name="title"/>
+    </title>
     <h:outputScript name="js/nanoscroller.js"
                     library="ultima-layout"/>
     <h:outputScript name="js/layout.js"

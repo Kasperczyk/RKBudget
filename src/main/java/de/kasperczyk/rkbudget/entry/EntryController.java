@@ -8,7 +8,6 @@ import org.ocpsoft.rewrite.annotation.Join;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.util.Locale;
 
@@ -56,20 +55,6 @@ public class EntryController {
 
     private final EntryService entryService;
     private final UserController userController;
-
-    public String login() {
-        try {
-            User user = entryService.loginUser(emailOrUserName, password);
-            userController.setCurrentUser(user);
-            userController.initializeFields();
-            return "/pages/accounts?faces-redirect=true";
-        } catch (Exception e) {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            FacesMessage facesMessage = new FacesMessage(e.getMessage());
-            facesContext.addMessage(null, facesMessage);
-        }
-        return "";
-    }
 
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();

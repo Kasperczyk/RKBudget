@@ -1,3 +1,6 @@
+Register:
+- currency value is lost when changing the language
+- i18n errormessages
 Accounts:
 - create-edit-account:
     - improve example in accountService.accountExists
@@ -26,7 +29,7 @@ Then back to Accounts
 
 Dashboard, Balance, Shared Expenses, Calculators and Inbox when the core functionalities are implemented
 
-
+BETTER / PRETTIER ERROR MESSAGES!
 LOGGING!
 TESTING (category, stuff i havent yet in accounts, maybe integration tests, jpa, ...)
 LIQUIBASE?

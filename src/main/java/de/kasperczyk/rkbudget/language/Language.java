@@ -1,5 +1,7 @@
 package de.kasperczyk.rkbudget.language;
 
+import java.util.Arrays;
+
 public enum Language {
 
     ENGLISH("en"),
@@ -13,6 +15,14 @@ public enum Language {
 
     Language(String countryCode) {
         this.countryCode = countryCode;
+    }
+
+    public static Language valueBy(String countryCode) {
+        return Arrays.stream(values())
+                .filter(language -> language.getCountryCode().equals(countryCode))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Language with country code " +
+                        countryCode + " not found"));
     }
 
     public String getCountryCode() {

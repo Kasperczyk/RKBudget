@@ -15,14 +15,19 @@
                         <!-- empty -->
                     </div>
                     <div class="ui-xl-2 ui-g-4">
-                        <p:panel header="#{msg.entry_panel_registrationheader}">
+                        <p:panel>
+                            <f:facet name="header">
+                                <p:outputLabel id="registrationPanelHeader"
+                                               value="#{msg.entry_panel_registrationheader}"/>
+                            </f:facet>
                             <br/>
-                            <p:messages showDetail="true"/>
+                            <p:messages/>
                             <p:panelGrid columns="2"
                                          layout="grid"
                                          columnClasses="ui-grid-col-5, ui-grid-col-7"
                                          styleClass="ui-panelgrid-blank">
-                                <p:outputLabel for="language"
+                                <p:outputLabel id="languageLabel"
+                                               for="language"
                                                value="#{msg.language_label}"/>
                                 <p:selectOneMenu id="language"
                                                  value="#{entryController.language}"
@@ -35,27 +40,34 @@
                                                    var="language"
                                                    itemValue="#{language}"
                                                    itemLabel="#{languageController.getLanguageName(language)}"/>
-                                    <p:ajax update="@form"/>
+                                    <p:ajax update="registrationPanelHeader languageLabel language firstNameLabel lastNameLabel userNameLabel
+                                                    emailLabel passwordLabel passwordConfirmationLabel currencyLabel
+                                                    currency registerButton alreadyRegisteredLabel loginLink
+                                                    successfulPanel unsuccessfulPanel"/>
                                 </p:selectOneMenu>
 
-                                <p:outputLabel for="firstName"
+                                <p:outputLabel id="firstNameLabel"
+                                               for="firstName"
                                                value="#{msg.entry_label_firstName}"/>
                                 <p:inputText id="firstName"
                                              value="#{entryController.firstName}"
                                              required="true"/>
 
-                                <p:outputLabel for="lastName"
+                                <p:outputLabel id="lastNameLabel"
+                                               for="lastName"
                                                value="#{msg.entry_label_lastName}"/>
                                 <p:inputText id="lastName"
                                              value="#{entryController.lastName}"
                                              required="true"/>
 
-                                <p:outputLabel for="userName"
+                                <p:outputLabel id="userNameLabel"
+                                               for="userName"
                                                value="#{msg.entry_label_userName}"/>
                                 <p:inputText id="userName"
                                              value="#{entryController.userName}"/>
 
-                                <p:outputLabel for="email"
+                                <p:outputLabel id="emailLabel"
+                                               for="email"
                                                value="#{msg.entry_label_email}"/>
                                 <p:inputText id="email"
                                              value="#{entryController.email}"
@@ -63,24 +75,28 @@
                                     <f:validator binding="#{emailValidator}"/>
                                 </p:inputText>
 
-                                <p:outputLabel for="password"
+                                <p:outputLabel id="passwordLabel"
+                                               for="password"
                                                value="#{msg.entry_label_password}"/>
                                 <p:password id="password"
                                             value="#{entryController.password}"
                                             match="passwordConfirmation"
                                             required="true"/>
 
-                                <p:outputLabel for="passwordConfirmation"
+                                <p:outputLabel id="passwordConfirmationLabel"
+                                               for="passwordConfirmation"
                                                value="#{msg.entry_label_passwordConfirmation}"/>
                                 <p:password id="passwordConfirmation"
                                             type="hidden"
                                             required="true"/>
 
-                                <p:outputLabel for="currency"
+                                <p:outputLabel id="currencyLabel"
+                                               for="currency"
                                                value="#{msg.currency_label_currency}"/>
                                 <p:selectOneMenu id="currency"
                                                  value="#{entryController.currency}"
-                                                 converter="#{currencyConverter}">
+                                                 converter="#{currencyConverter}"
+                                                 required="true">
                                     <f:selectItem itemLabel="#{msg.currency_selectItem_defaultCurrency}"
                                                   noSelectionOption="true"
                                                   itemDisabled="true"/>
@@ -88,32 +104,38 @@
                                                    var="currency"
                                                    itemValue="#{currency}"
                                                    itemLabel="#{currencyController.getCurrencyName(currency)}"/>
-                                    <p:ajax update="@form"/>
                                 </p:selectOneMenu>
 
                                 <h:panelGrid/>
-                                <p:commandButton value="#{msg.entry_button_register}"
+                                <p:commandButton id="registerButton"
+                                                 value="#{msg.entry_button_register}"
                                                  icon="fa fa-fw fa-sign-in"
                                                  action="#{entryController.register}"
                                                  update="@form"/>
                                 <h:panelGrid/>
                                 <h:panelGroup>
-                                    <p:outputLabel value="#{msg.entry_label_alreadyRegistered}"/>
+                                    <p:outputLabel id="alreadyRegisteredLabel"
+                                                   value="#{msg.entry_label_alreadyRegistered}"/>
                                     <p:spacer width="5"/>
-                                    <p:link value="#{msg.entry_link_login}"
+                                    <p:link id="loginLink"
+                                            value="#{msg.entry_link_login}"
                                             styleClass="link"
                                             outcome="login"/>
                                 </h:panelGroup>
                             </p:panelGrid>
                             <br/>
                         </p:panel>
-                        <p:panel header="#{msg.entry_panel_successfulPanel}"
+                        <p:panel id="successfulPanel"
+                                 header="#{msg.entry_panel_successfulPanel}"
                                  rendered="#{entryController.registered and entryController.submitted}">
                             <p:outputLabel value="#{msg.entry_label_successfulRegistration}"/>
+                            <p:spacer width="5"/>
                             <p:link value="#{msg.entry_link_login}"
+                                    styleClass="link"
                                     outcome="login"/>
                         </p:panel>
-                        <p:panel header="#{msg.entry_panel_unsuccessfulPanel}"
+                        <p:panel id="unsuccessfulPanel"
+                                 header="#{msg.entry_panel_unsuccessfulPanel}"
                                  rendered="#{!entryController.registered and entryController.submitted}">
                             <p:outputLabel value="#{msg.entry_error_emailAlreadyExists}"/>
                         </p:panel>

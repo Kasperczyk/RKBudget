@@ -14,6 +14,30 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Service
 class EntryService {
 
+    boolean registerUser(User user) {
+        if (userService.exists(user)) {
+            return false;
+        } else {
+            userService.addUser(user);
+            VerificationToken verificationToken = createVerificationToken(user);
+            sendVerificationEmail(user, verificationToken);
+            return true;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final MessageSource messageSource;
 
     EntryService(UserService userService,
@@ -72,17 +96,6 @@ class EntryService {
     private final VerificationTokenRepository verificationTokenRepository;
     private final EmailService emailService;
 
-    boolean registerUser(User user) {
-        if (userService.exists(user)) {
-            return false;
-        } else {
-            userService.addUser(user);
-            VerificationToken verificationToken = createVerificationToken(user);
-            sendVerificationEmail(user, verificationToken);
-            return true;
-        }
-    }
-
     private VerificationToken createVerificationToken(User user) {
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken(user, token);
@@ -94,7 +107,7 @@ class EntryService {
         String subject = messageSource.getMessage("entry_mail_registrationSubject", null, locale);
         String text = messageSource.getMessage("entry_mail_registrationText", null, locale);;
         // todo
-        String confirmationUrl = "localhost:8080/pages/entry/verification.xhtml?token=" + verificationToken.getToken();
+        String confirmationUrl = "localhost:8080/pages/entry/verify.xhtml?token=" + verificationToken.getToken();
         text += "\n\n" + confirmationUrl;
         emailService.sendVerificationEmail(user.getEmail(), subject, text);
     }

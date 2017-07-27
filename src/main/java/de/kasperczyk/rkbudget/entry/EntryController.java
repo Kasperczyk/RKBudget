@@ -4,6 +4,7 @@ import de.kasperczyk.rkbudget.currency.Currency;
 import de.kasperczyk.rkbudget.language.Language;
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
+import org.ocpsoft.rewrite.annotation.Join;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.Locale;
 
 @Component
 @Scope("request")
+@Join(path = "/login", to = "/pages/entry/login.xhtml")
 public class EntryController {
 
     private Language language;
@@ -23,43 +25,37 @@ public class EntryController {
     private String password;
     private Currency currency;
 
+    private boolean registered;
+    private boolean submitted;
+
+    public EntryController(EntryService entryService,
+                           UserController userController) {
+        this.entryService = entryService;
+        this.userController = userController;
+    }
+
     public Locale getLocale() {
         if (language != null) {
             return new Locale(language.getCountryCode());
         } else {
-            return FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+            Locale requestLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+            language = Language.valueBy(requestLocale.getLanguage());
+            return requestLocale;
         }
     }
 
     public void register() {
-        User user = new User(firstName, lastName, userName, email, password);
-        user.setCurrency(currency);
-        user.setLocale(getLocale());
+        User user = new User(firstName, lastName, userName, email, password, currency, getLocale());
         registered = entryService.registerUser(user);
         submitted = true;
-        resetFields();
+        if (registered) {
+            resetFields();
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private final EntryService entryService;
     private final UserController userController;
-
-    public EntryController(EntryService entryService, UserController userController) {
-        this.entryService = entryService;
-        this.userController = userController;
-    }
 
     public String login() {
         try {
@@ -81,18 +77,9 @@ public class EntryController {
     }
 
 
-
-
-
-
-
     private String emailOrUserName;
 
 
-
-
-    private boolean registered;
-    private boolean submitted;
     private String token;
     private boolean verified;
 

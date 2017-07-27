@@ -22,7 +22,6 @@ public class EmailValidator implements Validator {
 
     private final MessageSource messageSource;
     private final Pattern pattern;
-    // todo locale
 
     public EmailValidator(MessageSource messageSource) {
         this.messageSource = messageSource;

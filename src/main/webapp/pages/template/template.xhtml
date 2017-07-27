@@ -1,28 +1,64 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:p="http://primefaces.org/ui">
+
 <h:head>
-    <title>
-        <ui:insert name="title"/>
-    </title>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible"
+              content="IE=edge"/>
+        <meta http-equiv="Content-Type"
+              content="text/html; charset=UTF-8"/>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable"
+              content="yes"/>
+        <meta name="theme-color"
+              content="#{userController.themeColors[userController.theme]}"/>
+    </f:facet>
+    <ui:insert name="title"/>
+    <h:outputScript name="js/nanoscroller.js"
+                    library="ultima-layout"/>
+    <h:outputScript name="js/layout.js"
+                    library="ultima-layout"/>
+    <h:outputScript name="js/ripple.js"
+                    library="ultima-layout"/>
+    <h:outputScript name="js/swipe.js"
+                    library="ultima-layout"/>
+    <ui:insert name="head"/>
 </h:head>
-<h:body>
+
+<h:body styleClass="main-body #{userController.compact ? 'layout-compact' : null}">
+
     <f:view locale="#{userController.locale}">
-        <div class="ui-fluid">
-            <div class="ui-g">
-                <div class="ui-xl-1 ui-g-2 ui-g-nopad">
-                    <ui:include src="sidemenu.xhtml"/>
-                </div>
-                <div class="ui-xl-11 ui-g-10 ui-g-nopad">
-                    <ui:insert name="content"/>
-                </div>
+        <div class="layout-wrapper #{userController.menuLayout} #{userController.orientationLTR ? 'layout-ltr' : null}">
+            <ui:include src="./topbar.xhtml"/>
+            <ui:include src="./menu.xhtml"/>
+
+            <div class="layout-main">
+                <ui:insert name="content"/>
+
+                <ui:include src="../template/footer.xhtml"/>
             </div>
-            <!-- todo footer -->
         </div>
+
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+            <f:facet name="start">
+                <i class="fa fa-circle-o-notch fa-spin ajax-loader"/>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value=""/>
+            </f:facet>
+        </p:ajaxStatus>
     </f:view>
-    <h:outputStylesheet name="css/style.css"/>
+
+    <h:outputStylesheet name="css/nanoscroller.css" library="ultima-layout"/>
+    <h:outputStylesheet name="css/animate.css" library="ultima-layout"/>
+    <h:outputStylesheet name="css/ripple.css" library="ultima-layout"/>
+    <h:outputStylesheet name="css/layout-#{userController.theme}.css" library="ultima-layout"/>
 </h:body>
+
 </html>

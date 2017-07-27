@@ -19,4 +19,17 @@
         </locale-config>
     </application>
 
+    <component>
+        <component-type>org.primefaces.component.UltimaMenu</component-type>
+        <component-class>org.primefaces.ultima.UltimaMenu</component-class>
+    </component>
+
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.UltimaMenuRenderer</renderer-type>
+            <renderer-class>org.primefaces.ultima.UltimaMenuRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+
 </faces-config>

@@ -1,0 +1,80 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pu="http://primefaces.org/ultima">
+
+    <h:form id="menuform">
+        <div class="layout-menu #{userController.menuClass}">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <ui:fragment rendered="#{userController.profileMode == 'inline'
+                                              and userController.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
+                        <div class="profile">
+                            <div class="profile-image"/>
+                            <a id="profile-options" href="#">
+                                <span class="profile-name">#{userController.currentUser.fullName}</span>
+                                <i class="material-icons">&#xE313;</i>
+                            </a>
+                        </div>
+
+                        <ul id="profile-menu" class="ultima-menu">
+                            <li role="menuitem">
+                                <p:link class="ripplelink"
+                                        outcome="user">
+                                    <i class="ui-icon ui-icon-perm-identity"/>
+                                    <span>Profile</span>
+                                </p:link>
+                            </li>
+                            <li role="menuitem">
+                                <p:link class="ripplelink"
+                                        outcome="user">
+                                    <i class="ui-icon ui-icon-settings"/>
+                                    <span>Settings</span>
+                                </p:link>
+                            </li>
+                            <li role="menuitem">
+                                <p:link class="ripplelink"
+                                        outcome="user">
+                                    <i class="ui-icon ui-icon-power-settings-new"/>
+                                    <span>Logout</span>
+                                </p:link>
+                            </li>
+                        </ul>
+                    </ui:fragment>
+
+                    <pu:menu widgetVar="me">
+                        <p:menuitem value="#{msg.title_dashbord}"
+                                    icon="home"
+                                    outcome="/pages/dashboard"/>
+                        <p:menuitem value="#{msg.title_balance}"
+                                    icon="assignment"
+                                    outcome="balance"/>
+                        <p:menuitem value="#{msg.title_expenses}"
+                                    icon="shopping_cart"
+                                    outcome="/pages/expenses"/>
+                        <p:menuitem value="#{msg.title_income}"
+                                    icon="attach_money"
+                                    outcome="/pages/income"/>
+                        <p:menuitem value="#{msg.title_accounts}"
+                                    icon="view_column"
+                                    outcome="/pages/accounts"/>
+                        <p:menuitem value="#{msg.title_categorization}"
+                                    icon="reorder"
+                                    outcome="/pages/categorization"/>
+                        <p:menuitem value="#{msg.title_sharedExpenses}"
+                                    icon="supervisor_account"
+                                    outcome="/pages/shared-expenses"/>
+                        <p:menuitem value="#{msg.title_calculators}"
+                                    icon="dialpad"
+                                    outcome="/pages/calculators"/>
+                        <p:menuitem value="#{msg.title_inbox}"
+                                    icon="announcement"
+                                    outcome="/pages/inbox"/>
+                    </pu:menu>
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

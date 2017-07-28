@@ -88,3 +88,15 @@ professionally used package by layer and I want to see how package by feature wo
 => search users to test the app!
 
 - dashboard and calculators not included in MVP (probably)
+
+## How to run locally
+
+1. Clone the project to your file system via **git clone https://github.com/Kasperczyk/RKBudget.git**
+2. cd into the project
+3. Run **mvn clean install** on the command line
+4. Start the app with **mvn spring-boot:run -Dspring.profiles.active=dev-h2**
+5. Open up your favorite browser and navigate to **localhost:8080**
+6. If port 8080 is already used by some other process (that you don't want to stop), 
+you can change it by either setting server.port=port in the 
+application-dev-h2.properties or adding **-Dserver.port=port** as a VM argument where 
+port is whatever port you may want to use instead of 8080.

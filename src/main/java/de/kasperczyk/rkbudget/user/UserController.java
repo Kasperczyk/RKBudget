@@ -119,7 +119,7 @@ public class UserController {
     }
 
     public void initializeFields() {
-        language = Language.valueOf(currentUser.getLocale().getDisplayName().toUpperCase());
+        language = Language.valueBy(currentUser.getLocale().toLanguageTag());
         currency = currentUser.getCurrency();
     }
 

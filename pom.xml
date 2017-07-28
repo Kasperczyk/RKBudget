@@ -8,13 +8,18 @@
     <artifactId>rkbudget</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
+    </parent>
+
     <properties>
         <spring.boot.version>1.5.4.RELEASE</spring.boot.version>
         <mojarra.version>2.2.14</mojarra.version>
         <primefaces.version>6.1</primefaces.version>
         <tomcat.embed.jasper.version>8.5.15</tomcat.embed.jasper.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
-        <primefaces.themes.version>1.0.10</primefaces.themes.version>
         <rewrite.version>3.4.1.Final</rewrite.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
         <h2.version>1.4.196</h2.version>
@@ -53,11 +58,6 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>${primefaces.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>all-themes</artifactId>
-            <version>${primefaces.themes.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>

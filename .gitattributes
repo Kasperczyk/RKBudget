@@ -2,3 +2,4 @@
 /src/main/webapp/resources/primefaces-ultima-cyan/* linguist-vendored
 /src/main/webapp/resources/primefaces-ultima-grey/* linguist-vendored
 /src/main/webapp/resources/ultima-layout/* linguist-vendored
+/src/main/webapp/WEB-INF/primefaces-ultima.taglib.xml linguist-vendored

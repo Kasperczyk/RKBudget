@@ -1,4 +1,12 @@
 Register:
+ - set currency based on location (until then € as default)
+ - error messages
+
+
+
+
+
+Register:
 - currency value is lost when changing the language
 - i18n errormessages
 Accounts:

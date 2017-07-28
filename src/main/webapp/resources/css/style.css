@@ -1,3 +1,35 @@
 .margin-bottom input {
     margin-bottom: 25px;
 }
+
+.md-selectonemenu {
+    display: block;
+    position:relative;
+}
+
+.md-selectonemenu .ui-selectonemenu > label {
+    color: transparent;
+}
+
+.md-selectonemenu .ui-selectonemenu.ui-state-filled > label {
+    color: #212121;
+}
+
+.md-selectonemenu .ui-selectonemenu.ui-state-focus ~ label,
+.md-selectonemenu .ui-state-filled ~ label {
+    top:-20px;
+    font-size:12px;
+    color:#757575;
+}
+
+.md-selectonemenu > label {
+    color:#999;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:5px;
+    top:1px;
+    transition: 0.3s ease all;
+    -moz-transition: 0.3s ease all;
+    -webkit-transition: 0.3s ease all;
+}

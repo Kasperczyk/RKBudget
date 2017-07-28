@@ -35,11 +35,11 @@
                                 </p:link>
                             </li>
                             <li role="menuitem">
-                                <p:link class="ripplelink"
-                                        outcome="user">
+                                <p:commandLink class="ripplelink"
+                                               action="#{loginController.logout}">
                                     <i class="ui-icon ui-icon-power-settings-new"/>
                                     <span>Logout</span>
-                                </p:link>
+                                </p:commandLink>
                             </li>
                         </ul>
                     </ui:fragment>

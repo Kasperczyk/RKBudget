@@ -12,7 +12,7 @@ import javax.faces.context.FacesContext;
 
 @Controller
 @Scope("request")
-@Join(path = "/login", to = "/pages/entry/login.xhtml")
+@Join(path = "/login", to = "/pages/login.xhtml")
 public class LoginController {
 
     private final LoginService loginService;
@@ -32,13 +32,18 @@ public class LoginController {
             User user = loginService.login(emailOrUserName, password);
             userController.setCurrentUser(user);
             userController.initializeFields();
-            return "/pages/accounts?faces-redirect=true";
+            return "/pages/dashboard?faces-redirect=true";
         } catch (Exception e) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             FacesMessage facesMessage = new FacesMessage(e.getMessage());
             facesContext.addMessage(null, facesMessage);
         }
         return "";
+    }
+
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/pages/entry/login?faces-redirect=true";
     }
 
     public String getEmailOrUserName() {

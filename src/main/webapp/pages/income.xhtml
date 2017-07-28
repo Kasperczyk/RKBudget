@@ -3,17 +3,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+>
 <h:body>
     <ui:composition template="template/template.xhtml">
         <ui:define name="title">RKBudget - #{msg.title_income}</ui:define>
         <ui:define name="content">
             <h:form id="incomeForm">
-                <p:panel header="#{msg.income_panel_header}"
-                         styleClass="full-width">
-                    <!-- todo -->
-                    INCOME!
-                </p:panel>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card">
+                            <h1>Income</h1>
+                        </div>
+                    </div>
+                </div>
             </h:form>
         </ui:define>
     </ui:composition>

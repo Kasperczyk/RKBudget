@@ -1,6 +1,6 @@
 package de.kasperczyk.rkbudget.currency;
 
-import de.kasperczyk.rkbudget.entry.EntryController;
+import de.kasperczyk.rkbudget.register.RegisterController;
 import de.kasperczyk.rkbudget.user.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -18,17 +18,17 @@ public class CurrencyController {
     private final MessageSource messageSource;
     private final CurrencyService currencyService;
     private final UserController userController;
-    private final EntryController entryController;
+    private final RegisterController registerController;
 
     @Autowired
     public CurrencyController(MessageSource messageSource,
                               CurrencyService currencyService,
                               UserController userController,
-                              EntryController entryController) {
+                              RegisterController registerController) {
         this.messageSource = messageSource;
         this.currencyService = currencyService;
         this.userController = userController;
-        this.entryController = entryController;
+        this.registerController = registerController;
     }
 
     public List<Currency> getAllSupportedCurrencies() {
@@ -39,8 +39,8 @@ public class CurrencyController {
         Locale locale;
         if (userController.getCurrentUser() != null) {
             locale = userController.getCurrentUser().getLocale();
-        } else if (entryController.getLanguage() != null) {
-            locale = new Locale(entryController.getLanguage().getCountryCode());
+        } else if (registerController.getLanguage() != null) {
+            locale = new Locale(registerController.getLanguage().getCountryCode());
         } else {
             locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
         }

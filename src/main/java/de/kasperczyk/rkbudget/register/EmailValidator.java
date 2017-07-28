@@ -1,4 +1,4 @@
-package de.kasperczyk.rkbudget.entry;
+package de.kasperczyk.rkbudget.register;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;

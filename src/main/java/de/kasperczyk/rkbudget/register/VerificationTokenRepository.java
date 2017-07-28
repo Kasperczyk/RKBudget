@@ -1,4 +1,4 @@
-package de.kasperczyk.rkbudget.entry;
+package de.kasperczyk.rkbudget.register;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

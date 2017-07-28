@@ -1,8 +1,9 @@
-package de.kasperczyk.rkbudget.entry;
+package de.kasperczyk.rkbudget.register;
 
 import de.kasperczyk.rkbudget.email.EmailService;
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,25 @@ import java.util.Locale;
 import java.util.UUID;
 
 @Service
-class EntryService {
+public class RegisterService {
 
-    boolean registerUser(User user) {
+    private final MessageSource messageSource;
+    private final UserService userService;
+    private final EmailService emailService;
+    private final VerificationTokenRepository verificationTokenRepository;
+
+    @Autowired
+    public RegisterService(MessageSource messageSource,
+                           UserService userService,
+                           EmailService emailService,
+                           VerificationTokenRepository verificationTokenRepository) {
+        this.messageSource = messageSource;
+        this.userService = userService;
+        this.emailService = emailService;
+        this.verificationTokenRepository = verificationTokenRepository;
+    }
+
+    boolean register(User user) {
         if (userService.exists(user)) {
             return false;
         } else {
@@ -22,53 +39,6 @@ class EntryService {
             return true;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private final MessageSource messageSource;
-
-    EntryService(UserService userService,
-                 VerificationTokenRepository verificationTokenRepository,
-                 MessageSource messageSource,
-                 EmailService emailService) {
-        this.userService = userService;
-        this.verificationTokenRepository = verificationTokenRepository;
-        this.messageSource = messageSource;
-        this.emailService = emailService;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private final UserService userService;
-    private final VerificationTokenRepository verificationTokenRepository;
-    private final EmailService emailService;
 
     private VerificationToken createVerificationToken(User user) {
         String token = UUID.randomUUID().toString();
@@ -80,25 +50,23 @@ class EntryService {
         Locale locale = new Locale("en");
         String subject = messageSource.getMessage("entry_mail_registrationSubject", null, locale);
         String text = messageSource.getMessage("entry_mail_registrationText", null, locale);;
-        // todo
         String confirmationUrl = "localhost:8080/pages/entry/verify.xhtml?token=" + verificationToken.getToken();
         text += "\n\n" + confirmationUrl;
         emailService.sendVerificationEmail(user.getEmail(), subject, text);
     }
 
-    // todo
     boolean verifyUser(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         if (verificationToken == null) {
             throw new RuntimeException("invalid token");
         } else {
-//            if (new Date().after(verificationToken.getExpiryDate())) {
-//                throw new RuntimeException("token expired");
-//            } else {
-                 userService.activateUser(verificationToken.getUser().getId());
-                 verificationTokenRepository.delete(verificationToken);
-                 return true;
-//            }
+            //            if (new Date().after(verificationToken.getExpiryDate())) {
+            //                throw new RuntimeException("token expired");
+            //            } else {
+            userService.activateUser(verificationToken.getUser().getId());
+            verificationTokenRepository.delete(verificationToken);
+            return true;
+            //            }
         }
     }
 }

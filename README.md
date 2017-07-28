@@ -100,3 +100,6 @@ professionally used package by layer and I want to see how package by feature wo
 you can change it by either setting server.port=port in the 
 application-dev-h2.properties or adding **-Dserver.port=port** as a VM argument where 
 port is whatever port you may want to use instead of 8080.
+7. You can use the following predefined users:
+    - email: kasperczyk.rene@gmail.com, user name: Vyrwel, password: secret
+    - email: vyrwel@gmail.com, user name: Ryana, password: geheim

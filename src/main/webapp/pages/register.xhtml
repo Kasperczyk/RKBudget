@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{registerController.locale}">
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible"
+                  content="IE=edge"/>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=UTF-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable"
+                  content="yes"/>
+        </f:facet>
+        <h:outputScript name="js/ripple.js"
+                        library="ultima-layout"/>
+        <h:outputScript name="js/layout.js"
+                        library="ultima-layout"/>
+    </h:head>
+
+    <h:body styleClass="login-body">
+        <h:form id="registrationForm">
+            <title>#{msg.app_name} - #{msg.register_title}</title>
+            <div class="card login-panel ui-fluid">
+                <p:outputLabel value="#{msg.register_title}"/>
+                <div class="ui-g">
+                    <div class="ui-g-12 margin-bottom">
+                        <p:selectOneMenu id="language"
+                                         value="#{registerController.language}"
+                                         converter="#{languageConverter}"
+                                         required="true">
+                            <f:selectItem itemLabel="#{msg.language_selectItem_defaultLanguage}"
+                                          noSelectionOption="true"
+                                          itemDisabled="true"/>
+                            <f:selectItems value="#{languageController.allSupportedLanguages}"
+                                           var="language"
+                                           itemValue="#{language}"
+                                           itemLabel="#{languageController.getLanguageName(language)}"/>
+                            <p:ajax update="@form"/>
+                        </p:selectOneMenu>
+                        <br/><br/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText value="#{registerController.firstName}"
+                                         required="true"/>
+                            <label>#{msg.register_input_firstName}</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText value="#{registerController.lastName}"
+                                         required="true"/>
+                            <label>#{msg.register_input_lastName}</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText value="#{registerController.userName}"/>
+                            <label>#{msg.register_input_userName}</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText value="#{registerController.email}"
+                                         required="true"/>
+                            <label>#{msg.register_input_email}</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:password value="#{registerController.password}"
+                                        match="passwordConfirm"
+                                        required="true"/>
+                            <label>#{msg.register_input_password}</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText id="passwordConfirm"
+                                         required="true"/>
+                            <label>#{msg.register_input_passwordConfirm}</label>
+                        </h:panelGroup>
+                        <p:selectOneMenu id="currency"
+                                         value="#{registerController.currency}"
+                                         converter="#{currencyConverter}"
+                                         required="true">
+                            <f:selectItem itemLabel="#{msg.currency_selectItem_defaultCurrency}"
+                                          noSelectionOption="true"
+                                          itemDisabled="true"/>
+                            <f:selectItems value="#{currencyController.allSupportedCurrencies}"
+                                           var="currency"
+                                           itemValue="#{currency}"
+                                           itemLabel="#{currencyController.getCurrencyName(currency)}"/>
+                        </p:selectOneMenu>
+                        <br/><br/>
+                        <p:commandButton value="#{msg.register_button_register}"
+                                         icon="ui-icon-person"
+                                         action="#{registerController.register}"
+                                         update="@form"/>
+                        <p:link value="#{msg.register_link_alreadyRegistered}"
+                                outcome="register"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-footer">#{msg.app_name} #{msg.app_copyright}</div>
+
+            <h:outputStylesheet name="css/ripple.css"
+                                library="ultima-layout"/>
+            <h:outputStylesheet name="css/layout-#{userController.theme}.css"
+                                library="ultima-layout"/>
+            <h:outputStylesheet name="css/style.css"/>
+        </h:form>
+    </h:body>
+</f:view>
+
+</html>

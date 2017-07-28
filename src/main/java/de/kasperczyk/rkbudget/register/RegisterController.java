@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 @Controller
@@ -37,10 +38,10 @@ public class RegisterController {
     }
 
     public void register() {
-        // todo currency based on location
-        Currency defaultCurrency = Currency.EURO;
-        String securePassword = registerService.saltAndHashPassword(password);
-        User user = new User(firstName, lastName, userName, email, securePassword, defaultCurrency, getLocale());
+         Currency currency = registerService.getInitialCurrencyByIp(getIpAddress());
+        // todo salt and hash
+        //String securePassword = registerService.saltAndHashPassword(password);
+        User user = new User(firstName, lastName, userName, email, password, currency, getLocale());
         registered = registerService.register(user);
         submitted = true;
         if (registered) {
@@ -48,10 +49,14 @@ public class RegisterController {
         }
     }
 
-    private String saltAndHash(String password) {
-
-
-        return null;
+    private String getIpAddress() {
+        HttpServletRequest request =
+                (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null) {
+            ipAddress = request.getRemoteAddr();
+        }
+        return ipAddress;
     }
 
     public Locale getLocale() {
@@ -72,8 +77,10 @@ public class RegisterController {
         password = null;
     }
 
-    public void verifyUser() {
-        verified = registerService.verifyUser(token);
+    public void verify() {
+        if (token != null) {
+            verified = registerService.verify(token);
+        }
     }
 
     public Language getLanguage() {
@@ -122,5 +129,13 @@ public class RegisterController {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -23,9 +23,20 @@
 
     <h:body styleClass="login-body">
         <h:form id="registrationForm">
+
+            <!-- Email verification -->
+            <f:metadata>
+                <f:viewParam name="token"
+                             value="#{registerController.token}"/>
+                <f:event type="preRenderView"
+                         listener="#{registerController.verify}"/>
+            </f:metadata>
+
+            <!-- title -->
             <h:panelGroup id="title">
                 <title>#{msg.app_name} - #{msg.register_title}</title>
             </h:panelGroup>
+
             <div class="card login-panel ui-fluid">
                 <p:outputLabel id="header"
                                value="#{msg.register_title}"/>

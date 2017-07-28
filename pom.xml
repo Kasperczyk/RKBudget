@@ -21,6 +21,7 @@
         <tomcat.embed.jasper.version>8.5.15</tomcat.embed.jasper.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
         <rewrite.version>3.4.1.Final</rewrite.version>
+        <geoip2.version>2.9.0</geoip2.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
         <h2.version>1.4.196</h2.version>
         <apache.commons.version>3.6</apache.commons.version>
@@ -78,6 +79,11 @@
             <groupId>org.ocpsoft.rewrite</groupId>
             <artifactId>rewrite-config-prettyfaces</artifactId>
             <version>${rewrite.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>${geoip2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

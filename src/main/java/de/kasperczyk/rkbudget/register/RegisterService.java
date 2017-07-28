@@ -1,5 +1,6 @@
 package de.kasperczyk.rkbudget.register;
 
+import de.kasperczyk.rkbudget.currency.Currency;
 import de.kasperczyk.rkbudget.email.EmailService;
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -20,6 +22,7 @@ public class RegisterService {
     private final UserService userService;
     private final PasswordService passwordService;
     private final EmailService emailService;
+    private final LocationService locationService;
     private final VerificationTokenRepository verificationTokenRepository;
 
     @Autowired
@@ -27,16 +30,22 @@ public class RegisterService {
                            UserService userService,
                            PasswordService passwordService,
                            EmailService emailService,
+                           LocationService locationService,
                            VerificationTokenRepository verificationTokenRepository) {
         this.messageSource = messageSource;
         this.userService = userService;
         this.passwordService = passwordService;
         this.emailService = emailService;
+        this.locationService = locationService;
         this.verificationTokenRepository = verificationTokenRepository;
     }
 
     String saltAndHashPassword(String password) {
         return passwordService.saltAndHash(password);
+    }
+
+    Currency getInitialCurrencyByIp(String ip) {
+        return Currency.valueBy(locationService.getCountryCodeByIp(ip));
     }
 
     boolean register(User user) {
@@ -64,24 +73,24 @@ public class RegisterService {
     private void sendVerificationEmail(User user, VerificationToken verificationToken) {
         Locale locale = new Locale("en");
         String subject = messageSource.getMessage("entry_mail_registrationSubject", null, locale);
-        String text = messageSource.getMessage("entry_mail_registrationText", null, locale);;
-        String confirmationUrl = "localhost:8080/pages/entry/verify.xhtml?token=" + verificationToken.getToken();
+        String text = messageSource.getMessage("entry_mail_registrationText", null, locale);
+        String confirmationUrl = "localhost:8080/register?token=" + verificationToken.getToken();
         text += "\n\n" + confirmationUrl;
         emailService.sendVerificationEmail(user.getEmail(), subject, text);
     }
 
-    boolean verifyUser(String token) {
+    boolean verify(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         if (verificationToken == null) {
             throw new RuntimeException("invalid token");
         } else {
-            //            if (new Date().after(verificationToken.getExpiryDate())) {
-            //                throw new RuntimeException("token expired");
-            //            } else {
-            userService.activateUser(verificationToken.getUser().getId());
-            verificationTokenRepository.delete(verificationToken);
-            return true;
-            //            }
+            if (new Date().after(verificationToken.getExpiryDate())) {
+                throw new RuntimeException("token expired");
+            } else {
+                userService.activateUser(verificationToken.getUser().getId());
+                verificationTokenRepository.delete(verificationToken);
+                return true;
+            }
         }
     }
 }

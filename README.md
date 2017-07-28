@@ -103,3 +103,7 @@ port is whatever port you may want to use instead of 8080.
 7. You can use the following predefined users:
     - email: kasperczyk.rene@gmail.com, user name: Vyrwel, password: secret
     - email: vyrwel@gmail.com, user name: Ryana, password: geheim
+    
+## Credits
+
+This product includes GeoLite2 data created by MaxMind, available from [http://www.maxmind.com](http://www.maxmind.com).

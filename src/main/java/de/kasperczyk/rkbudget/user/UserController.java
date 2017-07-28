@@ -2,17 +2,20 @@ package de.kasperczyk.rkbudget.user;
 
 import de.kasperczyk.rkbudget.currency.Currency;
 import de.kasperczyk.rkbudget.language.Language;
+import org.ocpsoft.rewrite.annotation.Join;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import javax.faces.context.FacesContext;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 @Controller
 @Scope("session")
+@Join(path = "/profile", to = "/pages/user.xhtml")
 public class UserController {
 
     private Map<String, String> themeColors;
@@ -20,7 +23,7 @@ public class UserController {
     private boolean compact = true;
     private String menuLayout = "static";
     private boolean orientationLTR = true;
-    private String menuClass = null;
+    private String menuClass = "layout-menu-dark";
     private String profileMode = "inline";
 
     public Map<String, String> getThemeColors() {
@@ -124,7 +127,11 @@ public class UserController {
     }
 
     public Locale getLocale() {
-        return currentUser.getLocale();
+        if (currentUser != null) {
+            return currentUser.getLocale();
+        } else {
+            return FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+        }
     }
 
     public void save() {

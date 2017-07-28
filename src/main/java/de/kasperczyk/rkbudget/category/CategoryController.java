@@ -1,6 +1,7 @@
 package de.kasperczyk.rkbudget.category;
 
 import de.kasperczyk.rkbudget.user.UserController;
+import org.ocpsoft.rewrite.annotation.Join;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Controller
 @Scope("session")
+@Join(path = "/categorization", to = "/pages/categorization.xhtml")
 public class CategoryController {
 
     private final MessageSource messageSource;

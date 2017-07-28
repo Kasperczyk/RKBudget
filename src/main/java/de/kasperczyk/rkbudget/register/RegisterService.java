@@ -33,7 +33,7 @@ public class RegisterService {
         if (userService.exists(user)) {
             return false;
         } else {
-            userService.addUser(user);
+            userService.create(user);
             VerificationToken verificationToken = createVerificationToken(user);
             sendVerificationEmail(user, verificationToken);
             return true;

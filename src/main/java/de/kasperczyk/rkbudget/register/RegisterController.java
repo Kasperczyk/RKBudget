@@ -24,7 +24,6 @@ public class RegisterController {
     private String userName;
     private String email;
     private String password;
-    private Currency currency;
 
     private String token;
     private boolean verified;
@@ -38,7 +37,9 @@ public class RegisterController {
     }
 
     public void register() {
-        User user = new User(firstName, lastName, userName, email, password, currency, getLocale());
+        // todo currency based on location
+        Currency defaultCurrency = Currency.EURO;
+        User user = new User(firstName, lastName, userName, email, password, defaultCurrency, getLocale());
         registered = registerService.register(user);
         submitted = true;
         if (registered) {
@@ -114,13 +115,5 @@ public class RegisterController {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
     }
 }

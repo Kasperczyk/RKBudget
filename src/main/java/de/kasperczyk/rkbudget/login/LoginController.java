@@ -43,7 +43,7 @@ public class LoginController {
 
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/pages/entry/login?faces-redirect=true";
+        return "/pages/login?faces-redirect=true";
     }
 
     public String getEmailOrUserName() {

@@ -42,7 +42,7 @@ public class UserServiceTest {
     @Test
     public void addUserShouldSaveTheUser() {
         User user = new User();
-        userService.addUser(user);
+        userService.create(user);
         verify(userRepositoryMock).save(user);
     }
 }

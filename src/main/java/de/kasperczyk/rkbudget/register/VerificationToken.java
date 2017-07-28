@@ -3,8 +3,8 @@ package de.kasperczyk.rkbudget.register;
 import de.kasperczyk.rkbudget.user.User;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,27 +32,26 @@ public class VerificationToken {
     )
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String token;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "USER_ID")
+    @OneToOne
+    @JoinColumn(nullable = false)
     private User user;
 
+    @Column(nullable = false)
     private Date expiryDate;
 
-    public VerificationToken() {
-
-    }
-
-    public VerificationToken(User user, String token) {
+    VerificationToken(User user, String token) {
         this.user = user;
         this.token = token;
+        expiryDate = calculateExpiryDate();
     }
 
-    private Date calculateExpiryDate(int expiryTimeInMinutes) {
+    private Date calculateExpiryDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Timestamp(calendar.getTime().getTime()));
-        calendar.add(Calendar.MINUTE, expiryTimeInMinutes);
+        calendar.add(Calendar.MINUTE, EXPIRES_IN);
         return new Date(calendar.getTime().getTime());
     }
 

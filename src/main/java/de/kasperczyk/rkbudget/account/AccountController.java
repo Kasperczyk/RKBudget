@@ -3,6 +3,7 @@ package de.kasperczyk.rkbudget.account;
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
 import org.apache.commons.lang3.StringUtils;
+import org.ocpsoft.rewrite.annotation.Join;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -11,11 +12,16 @@ import org.springframework.stereotype.Controller;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
 @Scope("session")
+@Join(path = "/accounts", to = "/pages/accounts.xhtml")
 public class AccountController {
 
     // todo extend in the future, maybe allow the user to choose from several layouts

@@ -1,10 +1,17 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:ui="http://java.sun.com/jsf/facelets">
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
 
     <div class="footer">
         <div class="card clearfix">
-            <span class="footer-text-left">#{msg.app_name}</span>
+            <span class="footer-text-left">
+                #{msg.app_name}
+                <p:spacer width="5"/>
+                <a href="https://github.com/Kasperczyk/RKBudget">
+                    <i class="fa fa-github"/> GitHub
+                </a>
+            </span>
             <span class="footer-text-right">
                 <span class="ui-icon ui-icon-copyright"/>
                 <span>#{msg.app_copyright}</span>

@@ -154,13 +154,22 @@ public class User {
         this.activated = activated;
     }
 
-    @Override
-    public String toString() {
-        return getFullName();
-    }
-
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+               "id=" + id +
+               ", firstName='" + firstName + '\'' +
+               ", lastName='" + lastName + '\'' +
+               ", userName='" + userName + '\'' +
+               ", email='" + email + '\'' +
+               ", locale=" + locale +
+               ", currency=" + currency +
+               ", activated=" + activated +
+               '}';
     }
 
     @Override

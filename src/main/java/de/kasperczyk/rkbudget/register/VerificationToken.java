@@ -55,6 +55,16 @@ public class VerificationToken {
         return new Date(calendar.getTime().getTime());
     }
 
+    @Override
+    public String toString() {
+        return "VerificationToken{" +
+               "id=" + id +
+               ", token='" + token + '\'' +
+               ", user=" + user +
+               ", expiryDate=" + expiryDate +
+               '}';
+    }
+
     public Long getId() {
         return id;
     }

@@ -49,7 +49,7 @@ professionally used package by layer and I want to see how package by feature wo
 - JSF Facelets have access to Spring managed Controllers ("managed beans")
     - each Facelet has its own Controller
 - Controllers are relatively dumb and rely on Services to perform business logic
-    - each Controller can only use its own Service
+    - each Controller can only other Controllers and its own Service
     - if a Controller needs something from another Service, it must use its own Service as a proxy
 - Services perform business logic and use Repositories to interact with the database
     - Services can only use the feature specific Repository; if it needs data corresponding to 

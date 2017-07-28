@@ -39,12 +39,19 @@ public class RegisterController {
     public void register() {
         // todo currency based on location
         Currency defaultCurrency = Currency.EURO;
-        User user = new User(firstName, lastName, userName, email, password, defaultCurrency, getLocale());
+        String securePassword = registerService.saltAndHashPassword(password);
+        User user = new User(firstName, lastName, userName, email, securePassword, defaultCurrency, getLocale());
         registered = registerService.register(user);
         submitted = true;
         if (registered) {
             resetFields();
         }
+    }
+
+    private String saltAndHash(String password) {
+
+
+        return null;
     }
 
     public Locale getLocale() {

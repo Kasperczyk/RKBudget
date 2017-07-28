@@ -2,6 +2,7 @@ package de.kasperczyk.rkbudget.login;
 
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Service
 class LoginService {
 
+    private static final Logger LOG = Logger.getLogger(LoginService.class);
+
     private final MessageSource messageSource;
     private final UserService userService;
 
@@ -23,9 +26,11 @@ class LoginService {
     }
 
     User login(String emailOrUserName, String password) throws Exception {
+        LOG.info("Trying to log in user with email or user name: '" + emailOrUserName + "'");
         User user = userService.getUserByEmailAddressOrUserName(emailOrUserName);
         String errorMessage = validateUser(user, emailOrUserName, password);
         if (isBlank(errorMessage)) {
+            LOG.info("Successfully logged in user: " + user.toString());
             return user;
         } else {
             throw new Exception(errorMessage);
@@ -38,10 +43,13 @@ class LoginService {
         String[] args = {emailOrUserName};
         if (user == null) {
             errorMessage = messageSource.getMessage("entry_error_userNotFound", args, locale);
+            LOG.error("User with email or user name '" + emailOrUserName + "' not found");
         } else if (!user.getPassword().equals(password)) {
             errorMessage = messageSource.getMessage("entry_error_wrongPassword", args, locale);
+            LOG.error("Incorrect password provided for user with email or user name '" + emailOrUserName + "'");
         } else if (!user.isActivated()) {
             errorMessage = messageSource.getMessage("entry_error_notActivated", args, locale);
+            LOG.error("User with email or user name '" + emailOrUserName + "' has not been activated yet");
         }
         return errorMessage;
     }

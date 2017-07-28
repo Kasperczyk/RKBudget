@@ -1,6 +1,7 @@
 package de.kasperczyk.rkbudget.user;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,8 @@ import java.util.List;
 
 @Service
 public class UserService {
+
+    private static final Logger LOG = Logger.getLogger(UserService.class);
 
     public User getUserByEmailAddressOrUserName(String emailOrUserName) {
         User user;
@@ -32,6 +35,7 @@ public class UserService {
     }
 
     public void create(User user) {
+        LOG.info("Saving user: " + user.toString() + " to the database");
         userRepository.save(user);
     }
 

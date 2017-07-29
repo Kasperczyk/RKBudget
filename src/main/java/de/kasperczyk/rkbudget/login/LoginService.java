@@ -5,6 +5,7 @@ import de.kasperczyk.rkbudget.user.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
@@ -18,11 +19,13 @@ class LoginService {
 
     private final MessageSource messageSource;
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    LoginService(MessageSource messageSource, UserService userService) {
+    LoginService(MessageSource messageSource, UserService userService, PasswordEncoder passwordEncoder) {
         this.messageSource = messageSource;
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     User login(String emailOrUserName, String password) throws Exception {
@@ -44,7 +47,7 @@ class LoginService {
         if (user == null) {
             errorMessage = messageSource.getMessage("entry_error_userNotFound", args, locale);
             LOG.error("User with email or user name '" + emailOrUserName + "' not found");
-        } else if (!user.getPassword().equals(password)) {
+        } else if (!passwordEncoder.matches(password, user.getPassword())) {
             errorMessage = messageSource.getMessage("entry_error_wrongPassword", args, locale);
             LOG.error("Incorrect password provided for user with email or user name '" + emailOrUserName + "'");
         } else if (!user.isActivated()) {

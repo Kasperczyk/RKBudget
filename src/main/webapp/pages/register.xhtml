@@ -41,7 +41,11 @@
                 <p:outputLabel id="header"
                                value="#{msg.register_title}"/>
                 <div class="ui-g">
-                    <div class="ui-g-12 margin-bottom">
+                    <div class="ui-g-12">
+                        <p:graphicImage name="images/logo-ultima.svg"
+                                        library="ultima-layout"/>
+                    </div>
+                    <div class="ui-g-12">
 
                         <!-- Language -->
                         <h:panelGroup class="md-selectonemenu">
@@ -57,7 +61,8 @@
                                                itemLabel="#{languageController.getLanguageName(language)}"/>
                                 <p:ajax update="languageLabel firstNameLabel lastNameLabel userNameLabel
                                                 emailLabel passwordLabel passwordConfirmLabel registerButton loginLink
-                                                title header"/>
+                                                title header firstNameError lastNameError userNameError emailError
+                                                passwordError passwordConfirmError"/>
                             </p:selectOneMenu>
                             <p:outputLabel id="languageLabel"
                                            value="#{msg.language_label}"/>
@@ -66,42 +71,62 @@
 
                         <!-- First Name -->
                         <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText value="#{registerController.firstName}"
+                            <p:inputText id="firstName"
+                                         value="#{registerController.firstName}"
                                          required="true"/>
                             <p:outputLabel id="firstNameLabel"
                                            value="#{msg.register_input_firstName}"/>
+                            <p:message id="firstNameError"
+                                       styleClass="left-align"
+                                       for="firstName"/>
                         </h:panelGroup>
 
                         <!-- Last Name -->
                         <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText value="#{registerController.lastName}"
+                            <p:inputText id="lastName"
+                                         value="#{registerController.lastName}"
                                          required="true"/>
                             <p:outputLabel id="lastNameLabel"
                                            value="#{msg.register_input_lastName}"/>
+                            <p:message id="lastNameError"
+                                       styleClass="left-align"
+                                       for="lastName"/>
                         </h:panelGroup>
 
                         <!-- User Name -->
                         <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText value="#{registerController.userName}"/>
+                            <p:inputText id="userName"
+                                         value="#{registerController.userName}"/>
                             <p:outputLabel id="userNameLabel"
                                            value="#{msg.register_input_userName}"/>
+                            <p:message id="userNameError"
+                                       styleClass="left-align"
+                                       for="userName"/>
                         </h:panelGroup>
 
                         <!-- Email -->
                         <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText value="#{registerController.email}"
+                            <p:inputText id="email"
+                                         value="#{registerController.email}"
                                          required="true"/>
                             <p:outputLabel id="emailLabel"
                                            value="#{msg.register_input_email}"/>
+                            <p:message id="emailError"
+                                       styleClass="left-align"
+                                       for="email"/>
                         </h:panelGroup>
 
                         <!-- Password -->
                         <h:panelGroup styleClass="md-inputfield">
-                            <p:password value="#{registerController.password}"
+                            <p:password id="password"
+                                        value="#{registerController.password}"
                                         match="passwordConfirm"
                                         required="true"/>
                             <p:outputLabel id="passwordLabel"
                                            value="#{msg.register_input_password}"/>
+                            <p:message id="passwordError"
+                                       styleClass="left-align"
+                                       for="password"/>
                         </h:panelGroup>
 
                         <!-- Confirm Password -->
@@ -110,8 +135,12 @@
                                         required="true"/>
                             <p:outputLabel id="passwordConfirmLabel"
                                            value="#{msg.register_input_passwordConfirm}"/>
+                            <p:message id="passwordConfirmError"
+                                       styleClass="left-align"
+                                       for="passwordConfirm"/>
                         </h:panelGroup>
 
+                        <br/>
                         <!-- Register Button -->
                         <p:commandButton id="registerButton"
                                          value="#{msg.register_button_register}"

@@ -38,10 +38,9 @@ public class RegisterController {
     }
 
     public void register() {
-         Currency currency = registerService.getInitialCurrencyByIp(getIpAddress());
-        // todo salt and hash
-        //String securePassword = registerService.saltAndHashPassword(password);
-        User user = new User(firstName, lastName, userName, email, password, currency, getLocale());
+        Currency currency = registerService.getInitialCurrencyByIp(getIpAddress());
+        String securePassword = registerService.encodePassword(password);
+        User user = new User(firstName, lastName, userName, email, securePassword, currency, getLocale());
         registered = registerService.register(user);
         submitted = true;
         if (registered) {
@@ -74,7 +73,6 @@ public class RegisterController {
         lastName = null;
         userName = null;
         email = null;
-        password = null;
     }
 
     public void verify() {
@@ -137,5 +135,17 @@ public class RegisterController {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isSubmitted() {
+        return submitted;
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public boolean isVerified() {
+        return verified;
     }
 }

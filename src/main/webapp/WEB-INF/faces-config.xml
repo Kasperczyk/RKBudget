@@ -10,6 +10,9 @@
             <base-name>message</base-name>
             <var>msg</var>
         </resource-bundle>
+        <message-bundle>
+            message
+        </message-bundle>
 
         <locale-config>
             <default-locale>en</default-locale>

@@ -15,19 +15,24 @@
     </parent>
 
     <properties>
-        <spring.boot.version>1.5.4.RELEASE</spring.boot.version>
+        <spring.boot.version>1.5.6.RELEASE</spring.boot.version>
+        <!-- Web -->
         <mojarra.version>2.2.14</mojarra.version>
+        <tomcat.embed.jasper.version>8.5.19</tomcat.embed.jasper.version>
         <primefaces.version>6.1</primefaces.version>
-        <tomcat.embed.jasper.version>8.5.15</tomcat.embed.jasper.version>
-        <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
         <rewrite.version>3.4.1.Final</rewrite.version>
-        <geoip2.version>2.9.0</geoip2.version>
+        <!-- Data -->
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
         <h2.version>1.4.196</h2.version>
-        <apache.commons.version>3.6</apache.commons.version>
+        <geoip2.version>2.9.0</geoip2.version>
+        <!-- Utility -->
+        <common.lang.version>3.6</common.lang.version>
         <commons.validator.version>1.4.0</commons.validator.version>
+        <!-- Test -->
         <junit.version>4.12</junit.version>
-        <mockito.version>1.9.5</mockito.version>
+        <mockito.version>1.10.19</mockito.version>
+        <!-- Plugins -->
+        <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
     </properties>
 
     <repositories>
@@ -40,6 +45,7 @@
     </repositories>
 
     <dependencies>
+        <!-- Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -56,14 +62,14 @@
             <version>${mojarra.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>${primefaces.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
             <version>${tomcat.embed.jasper.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${primefaces.version}</version>
         </dependency>
         <dependency>
             <groupId>org.ocpsoft.rewrite</groupId>
@@ -80,11 +86,7 @@
             <artifactId>rewrite-config-prettyfaces</artifactId>
             <version>${rewrite.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.maxmind.geoip2</groupId>
-            <artifactId>geoip2</artifactId>
-            <version>${geoip2.version}</version>
-        </dependency>
+        <!-- Data -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -101,20 +103,34 @@
             <version>${h2.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>${geoip2.version}</version>
+        </dependency>
+        <!-- Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <!-- Utility -->
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${apache.commons.version}</version>
+            <version>${common.lang.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>${commons.validator.version}</version>
         </dependency>
+        <!-- Mail -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
+        <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

@@ -4,6 +4,7 @@ import de.kasperczyk.rkbudget.currency.Currency;
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
@@ -12,17 +13,22 @@ import java.util.Locale;
 public class DevUserConfig {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DevUserConfig(UserRepository userRepository) {
+    public DevUserConfig(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void configureDevUsers() {
+
         User devUserRene = createDevUser("Rene", "Kasperczyk", "Vyrwel",
-                "kasperczyk.rene@gmail.com", "secret", new Locale("en"), Currency.EURO);
+                "kasperczyk.rene@gmail.com", passwordEncoder.encode("secret"),
+                new Locale("en"), Currency.EURO);
         User devUserChristina = createDevUser("Christina", "Meißner", "Ryana",
-                "vyrwel@gmail.com", "geheim", new Locale("de"), Currency.EURO);
+                "vyrwel@gmail.com", passwordEncoder.encode("geheim"),
+                new Locale("de"), Currency.EURO);
         userRepository.save(devUserRene);
         userRepository.save(devUserChristina);
     }

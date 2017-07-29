@@ -7,6 +7,7 @@ import de.kasperczyk.rkbudget.user.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -20,28 +21,28 @@ public class RegisterService {
 
     private final MessageSource messageSource;
     private final UserService userService;
-    private final PasswordService passwordService;
     private final EmailService emailService;
     private final LocationService locationService;
     private final VerificationTokenRepository verificationTokenRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public RegisterService(MessageSource messageSource,
                            UserService userService,
-                           PasswordService passwordService,
                            EmailService emailService,
                            LocationService locationService,
-                           VerificationTokenRepository verificationTokenRepository) {
+                           VerificationTokenRepository verificationTokenRepository,
+                           PasswordEncoder passwordEncoder) {
         this.messageSource = messageSource;
         this.userService = userService;
-        this.passwordService = passwordService;
         this.emailService = emailService;
         this.locationService = locationService;
         this.verificationTokenRepository = verificationTokenRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    String saltAndHashPassword(String password) {
-        return passwordService.saltAndHash(password);
+    String encodePassword(String password) {
+        return passwordEncoder.encode(password);
     }
 
     Currency getInitialCurrencyByIp(String ip) {

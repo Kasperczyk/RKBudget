@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 @Controller
-@Scope("request")
+@Scope("session")
 @Join(path = "/register", to = "/pages/register.xhtml")
 public class RegisterController {
 
@@ -30,7 +30,7 @@ public class RegisterController {
     private boolean verified;
 
     private boolean registered;
-    private boolean submitted;
+    private boolean failed;
 
     @Autowired
     public RegisterController(RegisterService registerService) {
@@ -40,12 +40,20 @@ public class RegisterController {
     public void register() {
         Currency currency = registerService.getInitialCurrencyByIp(getIpAddress());
         String securePassword = registerService.encodePassword(password);
-        User user = new User(firstName, lastName, userName, email, securePassword, currency, getLocale());
-        registered = registerService.register(user);
-        submitted = true;
+        User user = new User(firstName, lastName, userName, email.toLowerCase(),
+                securePassword, currency, getLocale());
+        registered = registerService.register(user, getServerUrl(), getLocale());
+        failed = !registered;
         if (registered) {
             resetFields();
         }
+    }
+
+    private String getServerUrl() {
+        HttpServletRequest request =
+                (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String url = request.getRequestURL().toString();
+        return url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath();
     }
 
     private String getIpAddress() {
@@ -79,6 +87,14 @@ public class RegisterController {
         if (token != null) {
             verified = registerService.verify(token);
         }
+    }
+
+    public boolean showRegistrationForm() {
+        return !(verified || registered || failed);
+    }
+
+    public String navigateToLoginPage() {
+        return "login?faces-redirect=true";
     }
 
     public Language getLanguage() {
@@ -137,8 +153,8 @@ public class RegisterController {
         this.token = token;
     }
 
-    public boolean isSubmitted() {
-        return submitted;
+    public boolean isFailed() {
+        return failed;
     }
 
     public boolean isRegistered() {

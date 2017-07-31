@@ -28,6 +28,7 @@
         <!-- Utility -->
         <common.lang.version>3.6</common.lang.version>
         <commons.validator.version>1.4.0</commons.validator.version>
+        <passay.version>1.3.0</passay.version>
         <!-- Test -->
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
@@ -123,6 +124,11 @@
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>${commons.validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.passay</groupId>
+            <artifactId>passay</artifactId>
+            <version>${passay.version}</version>
         </dependency>
         <!-- Mail -->
         <dependency>

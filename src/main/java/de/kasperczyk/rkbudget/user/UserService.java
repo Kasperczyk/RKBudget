@@ -34,6 +34,14 @@ public class UserService {
         return userRepository.findByEmail(user.getEmail()) != null;
     }
 
+    public boolean isEmailTaken(String email) {
+        return userRepository.findByEmail(email) != null;
+    }
+
+    public boolean isUserNameTaken(String userName) {
+        return userRepository.findByUserName(userName) != null;
+    }
+
     public void create(User user) {
         LOG.info("Saving user: " + user.toString() + " to the database");
         userRepository.save(user);

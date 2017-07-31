@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<f:view locale="#{registerController.locale}">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <f:facet name="first">
             <meta http-equiv="X-UA-Compatible"
@@ -22,6 +23,7 @@
     </h:head>
 
     <h:body styleClass="login-body">
+        <f:view locale="#{registerController.locale}">
         <h:form id="registrationForm">
 
             <!-- Email verification -->
@@ -40,119 +42,27 @@
             <div class="card login-panel ui-fluid">
                 <p:outputLabel id="header"
                                value="#{msg.register_title}"/>
+                <ui:insert name="subtitle"/>
                 <div class="ui-g">
                     <div class="ui-g-12">
                         <p:graphicImage name="images/logo-ultima.svg"
                                         library="ultima-layout"/>
                     </div>
-                    <div class="ui-g-12">
 
-                        <!-- Language -->
-                        <h:panelGroup class="md-selectonemenu">
-                            <p:selectOneMenu value="#{registerController.language}"
-                                             converter="#{languageConverter}"
-                                             required="true">
-                                <f:selectItem itemLabel="#{msg.language_default}"
-                                              noSelectionOption="true"
-                                              itemDisabled="true"/>
-                                <f:selectItems value="#{languageController.allSupportedLanguages}"
-                                               var="language"
-                                               itemValue="#{language}"
-                                               itemLabel="#{languageController.getLanguageName(language)}"/>
-                                <p:ajax update="languageLabel firstNameLabel lastNameLabel userNameLabel
-                                                emailLabel passwordLabel passwordConfirmLabel registerButton loginLink
-                                                title header firstNameError lastNameError userNameError emailError
-                                                passwordError passwordConfirmError"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel id="languageLabel"
-                                           value="#{msg.language_label}"/>
-                        </h:panelGroup>
-                        <br/>
+                    <!-- registrationForm -->
+                    <h:panelGroup rendered="#{registerController.showRegistrationForm()}">
+                        <ui:include src="registration/registerForm.xhtml"/>
+                    </h:panelGroup>
 
-                        <!-- First Name -->
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText id="firstName"
-                                         value="#{registerController.firstName}"
-                                         required="true"/>
-                            <p:outputLabel id="firstNameLabel"
-                                           value="#{msg.register_input_firstName}"/>
-                            <p:message id="firstNameError"
-                                       styleClass="left-align"
-                                       for="firstName"/>
-                        </h:panelGroup>
+                    <!-- registrationSuccessful -->
+                    <h:panelGroup rendered="#{registerController.registered}">
+                        <ui:include src="registration/successful.xhtml"/>
+                    </h:panelGroup>
 
-                        <!-- Last Name -->
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText id="lastName"
-                                         value="#{registerController.lastName}"
-                                         required="true"/>
-                            <p:outputLabel id="lastNameLabel"
-                                           value="#{msg.register_input_lastName}"/>
-                            <p:message id="lastNameError"
-                                       styleClass="left-align"
-                                       for="lastName"/>
-                        </h:panelGroup>
-
-                        <!-- User Name -->
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText id="userName"
-                                         value="#{registerController.userName}"/>
-                            <p:outputLabel id="userNameLabel"
-                                           value="#{msg.register_input_userName}"/>
-                            <p:message id="userNameError"
-                                       styleClass="left-align"
-                                       for="userName"/>
-                        </h:panelGroup>
-
-                        <!-- Email -->
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText id="email"
-                                         value="#{registerController.email}"
-                                         required="true"/>
-                            <p:outputLabel id="emailLabel"
-                                           value="#{msg.register_input_email}"/>
-                            <p:message id="emailError"
-                                       styleClass="left-align"
-                                       for="email"/>
-                        </h:panelGroup>
-
-                        <!-- Password -->
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:password id="password"
-                                        value="#{registerController.password}"
-                                        match="passwordConfirm"
-                                        required="true"/>
-                            <p:outputLabel id="passwordLabel"
-                                           value="#{msg.register_input_password}"/>
-                            <p:message id="passwordError"
-                                       styleClass="left-align"
-                                       for="password"/>
-                        </h:panelGroup>
-
-                        <!-- Confirm Password -->
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:password id="passwordConfirm"
-                                        required="true"/>
-                            <p:outputLabel id="passwordConfirmLabel"
-                                           value="#{msg.register_input_passwordConfirm}"/>
-                            <p:message id="passwordConfirmError"
-                                       styleClass="left-align"
-                                       for="passwordConfirm"/>
-                        </h:panelGroup>
-
-                        <br/>
-                        <!-- Register Button -->
-                        <p:commandButton id="registerButton"
-                                         value="#{msg.register_button_register}"
-                                         icon="ui-icon-person"
-                                         action="#{registerController.register}"
-                                         update="@form"/>
-
-                        <!-- Login Link -->
-                        <p:link id="loginLink"
-                                value="#{msg.register_link_alreadyRegistered}"
-                                outcome="login"/>
-                    </div>
+                    <!-- registrationVerified -->
+                    <h:panelGroup rendered="#{registerController.verified}">
+                        <ui:include src="registration/verified.xhtml"/>
+                    </h:panelGroup>
                 </div>
             </div>
 
@@ -166,7 +76,7 @@
             <h:outputStylesheet name="css/style.css"/>
             <h:outputScript name="js/md-selectonemenu.js"/>
         </h:form>
+        </f:view>
     </h:body>
-</f:view>
 
 </html>

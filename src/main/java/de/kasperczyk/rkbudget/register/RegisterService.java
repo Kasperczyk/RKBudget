@@ -49,18 +49,12 @@ public class RegisterService {
         return Currency.valueBy(locationService.getCountryCodeByIp(ip));
     }
 
-    boolean register(User user) {
-        LOG.info("Trying to register user: " + user.toString());
-        if (userService.exists(user)) {
-            LOG.error("User already registered -> could not register user: " + user.toString());
-            return false;
-        } else {
-            LOG.info("Registering user: " + user.toString());
-            userService.create(user);
-            VerificationToken verificationToken = createVerificationToken(user);
-            sendVerificationEmail(user, verificationToken);
-            return true;
-        }
+    boolean register(User user, String serverUrl, Locale locale) {
+        LOG.info("Registering user: " + user.toString());
+        userService.create(user);
+        VerificationToken verificationToken = createVerificationToken(user);
+        sendVerificationEmail(user, verificationToken, serverUrl, locale);
+        return true;
     }
 
     private VerificationToken createVerificationToken(User user) {
@@ -71,13 +65,9 @@ public class RegisterService {
         return verificationTokenRepository.save(verificationToken);
     }
 
-    private void sendVerificationEmail(User user, VerificationToken verificationToken) {
-        Locale locale = new Locale("en");
-        String subject = messageSource.getMessage("entry_mail_registrationSubject", null, locale);
-        String text = messageSource.getMessage("entry_mail_registrationText", null, locale);
-        String confirmationUrl = "localhost:8080/register?token=" + verificationToken.getToken();
-        text += "\n\n" + confirmationUrl;
-        emailService.sendVerificationEmail(user.getEmail(), subject, text);
+    private void sendVerificationEmail(User user, VerificationToken verificationToken, String serverUrl, Locale locale) {
+        String confirmationUrl = serverUrl + "/register?token=" + verificationToken.getToken();
+        emailService.sendVerificationEmail(user.getEmail(), confirmationUrl, locale);
     }
 
     boolean verify(String token) {

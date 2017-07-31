@@ -1,7 +1,9 @@
 Register:
- - set currency based on location (until then € as default)
- - error messages
  - finish / clean up registration process
+ - handle verification link expiration
+Login:
+ - error messages
+ - handle forgot password
 
 
 

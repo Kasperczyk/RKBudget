@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<div class="ui-g-12">
+
+<!-- Language -->
+    <h:panelGroup class="md-selectonemenu">
+        <p:selectOneMenu value="#{registerController.language}"
+                         converter="#{languageConverter}"
+                         required="true">
+            <f:selectItem itemLabel="#{msg.language_default}"
+                          noSelectionOption="true"
+                          itemDisabled="true"/>
+            <f:selectItems value="#{languageController.allSupportedLanguages}"
+                           var="language"
+                           itemValue="#{language}"
+                           itemLabel="#{languageController.getLanguageName(language)}"/>
+            <p:ajax update="languageLabel firstNameLabel lastNameLabel userNameLabel
+                                                emailLabel passwordLabel passwordConfirmLabel registerButton loginLink
+                                                title header firstNameError lastNameError userNameError emailError
+                                                passwordError passwordConfirmError"/>
+        </p:selectOneMenu>
+        <p:outputLabel id="languageLabel"
+                       value="#{msg.language_label}"/>
+    </h:panelGroup>
+    <br/>
+
+    <!-- First Name -->
+    <h:panelGroup styleClass="md-inputfield">
+        <p:inputText id="firstName"
+                     value="#{registerController.firstName}"
+                     required="true"/>
+        <p:outputLabel id="firstNameLabel"
+                       value="#{msg.register_input_firstName}"/>
+        <p:message id="firstNameError"
+                   styleClass="left-align"
+                   for="firstName"/>
+    </h:panelGroup>
+
+    <!-- Last Name -->
+    <h:panelGroup styleClass="md-inputfield">
+        <p:inputText id="lastName"
+                     value="#{registerController.lastName}"
+                     required="true"/>
+        <p:outputLabel id="lastNameLabel"
+                       value="#{msg.register_input_lastName}"/>
+        <p:message id="lastNameError"
+                   styleClass="left-align"
+                   for="lastName"/>
+    </h:panelGroup>
+
+    <!-- User Name -->
+    <h:panelGroup styleClass="md-inputfield">
+        <p:inputText id="userName"
+                     value="#{registerController.userName}">
+            <f:validator binding="#{userNameValidator}"/>
+        </p:inputText>
+        <p:outputLabel id="userNameLabel"
+                       value="#{msg.register_input_userName}"/>
+        <p:message id="userNameError"
+                   styleClass="left-align"
+                   for="userName"/>
+    </h:panelGroup>
+
+    <!-- Email -->
+    <h:panelGroup styleClass="md-inputfield">
+        <p:inputText id="email"
+                     value="#{registerController.email}"
+                     required="true">
+            <f:validator binding="#{emailValidator}"/>
+        </p:inputText>
+        <p:outputLabel id="emailLabel"
+                       value="#{msg.register_input_email}"/>
+        <p:message id="emailError"
+                   styleClass="left-align"
+                   for="email"/>
+    </h:panelGroup>
+
+    <!-- Password -->
+    <h:panelGroup styleClass="md-inputfield">
+        <p:password id="password"
+                    value="#{registerController.password}"
+                    match="passwordConfirm"
+                    required="true"/>
+        <p:outputLabel id="passwordLabel"
+                       value="#{msg.register_input_password}"/>
+        <p:message id="passwordError"
+                   styleClass="left-align"
+                   for="password"/>
+    </h:panelGroup>
+
+    <!-- Confirm Password -->
+    <h:panelGroup styleClass="md-inputfield">
+        <p:password id="passwordConfirm"
+                    required="true"/>
+        <p:outputLabel id="passwordConfirmLabel"
+                       value="#{msg.register_input_passwordConfirm}"/>
+        <p:message id="passwordConfirmError"
+                   styleClass="left-align"
+                   for="passwordConfirm"/>
+    </h:panelGroup>
+
+    <br/>
+    <!-- Register Button -->
+    <p:commandButton id="registerButton"
+                     value="#{msg.register_button_register}"
+                     icon="ui-icon-person"
+                     action="#{registerController.register}"
+                     update="@form"/>
+
+    <!-- Login Link -->
+    <p:link id="loginLink"
+            value="#{msg.register_link_alreadyRegistered}"
+            outcome="login"/>
+</div>
+</ui:composition>

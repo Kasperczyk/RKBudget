@@ -37,7 +37,7 @@ public class RegisterControllerTest {
     public void registerShouldActuallyRegister() {
         setupMocksForRegister(GERMAN_IP);
         registerController.register();
-        verify(registerServiceMock).register(any(User.class));
+        verify(registerServiceMock).register(any(User.class), anyString(), any(Locale.class));
     }
 
     @Test
@@ -59,14 +59,14 @@ public class RegisterControllerTest {
     public void registerShouldSetSubmittedToTrue() {
         setupMocksForRegister(GERMAN_IP);
         registerController.register();
-        assertThat(registerController.isSubmitted(), is(true));
+        assertThat(registerController.isFailed(), is(true));
     }
 
     @Test
     public void registerShouldSetRegisteredToTrueAndResetFieldsIfRegistrationIsSuccessful() {
         setupFields();
         setupMocksForRegister(GERMAN_IP);
-        when(registerServiceMock.register(any(User.class))).thenReturn(true);
+        when(registerServiceMock.register(any(User.class), anyString(), any(Locale.class))).thenReturn(true);
         registerController.register();
         assertThat(registerController.isRegistered(), is(true));
         assertThat(areFieldsNull(), is(true));
@@ -76,7 +76,7 @@ public class RegisterControllerTest {
     public void registerShouldSetRegisteredToFalseAndNotResetFieldsIfRegistrationIsSuccessful() {
         setupFields();
         setupMocksForRegister(GERMAN_IP);
-        when(registerServiceMock.register(any(User.class))).thenReturn(false);
+        when(registerServiceMock.register(any(User.class), anyString(), any(Locale.class))).thenReturn(false);
         registerController.register();
         assertThat(registerController.isRegistered(), is(false));
         assertThat(areFieldsNull(), is(false));
@@ -97,6 +97,7 @@ public class RegisterControllerTest {
     }
 
     private void setupMocksForRegister(String desiredHeaderReturnValue) {
+        registerController.setEmail("email");
         FacesContext facesContextMock = FacesContextMock.getMock();
         HttpServletRequest httpServletRequestMock = mock(HttpServletRequest.class);
         when(facesContextMock.getExternalContext().getRequest()).thenReturn(httpServletRequestMock);

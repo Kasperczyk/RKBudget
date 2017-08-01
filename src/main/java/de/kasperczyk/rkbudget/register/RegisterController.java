@@ -30,7 +30,6 @@ public class RegisterController {
     private boolean verified;
 
     private boolean registered;
-    private boolean failed;
 
     @Autowired
     public RegisterController(RegisterService registerService) {
@@ -43,7 +42,6 @@ public class RegisterController {
         User user = new User(firstName, lastName, userName, email.toLowerCase(),
                 securePassword, currency, getLocale());
         registered = registerService.register(user, getServerUrl(), getLocale());
-        failed = !registered;
         if (registered) {
             resetFields();
         }
@@ -90,7 +88,7 @@ public class RegisterController {
     }
 
     public boolean showRegistrationForm() {
-        return !(verified || registered || failed);
+        return !(verified || registered);
     }
 
     public String navigateToLoginPage() {
@@ -151,10 +149,6 @@ public class RegisterController {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public boolean isFailed() {
-        return failed;
     }
 
     public boolean isRegistered() {

@@ -56,13 +56,6 @@ public class RegisterControllerTest {
     }
 
     @Test
-    public void registerShouldSetSubmittedToTrue() {
-        setupMocksForRegister(GERMAN_IP);
-        registerController.register();
-        assertThat(registerController.isFailed(), is(true));
-    }
-
-    @Test
     public void registerShouldSetRegisteredToTrueAndResetFieldsIfRegistrationIsSuccessful() {
         setupFields();
         setupMocksForRegister(GERMAN_IP);
@@ -102,6 +95,8 @@ public class RegisterControllerTest {
         HttpServletRequest httpServletRequestMock = mock(HttpServletRequest.class);
         when(facesContextMock.getExternalContext().getRequest()).thenReturn(httpServletRequestMock);
         when(httpServletRequestMock.getHeader("X-FORWARDED-FOR")).thenReturn(desiredHeaderReturnValue);
+        when(httpServletRequestMock.getRequestURL()).thenReturn(new StringBuffer());
+        when(httpServletRequestMock.getRequestURI()).thenReturn("");
         when(facesContextMock.getExternalContext().getRequestLocale()).thenReturn(new Locale("de"));
     }
 

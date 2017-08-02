@@ -31,7 +31,8 @@ public class CreditCardNumberValidator implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         if (!isCreditCardNumberValid(value)) {
             FacesMessage errorMessage = new FacesMessage(
-                    messageSource.getMessage("account_error_invalidCreditCardNumber", null, userController.getLocale()));
+                    messageSource.getMessage(
+                            "account_error_invalidCreditCardNumber", null, userController.getLocale()));
             throw new ValidatorException(errorMessage);
         }
     }

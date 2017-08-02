@@ -28,14 +28,14 @@ public class UserServiceTest {
     @Test
     public void existsShouldReturnTrueIfTheUserAlreadyExists() {
         when(userRepositoryMock.findByEmail(anyString())).thenReturn(new User());
-        boolean result = userService.exists(new User());
+        boolean result = userService.userExists(new User());
         assertThat(result, is(true));
     }
 
     @Test
     public void existsShouldReturnFalseIfTheUserDoesNotAlreadyExists() {
         when(userRepositoryMock.findByEmail(anyString())).thenReturn(null);
-        boolean result = userService.exists(new User());
+        boolean result = userService.userExists(new User());
         assertThat(result, is(false));
     }
 

@@ -59,7 +59,7 @@ public class EmailValidator implements Validator {
     }
 
     private void validateEmailAvailability(Object email, Locale locale) {
-        if (userService.isEmailTaken(email.toString())) {
+        if (userService.emailExists(email.toString())) {
             FacesMessage errorMessage = new FacesMessage(
                     messageSource.getMessage("register_error_emailTaken", null, locale));
             errorMessage.setSeverity(FacesMessage.SEVERITY_ERROR);

@@ -44,13 +44,13 @@ public class UserNameValidatorTest {
 
     @Test
     public void validateShouldNotThrowAnExceptionIfUserNameItNotTaken() {
-        when(userServiceMock.isUserNameTaken(anyString())).thenReturn(false);
+        when(userServiceMock.userNameExists(anyString())).thenReturn(false);
         userNameValidator.validate(facesContextMock, null, "userName");
     }
 
     @Test
     public void validateShouldThrowAnExceptionIfUserNameIsTaken() {
-        when(userServiceMock.isUserNameTaken(anyString())).thenReturn(true);
+        when(userServiceMock.userNameExists(anyString())).thenReturn(true);
         expectedException.expect(ValidatorException.class);
         userNameValidator.validate(facesContextMock, null, "userName");
     }

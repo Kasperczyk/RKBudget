@@ -28,7 +28,7 @@ public class UserNameValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object userName) throws ValidatorException {
-        if (userService.isUserNameTaken(userName.toString())) {
+        if (userService.userNameExists(userName.toString())) {
             Locale locale = registerController.getLocale();
             FacesMessage errorMessage = new FacesMessage(
                     messageSource.getMessage("register_error_userNameTaken", null, locale));

@@ -32,30 +32,42 @@
                 <div class="ui-g-12">
                     <p:graphicImage name="images/logo-ultima.svg"
                                     library="ultima-layout"/>
-                </div>
-                <div class="ui-g-12">
+
+                    <br/>
+                    <br/>
+                    <!-- Email or UserName -->
                     <h:panelGroup styleClass="md-inputfield">
-                        <p:inputText value="#{loginController.emailOrUserName}"
-                                     required="true"/>
-                        <label>#{msg.login_input_emailOrUserName}</label>
+                        <p:inputText id="emailOrUserName"
+                                     value="#{loginController.emailOrUserName}"
+                                     required="true">
+                            <f:validator binding="#{credentialsValidator}"/>
+                        </p:inputText>
+                        <p:outputLabel value="#{msg.login_input_emailOrUserName}"/>
+                        <p:message for="emailOrUserName"
+                                   styleClass="left-align"/>
                     </h:panelGroup>
-                </div>
-                <div class="ui-g-12">
+
+                    <!-- Password -->
                     <h:panelGroup styleClass="md-inputfield">
-                        <p:password value="#{loginController.password}"
+                        <p:password id="password"
+                                    value="#{loginController.password}"
                                     required="true"/>
-                        <label>#{msg.login_input_password}</label>
+                        <p:outputLabel value="#{msg.login_input_password}"/>
+                        <p:message for="password"
+                                   styleClass="left-align"/>
                     </h:panelGroup>
-                </div>
-                <div class="ui-g-12">
+
+                    <!-- Login Button -->
                     <p:commandButton value="#{msg.login_button_login}"
                                      icon="ui-icon-person"
                                      action="#{loginController.login}"
                                      update="@form"/>
+                    <!-- Forgot Password Button -->
                     <p:commandButton value="#{msg.login_button_forgotPassword}"
                                      icon="ui-icon-help"
                                      action="login"
                                      styleClass="secondary"/>
+                    <!-- Register Link -->
                     <p:link value="#{msg.login_link_notYetRegistered}"
                             outcome="register"/>
                 </div>
@@ -68,6 +80,7 @@
                             library="ultima-layout"/>
         <h:outputStylesheet name="css/layout-#{userController.theme}.css"
                             library="ultima-layout"/>
+        <h:outputStylesheet name="css/style.css"/>
     </h:form>
 </h:body>
 

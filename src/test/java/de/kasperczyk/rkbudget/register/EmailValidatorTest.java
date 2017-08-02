@@ -57,13 +57,13 @@ public class EmailValidatorTest {
 
     @Test
     public void validateShouldNotThrowAnExceptionIfEmailIsNotTaken() {
-        when(userServiceMock.isEmailTaken(VALID_EMAIL)).thenReturn(false);
+        when(userServiceMock.emailExists(VALID_EMAIL)).thenReturn(false);
         emailValidator.validate(facesContextMock, null, VALID_EMAIL);
     }
 
     @Test
     public void validateShouldThrowAnExceptionIfEmailIsAlreadyTaken() {
-        when(userServiceMock.isEmailTaken(VALID_EMAIL)).thenReturn(true);
+        when(userServiceMock.emailExists(VALID_EMAIL)).thenReturn(true);
         expectedException.expect(ValidatorException.class);
         emailValidator.validate(facesContextMock, null, INVALID_EMAIL);
     }

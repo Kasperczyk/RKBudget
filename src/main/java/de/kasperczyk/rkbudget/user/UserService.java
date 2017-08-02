@@ -30,15 +30,15 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean exists(User user) {
+    boolean userExists(User user) {
         return userRepository.findByEmail(user.getEmail()) != null;
     }
 
-    public boolean isEmailTaken(String email) {
+    public boolean emailExists(String email) {
         return userRepository.findByEmail(email) != null;
     }
 
-    public boolean isUserNameTaken(String userName) {
+    public boolean userNameExists(String userName) {
         return userRepository.findByUserName(userName) != null;
     }
 

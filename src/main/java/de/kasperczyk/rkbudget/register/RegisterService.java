@@ -6,7 +6,6 @@ import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,6 @@ public class RegisterService {
 
     private static final Logger LOG = Logger.getLogger(RegisterService.class);
 
-    private final MessageSource messageSource;
     private final UserService userService;
     private final EmailService emailService;
     private final LocationService locationService;
@@ -27,13 +25,11 @@ public class RegisterService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegisterService(MessageSource messageSource,
-                           UserService userService,
+    public RegisterService(UserService userService,
                            EmailService emailService,
                            LocationService locationService,
                            VerificationTokenRepository verificationTokenRepository,
                            PasswordEncoder passwordEncoder) {
-        this.messageSource = messageSource;
         this.userService = userService;
         this.emailService = emailService;
         this.locationService = locationService;

@@ -2,6 +2,7 @@ package de.kasperczyk.rkbudget.login;
 
 import de.kasperczyk.rkbudget.user.User;
 import de.kasperczyk.rkbudget.user.UserController;
+import de.kasperczyk.rkbudget.user.UserService;
 import org.ocpsoft.rewrite.annotation.Join;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -15,21 +16,21 @@ import javax.faces.context.FacesContext;
 @Join(path = "/login", to = "/pages/login.xhtml")
 public class LoginController {
 
-    private final LoginService loginService;
     private final UserController userController;
+    private final UserService userService;
 
     private String emailOrUserName;
     private String password;
 
     @Autowired
-    public LoginController(LoginService loginService, UserController userController) {
-        this.loginService = loginService;
+    public LoginController(UserController userController, UserService userService) {
         this.userController = userController;
+        this.userService = userService;
     }
 
     public String login() {
         try {
-            User user = loginService.login(emailOrUserName, password);
+            User user = userService.getUserByEmailAddressOrUserName(emailOrUserName);
             userController.setCurrentUser(user);
             userController.initializeFields();
             return "/pages/dashboard?faces-redirect=true";

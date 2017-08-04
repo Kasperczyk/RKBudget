@@ -45,6 +45,10 @@ public class RegisterService {
         return Currency.valueBy(locationService.getCountryCodeByIp(ip));
     }
 
+    boolean isStrongPassword(String password) {
+        return userService.isStrongPassword(password);
+    }
+
     boolean register(User user, String serverUrl, Locale locale) {
         LOG.info("Registering user: " + user.toString());
         userService.create(user);

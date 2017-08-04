@@ -35,7 +35,7 @@ public class DevUserConfig {
 
     private User createDevUser(String firstName, String lastName, String userName, String email,
                                String password, Locale locale, Currency currency) {
-        User user = new User(firstName, lastName, userName, email, password, currency, locale);
+        User user = new User(firstName, lastName, userName, email, password, true, currency, locale);
         user.setActivated(true);
         return user;
     }

@@ -5,6 +5,7 @@ import de.kasperczyk.rkbudget.language.Language;
 import de.kasperczyk.rkbudget.user.User;
 import org.ocpsoft.rewrite.annotation.Join;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -17,6 +18,7 @@ import java.util.Locale;
 @Join(path = "/register", to = "/pages/register.xhtml")
 public class RegisterController {
 
+    private final MessageSource messageSource;
     private final RegisterService registerService;
 
     private Language language;
@@ -26,32 +28,48 @@ public class RegisterController {
     private String email;
     private String password;
 
+    private boolean registered;
     private String token;
     private boolean verified;
 
-    private boolean registered;
-
     @Autowired
-    public RegisterController(RegisterService registerService) {
+    public RegisterController(MessageSource messageSource,
+                              RegisterService registerService) {
+        this.messageSource = messageSource;
         this.registerService = registerService;
+    }
+
+    public Locale getLocale() {
+        if (language != null) {
+            return new Locale(language.getCountryCode());
+        } else {
+            Locale requestLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+            language = Language.valueBy(requestLocale.getLanguage());
+            return requestLocale;
+        }
+    }
+
+    public String getPageTitle() {
+        String pageTitle = messageSource.getMessage("register_title", null, getLocale());
+        if (registered) {
+            pageTitle += " - " + messageSource.getMessage("register_subtitle_registered", null, getLocale());
+        }
+        if (verified) {
+            pageTitle += " - " + messageSource.getMessage("register_subtitle_verified", null, getLocale());
+        }
+        return pageTitle;
     }
 
     public void register() {
         Currency currency = registerService.getInitialCurrencyByIp(getIpAddress());
+        boolean isStrongPassword = registerService.isStrongPassword(password);
         String securePassword = registerService.encodePassword(password);
         User user = new User(firstName, lastName, userName, email.toLowerCase(),
-                securePassword, currency, getLocale());
+                securePassword, isStrongPassword, currency, getLocale());
         registered = registerService.register(user, getServerUrl(), getLocale());
         if (registered) {
             resetFields();
         }
-    }
-
-    private String getServerUrl() {
-        HttpServletRequest request =
-                (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String url = request.getRequestURL().toString();
-        return url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath();
     }
 
     private String getIpAddress() {
@@ -64,14 +82,11 @@ public class RegisterController {
         return ipAddress;
     }
 
-    public Locale getLocale() {
-        if (language != null) {
-            return new Locale(language.getCountryCode());
-        } else {
-            Locale requestLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-            language = Language.valueBy(requestLocale.getLanguage());
-            return requestLocale;
-        }
+    private String getServerUrl() {
+        HttpServletRequest request =
+                (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String url = request.getRequestURL().toString();
+        return url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath();
     }
 
     private void resetFields() {
@@ -87,12 +102,20 @@ public class RegisterController {
         }
     }
 
-    public boolean showRegistrationForm() {
-        return !(verified || registered);
-    }
-
     public String navigateToLoginPage() {
         return "login?faces-redirect=true";
+    }
+
+    public boolean isNeitherRegisteredNorVerified() {
+        return !(registered || verified);
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public boolean isVerified() {
+        return verified;
     }
 
     public Language getLanguage() {
@@ -149,13 +172,5 @@ public class RegisterController {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public boolean isRegistered() {
-        return registered;
-    }
-
-    public boolean isVerified() {
-        return verified;
     }
 }

@@ -41,7 +41,7 @@
 
             <div class="card login-panel ui-fluid">
                 <p:outputLabel id="header"
-                               value="#{msg.register_title}"/>
+                               value="#{registerController.pageTitle}"/>
                 <div class="ui-g">
                     <div class="ui-g-12">
                         <p:graphicImage name="images/logo-ultima.svg"
@@ -49,7 +49,7 @@
                     </div>
 
                     <!-- registrationForm -->
-                    <h:panelGroup rendered="#{registerController.showRegistrationForm()}">
+                    <h:panelGroup rendered="#{registerController.neitherRegisteredNorVerified}">
                         <ui:include src="registration/registerForm.xhtml"/>
                     </h:panelGroup>
 

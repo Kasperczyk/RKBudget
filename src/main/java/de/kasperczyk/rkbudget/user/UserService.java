@@ -23,10 +23,12 @@ public class UserService {
         return user;
     }
 
+    private final PasswordValidator passwordValidator;
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(PasswordValidator passwordValidator, UserRepository userRepository) {
+        this.passwordValidator = passwordValidator;
         this.userRepository = userRepository;
     }
 
@@ -62,5 +64,9 @@ public class UserService {
         User user = userRepository.findOne(id);
         user.setActivated(true);
         userRepository.save(user);
+    }
+
+    public boolean isStrongPassword(String password) {
+        return passwordValidator.isStrongPassword(password);
     }
 }

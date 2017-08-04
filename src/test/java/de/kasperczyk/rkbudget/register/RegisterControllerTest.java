@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.context.MessageSource;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,11 +27,14 @@ public class RegisterControllerTest {
     private RegisterController registerController;
 
     @Mock
+    private MessageSource messageSourceMock;
+
+    @Mock
     private RegisterService registerServiceMock;
 
     @Before
     public void setup() {
-        registerController = new RegisterController(registerServiceMock);
+        registerController = new RegisterController(messageSourceMock, registerServiceMock);
     }
 
     @Test

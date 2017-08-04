@@ -37,3 +37,12 @@
 body .md-inputfield .ui-message.ui-message-error {
     margin-bottom: 20px;
 }
+
+.login-footer {
+    color: #ccc;
+    font-size: 18px;
+}
+
+.modal-width {
+    width: 275px;
+}

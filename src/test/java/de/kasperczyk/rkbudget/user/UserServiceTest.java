@@ -20,9 +20,12 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepositoryMock;
 
+    @Mock
+    private PasswordValidator passwordValidatorMock;
+
     @Before
     public void setup() {
-        userService = new UserService(userRepositoryMock);
+        userService = new UserService(passwordValidatorMock, userRepositoryMock);
     }
 
     @Test

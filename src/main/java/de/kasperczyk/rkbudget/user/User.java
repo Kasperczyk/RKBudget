@@ -42,6 +42,9 @@ public class User {
     @Column(nullable = false, length = 60)
     private String password;
 
+    @Column
+    private Boolean strongPassword;
+
     @Column(nullable = false)
     private Locale locale;
 
@@ -59,6 +62,7 @@ public class User {
                 String userName,
                 String email,
                 String password,
+                boolean isStrongPassword,
                 Currency currency,
                 Locale locale) {
         this.firstName = firstName;
@@ -66,6 +70,7 @@ public class User {
         this.userName = userName;
         this.email = email;
         this.password = password;
+        this.strongPassword = isStrongPassword;
         this.currency = currency;
         this.locale = locale;
     }
@@ -120,6 +125,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getStrongPassword() {
+        return strongPassword;
+    }
+
+    public void setStrongPassword(Boolean strongPassword) {
+        this.strongPassword = strongPassword;
     }
 
     public Locale getLocale() {

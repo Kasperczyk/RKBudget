@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui">
+
+<div class="ui-g-12">
+    <p:outputLabel value="#{msg.register_label_expired}"/>
+    <br/>
+    <br/>
+    <p:commandButton value="#{msg.register_button_resendVerificationMail}"
+                     icon="ui-icon-email"
+                     action="#{registerController.resendVerificationMail}"
+                     update="@form"/>
+</div>
+</html>

@@ -49,7 +49,7 @@
                     </div>
 
                     <!-- registrationForm -->
-                    <h:panelGroup rendered="#{registerController.neitherRegisteredNorVerified}">
+                    <h:panelGroup rendered="#{registerController.noFlagSet()}">
                         <ui:include src="registration/registerForm.xhtml"/>
                     </h:panelGroup>
 
@@ -61,6 +61,16 @@
                     <!-- registrationVerified -->
                     <h:panelGroup rendered="#{registerController.verified}">
                         <ui:include src="registration/verified.xhtml"/>
+                    </h:panelGroup>
+
+                    <!-- tokenExpired -->
+                    <h:panelGroup rendered="#{registerController.expired}">
+                        <ui:include src="registration/expired.xhtml"/>
+                    </h:panelGroup>
+
+                    <!-- verificationMailResent -->
+                    <h:panelGroup rendered="#{registerController.resent}">
+                        <ui:include src="registration/resent.xhtml"/>
                     </h:panelGroup>
                 </div>
             </div>

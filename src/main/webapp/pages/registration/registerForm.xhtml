@@ -85,6 +85,7 @@
             <p:password id="password"
                         value="#{registerController.password}"
                         match="passwordConfirm"
+                        validatorMessage="#{msg.register_error_passwordsDoNotMatch}"
                         required="true">
                 <f:validateLength maximum="128"/>
             </p:password>

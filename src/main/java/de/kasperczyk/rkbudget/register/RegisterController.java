@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 @Controller
-@Scope("session")
+@Scope("view")
 @Join(path = "/register", to = "/pages/register.xhtml")
 public class RegisterController {
 
@@ -28,9 +28,11 @@ public class RegisterController {
     private String email;
     private String password;
 
-    private boolean registered;
     private String token;
+    private boolean registered;
     private boolean verified;
+    private boolean expired;
+    private boolean resent;
 
     @Autowired
     public RegisterController(MessageSource messageSource,
@@ -56,6 +58,12 @@ public class RegisterController {
         }
         if (verified) {
             pageTitle += " - " + messageSource.getMessage("register_subtitle_verified", null, getLocale());
+        }
+        if (expired) {
+            pageTitle = messageSource.getMessage("register_title_expired", null, getLocale());
+        }
+        if (resent) {
+            pageTitle = messageSource.getMessage("register_title_resent", null, getLocale());
         }
         return pageTitle;
     }
@@ -98,16 +106,26 @@ public class RegisterController {
 
     public void verify() {
         if (token != null) {
-            verified = registerService.verify(token);
+            expired = registerService.isExpired(token);
+            if (!expired) {
+                verified = registerService.verify(token);
+            }
         }
     }
 
-    public String navigateToLoginPage() {
-        return "login?faces-redirect=true";
+    public void resendVerificationMail() {
+        registerService.resendVerificationEmail(token, getServerUrl(), getLocale());
+        resent = true;
+        expired = false;
+        token = null;
     }
 
-    public boolean isNeitherRegisteredNorVerified() {
-        return !(registered || verified);
+    public String navigateToLoginPage() {
+        return "login?faces-redirect=true&includeViewParams=true";
+    }
+
+    public boolean noFlagSet() {
+        return !(registered || verified || expired || resent);
     }
 
     public boolean isRegistered() {
@@ -172,5 +190,13 @@ public class RegisterController {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public boolean isResent() {
+        return resent;
     }
 }

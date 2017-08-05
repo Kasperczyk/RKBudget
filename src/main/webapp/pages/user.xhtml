@@ -35,11 +35,11 @@
                                 </p:selectOneMenu>
 
                                 <p:outputLabel for="currency"
-                                               value="#{msg.currency_label_currency}"/>
+                                               value="#{msg.currency_label}"/>
                                 <p:selectOneMenu id="currency"
                                                  value="#{userController.currency}"
                                                  converter="#{currencyConverter}">
-                                    <f:selectItem itemLabel="#{msg.currency_selectItem_defaultCurrency}"
+                                    <f:selectItem itemLabel="#{msg.currency_default}"
                                                   noSelectionOption="true"
                                                   itemDisabled="true"/>
                                     <f:selectItems value="#{currencyController.allSupportedCurrencies}"

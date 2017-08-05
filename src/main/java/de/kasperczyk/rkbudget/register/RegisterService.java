@@ -70,6 +70,19 @@ public class RegisterService {
         emailService.sendVerificationEmail(user.getEmail(), confirmationUrl, locale);
     }
 
+    void resendVerificationEmail(String token, String serverUrl, Locale locale) {
+        VerificationToken oldToken = verificationTokenRepository.findByToken(token);
+        User user = oldToken.getUser();
+        verificationTokenRepository.delete(oldToken.getId());
+        VerificationToken verificationToken = createVerificationToken(user);
+        sendVerificationEmail(user, verificationToken, serverUrl, locale);
+    }
+
+    boolean isExpired(String token) {
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
+        return verificationToken != null && verificationToken.getExpiryDate().before(new Date());
+    }
+
     boolean verify(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         if (verificationToken == null) {

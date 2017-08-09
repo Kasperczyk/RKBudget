@@ -11,12 +11,13 @@ import org.springframework.stereotype.Controller;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.util.Locale;
 
 @Controller
 @Scope("view")
 @Join(path = "/register", to = "/pages/register.xhtml")
-public class RegisterController {
+public class RegisterController implements Serializable {
 
     private final MessageSource messageSource;
     private final RegisterService registerService;

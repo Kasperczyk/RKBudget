@@ -1,5 +1,14 @@
 /src/main/java/org/primefaces/ultima/* linguist-vendored
+/src/main/webapp/resources/primefaces-ultima-blue/* linguist-vendored
+/src/main/webapp/resources/primefaces-ultima-blue-grey/* linguist-vendored
+/src/main/webapp/resources/primefaces-ultima-brown/* linguist-vendored
 /src/main/webapp/resources/primefaces-ultima-cyan/* linguist-vendored
+/src/main/webapp/resources/primefaces-ultima-dark-blue/* linguist-vendored
+/src/main/webapp/resources/primefaces-ultima-dark-green/* linguist-vendored
 /src/main/webapp/resources/primefaces-ultima-grey/* linguist-vendored
+/src/main/webapp/resources/primefaces-ultima-indigo/* linguist-vendored
+/src/main/webapp/resources/primefaces-ultima-purple-amber/* linguist-vendored
+/src/main/webapp/resources/primefaces-ultima-purple-cyan/* linguist-vendored
+/src/main/webapp/resources/primefaces-ultima-teal/* linguist-vendored
 /src/main/webapp/resources/ultima-layout/* linguist-vendored
 /src/main/webapp/WEB-INF/primefaces-ultima.taglib.xml linguist-vendored

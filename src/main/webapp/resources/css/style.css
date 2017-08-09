@@ -43,6 +43,6 @@ body .md-inputfield .ui-message.ui-message-error {
     font-size: 18px;
 }
 
-.modal-width {
-    width: 275px;
+.hidden {
+    display: none;
 }

@@ -55,6 +55,10 @@ public class UserService {
 
     void updateUser(User updatedUser) {
         User user = userRepository.findOne(updatedUser.getId());
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        user.setUserName(updatedUser.getUserName());
+        user.setEmail(updatedUser.getEmail());
         user.setLocale(updatedUser.getLocale());
         user.setCurrency(updatedUser.getCurrency());
         userRepository.save(user);
@@ -64,6 +68,10 @@ public class UserService {
         User user = userRepository.findOne(id);
         user.setActivated(true);
         userRepository.save(user);
+    }
+
+    public String getThemeByName() {
+        return "";
     }
 
     public boolean isStrongPassword(String password) {

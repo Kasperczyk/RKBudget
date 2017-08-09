@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.context.MessageSource;
 
 import java.util.Locale;
 
@@ -21,14 +20,11 @@ public class UserControllerTest {
     private UserController userController;
 
     @Mock
-    private MessageSource messageSourceMock;
-
-    @Mock
     private UserService userServiceMock;
 
     @Before
     public void setup() {
-        userController = new UserController(messageSourceMock, userServiceMock);
+        userController = new UserController(userServiceMock);
     }
 
     @Test

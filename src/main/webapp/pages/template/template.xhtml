@@ -33,7 +33,7 @@
     <ui:insert name="head"/>
 </h:head>
 
-<h:body styleClass="main-body #{userController.compact ? 'layout-compact' : null}">
+<h:body styleClass="main-body #{userController.compactMode ? 'layout-compact' : null}">
 
     <f:view locale="#{userController.locale}">
         <div class="layout-wrapper #{userController.menuLayout} #{userController.orientationLTR ? 'layout-ltr' : null}">
@@ -57,10 +57,16 @@
         </p:ajaxStatus>
     </f:view>
 
-    <h:outputStylesheet name="css/nanoscroller.css" library="ultima-layout"/>
-    <h:outputStylesheet name="css/animate.css" library="ultima-layout"/>
-    <h:outputStylesheet name="css/ripple.css" library="ultima-layout"/>
-    <h:outputStylesheet name="css/layout-#{userController.theme}.css" library="ultima-layout"/>
+    <h:outputStylesheet name="css/nanoscroller.css"
+                        library="ultima-layout"/>
+    <h:outputStylesheet name="css/animate.css"
+                        library="ultima-layout"/>
+    <h:outputStylesheet name="css/ripple.css"
+                        library="ultima-layout"/>
+    <h:outputStylesheet name="css/layout-#{userController.theme}.css"
+                        library="ultima-layout"/>
+    <h:outputStylesheet name="css/style.css"/>
+    <h:outputScript name="js/md-selectonemenu.js"/>
 </h:body>
 
 </html>

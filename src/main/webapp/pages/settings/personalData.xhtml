@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <div class="card">
+        <h2>#{msg.settings_title_personal}</h2>
+        <br/>
+        <br/>
+
+        <!-- First Name -->
+        <h:panelGroup styleClass="md-inputfield">
+            <p:inputText id="firstName"
+                         value="#{userController.firstName}"
+                         required="true"/>
+            <p:outputLabel value="#{msg.settings_input_firstName}"/>
+            <p:message for="firstName"
+                       styleClass="left-align"/>
+        </h:panelGroup>
+        <br/>
+
+        <!-- Last Name -->
+        <h:panelGroup styleClass="md-inputfield">
+            <p:inputText id="lastName"
+                         value="#{userController.lastName}"
+                         required="true"/>
+            <p:outputLabel value="#{msg.settings_input_lastName}"/>
+            <p:message for="lastName"
+                       styleClass="left-align"/>
+        </h:panelGroup>
+        <br/>
+
+        <!-- User Name -->
+        <h:panelGroup styleClass="md-inputfield">
+            <p:inputText id="userName"
+                         value="#{userController.userName}"
+                         required="true">
+                <f:validator binding="#{userNameValidator}"/>
+            </p:inputText>
+            <p:outputLabel value="#{msg.settings_input_userName}"/>
+            <p:message for="userName"
+                       styleClass="left-align"/>
+        </h:panelGroup>
+        <br/>
+
+        <!-- Email -->
+        <h:panelGroup styleClass="md-inputfield">
+            <p:inputText id="email"
+                         value="#{userController.email}"
+                         required="true">
+                <f:validator binding="#{emailValidator}"/>
+            </p:inputText>
+            <p:outputLabel value="#{msg.settings_input_email}"/>
+            <p:message for="email"
+                       styleClass="left-align"/>
+        </h:panelGroup>
+        <br/>
+
+        <h:panelGroup id="passwordChangeGroup"
+                      styleClass="#{userController.changingPassword ? null : 'hidden'}">
+            <!-- New Password -->
+            <h:panelGroup styleClass="md-inputfield"
+                          rendered="#{userController.changingPassword}">
+                <p:password id="newPassword"
+                            value="#{userController.newPassword}"
+                            match="newPasswordConfirm"
+                            validatorMessage="#{msg.register_error_passwordsDoNotMatch}"
+                            required="#{userController.changingPassword}">
+                    <f:validateLength maximum="128"/>
+                </p:password>
+                <p:outputLabel value="#{msg.settings_input_newPassword}"/>
+                <p:message for="newPassword"
+                           styleClass="left-align"/>
+            </h:panelGroup>
+            <br/>
+
+            <!-- Confirm New Password -->
+            <h:panelGroup styleClass="md-inputfield"
+                          rendered="#{userController.changingPassword}">
+                <p:password id="newPasswordConfirm"
+                            required="#{userController.changingPassword}">
+                    <f:validateLength maximum="128"/>
+                </p:password>
+                <p:outputLabel value="#{msg.settings_input_newPasswordConfirm}"/>
+                <p:message for="newPasswordConfirm"
+                           styleClass="left-align"/>
+            </h:panelGroup>
+            <br/>
+
+            <!-- Old Password -->
+            <h:panelGroup styleClass="md-inputfield"
+                          rendered="#{userController.changingPassword}">
+                <p:inputText id="password"
+                             required="#{userController.changingPassword}">
+                    <f:validateLength maximum="128"/>
+                </p:inputText>
+                <p:outputLabel value="#{msg.settings_input_password}"/>
+                <p:message for="password"
+                           styleClass="left-align"/>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <p:commandButton value="#{userController.changingPassword ?
+                                    msg.settings_button_cancel : msg.settings_button_changePassword}"
+                         actionListener="#{userController.toggleChangingPasswordFlag()}"
+                         immediate="true"
+                         update="@this passwordChangeGroup"/>
+    </div>
+</ui:composition>

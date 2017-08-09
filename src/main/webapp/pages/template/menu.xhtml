@@ -5,8 +5,8 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:pu="http://primefaces.org/ultima">
 
-    <h:form id="menuform">
-        <div class="layout-menu #{userController.menuClass}">
+    <h:form id="menuForm">
+        <div class="layout-menu #{userController.menuColor}">
             <div class="nano">
                 <div class="nano-content menu-scroll-content">
                     <ui:fragment rendered="#{userController.profileMode == 'inline'
@@ -22,7 +22,7 @@
                         <ul id="profile-menu" class="ultima-menu">
                             <li role="menuitem">
                                 <p:link class="ripplelink"
-                                        outcome="user">
+                                        outcome="settings">
                                     <i class="ui-icon ui-icon-settings"/>
                                     <span>Settings</span>
                                 </p:link>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <div class="card">
+        <h2>#{msg.settings_title_ui}</h2>
+        <br/>
+        <br/>
+
+        <p:panelGrid columns="2"
+                     columnClasses="ui-grid-col-4, ui-grid-col-8"
+                     layout="grid"
+                     styleClass="ui-panelgrid-blank form-group">
+
+            <!-- Theme -->
+            <h:panelGroup styleClass="md-selectonemenu">
+                <p:selectOneMenu value="#{userController.theme}"
+                                 converter="#{themeConverter}">
+                    <f:selectItem itemLabel="#{msg.settings_theme_default}"
+                                  noSelectionOption="true"
+                                  itemDisabled="true"/>
+                    <f:selectItems value="#{userController.allThemes}"
+                                   var="theme"
+                                   itemValue="#{theme}"
+                                   itemLabel="#{userController.getThemeName(theme)}"/>
+                    <p:ajax update="@form"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="#{msg.settings_theme_label}"/>
+            </h:panelGroup>
+            <br/>
+            <br/>
+
+            <!-- Menu Color  -->
+            <p:outputLabel for="menuColor"
+                           value="#{msg.settings_label_menuColor}"/>
+            <p:selectOneRadio id="menuColor"
+                              layout="responsive"
+                              columns="2"
+                              value="#{userController.menuColor}">
+                <f:selectItem itemLabel="#{msg.settings_itemLabel_menuColorDark}"
+                              itemValue="layout-menu-dark"/>
+                <f:selectItem itemLabel="#{msg.settings_itemLabel_menuColorLight}"
+                              itemValue="layout-menu-light"/>
+                <p:ajax update=":menuForm"/>
+            </p:selectOneRadio>
+
+            <!-- Size  -->
+            <p:outputLabel for="size"
+                           value="#{msg.settings_label_size}"/>
+            <p:selectOneRadio id="size"
+                              layout="responsive"
+                              columns="2"
+                              value="#{userController.compactMode}">
+                <f:selectItem itemLabel="#{msg.settings_itemLabel_sizeCompact}"
+                              itemValue="true"/>
+                <f:selectItem itemLabel="#{msg.settings_itemLabel_sizeBig}"
+                              itemValue="false"/>
+            </p:selectOneRadio>
+
+            <!-- Orientation  -->
+            <p:outputLabel for="orientation"
+                           value="#{msg.settings_label_orientation}"/>
+            <p:selectOneRadio id="orientation"
+                              layout="responsive"
+                              columns="2"
+                              value="#{userController.orientationLTR}">
+                <f:selectItem itemLabel="#{msg.settings_itemLabel_orientationLTR}"
+                              itemValue="true"/>
+                <f:selectItem itemLabel="#{msg.settings_itemLabel_orientationRTL}"
+                              itemValue="false"/>
+            </p:selectOneRadio>
+        </p:panelGrid>
+        <br/>
+
+    </div>
+</ui:composition>
